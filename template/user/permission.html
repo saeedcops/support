@@ -19,7 +19,7 @@
         </div>
 
         <div class="col-md-2">
-            <a href="{% url 'permission' %}" class="btn btn-primary m-sm-1">Request</a>
+            <a href="{% url 'permission' request.user.pk %}" class="btn btn-primary m-sm-1">Request</a>
         </div>
     </div>
 
@@ -28,15 +28,26 @@
 
 
     <div class="container">
-    <h2 >Applications</h2>
 
-          {% for app in permission.apps %}
-            
-                <h3>{{app.name}}</h3>
-              
-            
+
+      <h2 >Applications</h2>
+        <ul>
+          {% for app in object.apps.all %}
+              <li>{{ app.name }}</li>
           {% endfor %}
-       
+          </ul>
+        
+    <h2 >Share</h2>
+         <ul>
+
+          {% for share in object.share.all %}
+              <li>{{ share.path }} {{ share.permission }}</li>
+              
+          {% endfor %}
+          </ul>
+
+        
+
         </div>
 
    

@@ -1,88 +1,133 @@
 import datetime
 import json
-
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
-from core.models import Category, Ticket, UserProfile,AdminProfile,UserPermission
+from core.models import Category, Ticket, UserProfile,AdminProfile,Permission,Share,PC
 from django.core.paginator import Paginator
-import csv
+from django.views.generic import DetailView,CreateView
+from django.shortcuts import get_object_or_404
+from .forms import TicketCreateForm
 
-## importing socket module
-# import socket
+class Home(View):
+    
+    def get(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+        
+            return redirect('admins')
+
+        else:
+
+            tickets = Ticket.objects.filter(user=UserProfile.objects.get(user=request.user))
+            paginator = Paginator(tickets, 6)
+            page_number = request.GET.get('page')
+            page_obj = Paginator.get_page(paginator, page_number)
+            return render(request, 'user/index.html', {'tickets': tickets, 'page_obj': page_obj})
+
+
+
+
+class PermissionDetailView(DetailView):
+
+    model = Permission
+    # context_object_name = 'permission'
+    template_name = 'user/permission.html'
+    
+    def get_object(self):
+
+        user=User.objects.get(pk=self.kwargs.get("id"))
+        return get_object_or_404(Permission, user=user)
+
+
+
+class TicketCreateView(CreateView):
+
+    template_name = 'tickets/add.html'
+    form_class = TicketCreateForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = UserProfile.objects.get(user=self.request.user)
+        self.object.pc=PC.objects.get(pk=1)
+        print("user ",str(self.object.user))
+        print("PC ",str(self.object.pc))
+        print("category ",str(self.object.category))
+      
+        self.object.save()
+        messages.success(self.request, "Ticket Added Successfully")
+        return redirect('ticket')
+
+    def get_initial(self, *args, **kwargs):
+        initial = super(TicketCreateView, self).get_initial(**kwargs)
+        initial['description'] = 'Error in '
+        return initial
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super(TicketCreateView, self).get_form_kwargs(*args, **kwargs)
+        kwargs['user'] = UserProfile.objects.get(user=self.request.user)
+        return kwargs
+
+
+
+
+# def add_ticket(request):
+#     category = Category.objects.all()
+
+#     if request.method == 'POST':
+#         priority = request.POST['priority']
+#         description = request.POST['description']
+#         cat = request.POST['category']
+#         # date = request.POST['open_date']
+#         if not cat:
+#             messages.error(request, "Please, select category")
+#             return render(request, 'tickets/add_tickets.html', {'category': category, 'values': request.POST})
+#         if not description:
+#             messages.error(request, "Please, enter description")
+#             return render(request, 'tickets/add_tickets.html', {'category': category, 'values': request.POST})
+
+#         Ticket.objects.create(priority=priority, description=description, category=cat, user=UserProfile.objects.get(user=request.user))
+
+#         messages.success(request, "Ticket Added Successfully")
+#         return redirect('ticket')
+#     return render(request, 'tickets/add_tickets.html', {'category': category})
+	
 
 # Create your views here.
-def index(request):
-    print("User: ",str(request.user))
-    print("META: ",str(request.META['HTTP_X_FORWARDED_FOR']))
-    print("body: ",str(request.body))
-    from datetime import datetime
-    print(datetime.now())
-    ## getting the hostname by socket.gethostname() method
-    # hostname = socket.gethostname()
-    ## getting the IP address using socket.gethostbyname() method
-    # ip_address = socket.gethostbyname(hostname)
-    ## printing the hostname and ip_address
-    # print(f"Hostname: {hostname}")
-    # print(f"IP Address: {ip_address}")
-    # print("REMOTE_HOST: ",str(request.META['HTTP_X_FORWARDED_HOST']))
-    # print("HTTP_HOST: ",str(request.META['HTTP_X_FORWARDED_SERVER']))
-    # UserProfile.objects.all().delete()
-    # print("Json: ",json.loads(request.body))
-    
-    if request.user.is_staff:
-        tickets = Ticket.objects.all()
-        paginator = Paginator(tickets, 6)
-        page_number = request.GET.get('page')
-        page_obj = Paginator.get_page(paginator, page_number)
-        return redirect('admins')
-        # return render(request, 'admins/index.html', {'tickets': tickets, 'page_obj': page_obj})
+# def index(request):
+#     print("User: ",str(request.user))
+#     print("META: ",str(request.META['HTTP_X_FORWARDED_FOR']))
+#     print("body: ",str(request.body))
+#     from datetime import datetime
+#     print(datetime.now())
+   
+#     if request.user.is_staff:
+#         tickets = Ticket.objects.all()
+#         paginator = Paginator(tickets, 6)
+#         page_number = request.GET.get('page')
+#         page_obj = Paginator.get_page(paginator, page_number)
+#         return redirect('admins')
+#         # return render(request, 'admins/index.html', {'tickets': tickets, 'page_obj': page_obj})
 
-        # return render(request, 'admin/index.html')
-    else:
-        tickets = Ticket.objects.filter(user=UserProfile.objects.get(user=request.user))
-        paginator = Paginator(tickets, 6)
-        page_number = request.GET.get('page')
-        page_obj = Paginator.get_page(paginator, page_number)
-        return render(request, 'user/index.html', {'tickets': tickets, 'page_obj': page_obj})
+#         # return render(request, 'admin/index.html')
+#     else:
+#         tickets = Ticket.objects.filter(user=UserProfile.objects.get(user=request.user))
+#         paginator = Paginator(tickets, 6)
+#         page_number = request.GET.get('page')
+#         page_obj = Paginator.get_page(paginator, page_number)
+#         return render(request, 'user/index.html', {'tickets': tickets, 'page_obj': page_obj})
 
-        # return render(request, 'user/index.html')
-    # tickets = UserTicket.objects.filter(user=request.user)
-    return render(request, 'tickets/home.html')
+#         # return render(request, 'user/index.html')
+#     # tickets = UserTicket.objects.filter(user=request.user)
+#     return render(request, 'tickets/home.html')
 
-def permission(request):
 
-    permission = UserPermission.objects.filter(user=UserProfile.objects.get(user=request.user))
-    
-    return render(request, 'user/permission.html', {'permission': permission})
 
-        # return render(request, 'user/index.html')
-    # tickets = UserTicket.objects.filter(user=request.user)
-    return render(request, 'tickets/home.html')
 
-def add_ticket(request):
-    category = Category.objects.all()
-
-    if request.method == 'POST':
-        priority = request.POST['priority']
-        description = request.POST['description']
-        cat = request.POST['category']
-        # date = request.POST['open_date']
-        if not cat:
-            messages.error(request, "Please, select category")
-            return render(request, 'tickets/add_tickets.html', {'category': category, 'values': request.POST})
-        if not description:
-            messages.error(request, "Please, enter description")
-            return render(request, 'tickets/add_tickets.html', {'category': category, 'values': request.POST})
-
-        Ticket.objects.create(priority=priority, description=description, category=cat, user=UserProfile.objects.get(user=request.user))
-
-        messages.success(request, "Ticket Added Successfully")
-        return redirect('ticket')
-    return render(request, 'tickets/add_tickets.html', {'category': category})
 
 
 # @login_required(login_url='/auth/login')

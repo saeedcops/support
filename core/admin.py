@@ -12,5 +12,7 @@ admin.site.register(Branch)
 admin.site.register(Ticket)
 admin.site.register(AdminProfile)
 admin.site.register(Server)
-admin.site.register(UserPermission)
+admin.site.register(Permission)
+admin.site.register(Share)
+admin.site.register(Printer)
 

@@ -49,10 +49,12 @@
     <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Priority ({{ currency }})</th>
+                <th> Priority</th>
                 <th> Category</th>
                 <th> Description</th>
                 <th> Date</th>
+                <th> Branch</th>
+                <th> Admin</th>
                 <th></th>
             </tr>
 
@@ -64,6 +66,8 @@
             <td>{{ex.category}}</td>
             <td>{{ex.description}}</td>
             <td>{{ex.open_date}}</td>
+            <td>{{ex.branch}}</td>
+            <td>{{ex.admin}}</td>
             <td><a href="" class="btn btn-secondary">Edit</a></td>
         </tr>
         {% endfor %}
@@ -78,10 +82,12 @@
             <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Priority ({{ currency }})</th>
+                <th> Priority </th>
                 <th> Category</th>
                 <th> Description</th>
                 <th> Date</th>
+                <th> Branch</th>
+                <th> Admin</th>
                 <th></th>
             </tr>
 

@@ -26,8 +26,6 @@ urlpatterns = [
     # path('', include('ticket.urls')),
     path('', include('users.urls')),
     path('admins/', include('admins.urls')),
-    # path('', include('userticket.urls')),
-   
-    # path('preferences/', include('userpreferences.urls')),
+    path('datasheet/', include('datasheet.urls')),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

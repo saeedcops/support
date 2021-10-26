@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'django_auth_adfs',
     'users',
     'admins',
-    'ticket',
     'core',
+    'datasheet',
 ]
 
 

@@ -98,3 +98,31 @@ body {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
   }
+
+section {
+    padding: 5px;
+   
+    margin: 5px auto;
+}
+
+
+section ul {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+
+section ul li {
+  list-style: none;
+  background: #eee;
+  padding: 5px 10px;
+  margin: 5px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+section ul li.active {
+  
+  background: #03a9f4;
+  color: #eee;
+}

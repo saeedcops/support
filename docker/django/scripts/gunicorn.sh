@@ -3,9 +3,9 @@
 set -e
 
 python /app/manage.py wait_for_db
-python /app/manage.py makemigrations
+python /app/manage.py makemigrations 
 python /app/manage.py migrate
-python /app/manage.py collectstatic --noinput
+python /app/manage.py collectstatic -l --noinput
 
 
 # mod_wsgi-express start-server osg-support.wsgi --user www-data --group www-data

@@ -16,8 +16,9 @@ class Branch(models.Model):
         return self.name
 
 
+
 class Category(models.Model):
-    name = models.CharField(max_length=20,primary_key=True)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
@@ -35,7 +36,7 @@ class Server(models.Model):
     ram = models.IntegerField(default=0)
     cpu = models.CharField(max_length=10)
     hard_disk=models.CharField(max_length=10)
-    os = models.CharField(max_length=10)
+    os = models.CharField(max_length=50)
     mac = models.CharField(max_length=17) 
     model = models.CharField(max_length=20) 
     serial_num = models.CharField(max_length=17)
@@ -51,6 +52,18 @@ class Server(models.Model):
     class Meta:
         ordering=['-host_name']
 
+
+class Share(models.Model):
+    path = models.CharField(max_length=100)
+    branch=models.ForeignKey(
+            Branch,
+            on_delete = models.CASCADE,null=True,blank=True)
+    server=models.ForeignKey(
+            Server,
+            on_delete = models.CASCADE)
+
+    def __str__(self):
+        return self.path
 
 
 class PC(models.Model):
@@ -80,6 +93,28 @@ class PC(models.Model):
 
     class Meta:
         ordering=['-host_name']
+
+
+class Printer(models.Model):
+    kind = models.CharField(max_length=15)
+    ip = models.CharField(max_length=15) 
+    switch_port = models.IntegerField(default=0)
+    vlan = models.IntegerField(default=0)
+    mac = models.CharField(max_length=17) 
+    model = models.CharField(max_length=20) 
+    serial_num = models.CharField(max_length=17)
+    role = models.CharField(max_length=30) 
+    connected_pc = models.ManyToManyField(PC)
+    branch=models.ForeignKey(
+            Branch,
+            on_delete = models.PROTECT)
+
+    def __str__(self):
+        return self.ip
+
+    class Meta:
+        ordering=['-ip']
+
 
 
 
@@ -132,39 +167,42 @@ class AdminProfile(models.Model):
         ordering = ['-name']
 
 
-class UserPermission(models.Model):
-    apps = models.ManyToManyField(Category,null=True, blank=True)
-    share=ArrayField(models.CharField(max_length=255,null=True),null=True,blank=True)
-    user = models.OneToOneField(
-            UserProfile,
+class Permission(models.Model):
+    apps = models.ManyToManyField(Category)
+    name = models.CharField(max_length = 50)
+    share = models.ManyToManyField(Share,related_name='usershare')
+    user = models.ForeignKey(
+            User,
             related_name='userpro',
             on_delete = models.CASCADE,null=True,blank=True)
     
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
 
 
 class Ticket(models.Model):
-    priority =  models.IntegerField(null=True)
+    priority =  models.IntegerField()
     open_date = models.DateField(default=now)
     closed_date = models.DateField(null=True,blank=True)
-    description = models.TextField(null=True,blank=True)
+    description = models.TextField()
     user = models.ForeignKey(
             UserProfile,
             related_name='userticket',
-            on_delete = models.CASCADE,null=True)
+            on_delete = models.CASCADE)
     admin = models.ForeignKey(
             AdminProfile,
             related_name='admin',
             on_delete = models.CASCADE,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
-            on_delete = models.PROTECT,null=True)
+            on_delete = models.PROTECT)
     branch=models.ForeignKey(
             Branch,
-            on_delete = models.PROTECT,null=True)
-    category = models.CharField(max_length=20, default="Support")
+            on_delete = models.PROTECT)
+    category = models.ForeignKey(
+            Category,
+            on_delete = models.PROTECT)
 
     def __str__(self):
         return self.user.name

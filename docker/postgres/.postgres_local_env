@@ -1,3 +1,3 @@
-POSTGRES_DB=django_db
+POSTGRES_DB=support
 POSTGRES_PASSWORD=postgres
 POSTGRES_USER=postgres

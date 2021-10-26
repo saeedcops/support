@@ -5,6 +5,7 @@ const appTable=document.querySelector(".app-table");
 const tableBody=document.querySelector(".table-body");
 const notFound=document.querySelector(".not-found");
 
+console.log("OKKK","Working");
 
 searchText.addEventListener('keyup',(e)=>{
 

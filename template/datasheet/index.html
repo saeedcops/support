@@ -12,8 +12,8 @@
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Home</li>
+                <li class="breadcrumb-item"><a href="#">Datasheet</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Branch</li>
               </ol>
             </nav>
         </div>
@@ -22,23 +22,49 @@
     </div>
 
     {% include 'partials/messages.html' %}
-    {% if tickets.count %}
-    <div class="container">
-
 
     <div class="row">
-        <div class="col-md-8">
 
-        </div>
-         <div class="col-md-4">
-
-             <div class="form-group">
-                 <input id="searchText" type="text" class="form-control" placeholder="Search">
-             </div>
-
+         <section>
+            <ul>
+            
+              <li class="blist active" data-filter="HQ"> HQ</li>
+              <li class="blist" data-filter="Waraq"> Waraq</li>
+              <li class="blist" data-filter="Lowa"> Lowa</li>
+              <li class="blist" data-filter="Bolaq"> Bolaq</li>
+              <li class="blist" data-filter="Awseem"> Awseem</li>
+              <li class="blist" data-filter="All"> All</li>
              
-         </div>
+            </ul>
+          
+          </section>
+
+          <section>
+            <ul>
+            
+              <li class="list active" data-filter="PC"> PC</li>
+              <li class="list" data-filter="Servers"> Servers</li>
+              <li class="list" data-filter="Printers"> Printers</li>
+              <li class="list" data-filter="Switches"> Switches</li>
+              <li class="list" data-filter="Firewall"> Firewall</li>
+              <li class="list" data-filter="DVR"> DVR</li>
+              <li class="list" data-filter="Fingerprint"> Fingerprint</li>
+            <input id="searchText" type="text" class="form-control" placeholder="Search">
+            </ul>
+
+          
+          
+          </section>
+            
+
+
+    
     </div>
+
+    {% if pc.count %}
+    <div class="container">
+
+    
 
 
     <div class="app-table">
@@ -46,13 +72,14 @@
     <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Priority</th>
-                <th> User</th>
-                <th> Category</th>
-                <th> Description</th>
-                <th> Date</th>
+                <th> Host Name</th>
+                <th> os</th>
+                <th> IP</th>
+                <th> Ram</th>
+                <th> Vlan</th>
+                <th> CPU</th>
                 <th> Branch</th>
-                <th> Admin</th>
+            
                 <th></th>
             </tr>
 
@@ -60,13 +87,14 @@
         <tbody>
         {% for ex in page_obj %}
         <tr>
-            <td>{{ex.priority}}</td>
-            <td>{{ex.user.name}}</td>
-            <td>{{ex.category}}</td>
-            <td>{{ex.description}}</td>
-            <td>{{ex.open_date}}</td>
-             <td>{{ex.branch}}</td>
-              <td>{{ex.admin}}</td>
+            <td>{{ex.host_name}}</td>
+            <td>{{ex.os}}</td>
+            <td>{{ex.ip}}</td>
+            <td>{{ex.ram}}</td>
+             <td>{{ex.vlan}}</td>
+            <td>{{ex.cpu}}</td>
+            <td>{{ex.branch}}</td>
+           
             <td><a href="" class="btn btn-secondary">Edit</a></td>
         </tr>
         {% endfor %}
@@ -81,13 +109,13 @@
             <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Priority</th>
-                <th> User</th>
-                <th> Category</th>
-                <th> Description</th>
-                <th> Date</th>
+                <th> Host Name</th>
+                <th> os</th>
+                <th> IP</th>
+                <th> Ram</th>
+                <th> Vlan</th>
+                <th> CPU</th>
                 <th> Branch</th>
-                <th> Admin</th>
                 <th></th>
             </tr>
 
@@ -139,5 +167,5 @@
 
 </div>
 
- <script src="{% static 'js/search.js' %}"></script>
+ <script src="{% static 'js/datasheet.js' %}"></script>
 {% endblock %}
