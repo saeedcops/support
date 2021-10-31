@@ -16,6 +16,13 @@ class Branch(models.Model):
         return self.name
 
 
+# class Department(models.Model):
+#     name = models.CharField(max_length=20)
+
+#     def __str__(self):
+#         return self.name
+
+
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
@@ -43,6 +50,7 @@ class Server(models.Model):
     role = models.CharField(max_length=30) 
     branch=models.ForeignKey(
             Branch,
+            verbose_name="Branch",
             on_delete = models.PROTECT,null=True,blank=True)
     # category = models.CharField(max_length=20, default="Support")
 
@@ -83,8 +91,11 @@ class PC(models.Model):
             related_name='userprofile',
             on_delete = models.PROTECT,null=True,blank=True)
 
+#     department=models.CharField(max_length = 10,null=True,blank=True)
+
     branch=models.ForeignKey(
             Branch,
+            verbose_name="Branch",
             on_delete = models.PROTECT,null=True,blank=True)
     # category = models.CharField(max_length=20, default="Support")
 
@@ -105,8 +116,10 @@ class Printer(models.Model):
     serial_num = models.CharField(max_length=17)
     role = models.CharField(max_length=30) 
     connected_pc = models.ManyToManyField(PC)
+#     department=models.CharField(max_length = 10,null=True,blank=True)
     branch=models.ForeignKey(
             Branch,
+            verbose_name="Branch",
             on_delete = models.PROTECT)
 
     def __str__(self):
@@ -126,6 +139,10 @@ class UserProfile(models.Model):
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 200)
     department=models.CharField(max_length = 10)
+#     department = models.ForeignKey(
+#             Department,
+#             related_name='udepartment',
+#             on_delete = models.PROTECT,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
             on_delete = models.PROTECT,null=True,blank=True)

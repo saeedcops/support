@@ -32,7 +32,7 @@
               <li class="blist" data-filter="Waraq"> Waraq</li>
               <li class="blist" data-filter="Lowa"> Lowa</li>
               <li class="blist" data-filter="Bolaq"> Bolaq</li>
-              <li class="blist" data-filter="Awseem"> Awseem</li>
+              <li class="blist" data-filter="Awsem"> Awsem</li>
               <li class="blist" data-filter="All"> All</li>
              
             </ul>
@@ -70,47 +70,77 @@
     <div class="app-table">
 
     <table class="table table-stripped table-hover">
-        <thead>
+        <thead >
             <tr>
-                <th> Host Name</th>
-                <th> os</th>
-                <th> IP</th>
-                <th> Ram</th>
-                <th> Vlan</th>
-                <th> CPU</th>
-                <th> Branch</th>
+                <th > Host Name</th>
+                <th > OS</th>
+                <th > IP</th>
+                <th > Ram</th>
+                <th > Vlan</th>
+                <th > CPU</th>
+                <th > Branch</th>
+                <th > User</th>
             
                 <th></th>
             </tr>
 
         </thead>
         <tbody>
+
         {% for ex in page_obj %}
         <tr>
             <td>{{ex.host_name}}</td>
             <td>{{ex.os}}</td>
             <td>{{ex.ip}}</td>
             <td>{{ex.ram}}</td>
-             <td>{{ex.vlan}}</td>
+            <td>{{ex.vlan}}</td>
             <td>{{ex.cpu}}</td>
             <td>{{ex.branch}}</td>
+            <td>{{ex.user}}</td>
            
             <td><a href="" class="btn btn-secondary">Edit</a></td>
         </tr>
         {% endfor %}
+
         </tbody>
     </table>
 
-        </div>
+  </div>
+
 
     <h3 class="not-found" style="display:none">Result not found</h3>
+
+      <div class="table-output" style="display:none">
+
+        <table class="table table-stripped table-hover">
+        <thead class="table-head">
+            <tr>
+                 <th class="thead"> Host Name</th>
+                <th class="thead"> OS</th>
+                <th class="thead"> IP</th>
+                <th class="thead"> Ram</th>
+                <th class="thead"> Vlan</th>
+                <th class="thead"> CPU</th>
+                <th class="thead"> Branch</th>
+                <th class="thead"> User</th>
+            
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody class="table-body">
+
+        </tbody>
+    </table>
+    </div>
+    <!--
     <div class="table-output" style="display:none">
 
             <table class="table table-stripped table-hover">
         <thead>
             <tr>
                 <th> Host Name</th>
-                <th> os</th>
+                <th> OS</th>
                 <th> IP</th>
                 <th> Ram</th>
                 <th> Vlan</th>
@@ -125,7 +155,7 @@
         </tbody>
     </table>
     </div>
-
+-->
     <div class="pagination-container">
         <div class="">
             Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
