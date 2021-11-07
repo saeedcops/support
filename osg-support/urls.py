@@ -23,9 +23,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('root/', admin.site.urls),
     path('oauth2/', include('django_auth_adfs.urls')),
-    # path('', include('ticket.urls')),
-    path('', include('users.urls')),
     path('admins/', include('admins.urls')),
+    path('', include('users.urls')),
+    path('tickets/', include('tickets.urls')),
+    
     
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

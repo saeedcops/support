@@ -101,7 +101,7 @@ body {
 
 section {
     padding: 5px;
-   
+
     margin: 5px auto;
 }
 
@@ -109,6 +109,7 @@ section {
 section ul {
     display: flex;
     margin-bottom: 2px;
+
 }
 
 
@@ -125,4 +126,10 @@ section ul li.active {
   
   background: #03a9f4;
   color: #eee;
+}
+
+img {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
 }

@@ -198,10 +198,23 @@ class Permission(models.Model):
 
 
 
+class Message(models.Model):
+    sender = models.IntegerField(default = 1)
+    name = models.CharField(default= " ",max_length = 50)
+    text = models.TextField()
+    date = models.DateField(default=now)
+    
+    def __str__(self):
+        return self.text
+
+
+
 class Ticket(models.Model):
+    status = models.CharField(default= "open",max_length = 10)
     priority =  models.IntegerField()
-    open_date = models.DateField(default=now)
-    closed_date = models.DateField(null=True,blank=True)
+    messages = models.ManyToManyField(Message)
+    open_date = models.DateTimeField(default=now)
+    closed_date = models.DateTimeField(null=True,blank=True)
     description = models.TextField()
     user = models.ForeignKey(
             UserProfile,
@@ -225,4 +238,5 @@ class Ticket(models.Model):
         return self.user.name
 
     class Meta:
+
         ordering=['-open_date']

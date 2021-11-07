@@ -28,12 +28,10 @@
     <div class="container">
 
 
-   
-
 
     <div class="app-table">
 
-    <table class="table table-stripped table-hover">
+    <table border=1 class="table table-stripped table-hover">
         <thead>
             <tr>
                 <th> Priority</th>
@@ -42,20 +40,21 @@
                 <th> Date</th>
                 <th> Branch</th>
                 <th> Admin</th>
-                <th></th>
+               
             </tr>
 
         </thead>
         <tbody>
         {% for ex in page_obj %}
         <tr>
+            <td style="display:none">{{ex.pk}}</td>
             <td>{{ex.priority}}</td>
             <td>{{ex.category}}</td>
             <td>{{ex.description}}</td>
             <td>{{ex.open_date}}</td>
             <td>{{ex.branch}}</td>
             <td>{{ex.admin}}</td>
-            <td><a href="" class="btn btn-secondary">Edit</a></td>
+            
         </tr>
         {% endfor %}
         </tbody>
@@ -66,7 +65,7 @@
     <h3 class="not-found" style="display:none">Result not found</h3>
     <div class="table-output" style="display:none">
 
-            <table class="table table-stripped table-hover">
+    <table border=1 class="table table-stripped table-hover">
         <thead>
             <tr>
                 <th> Priority </th>
@@ -126,5 +125,5 @@
 
 </div>
 
- <script src="{% static 'js/search.js' %}"></script>
+ <script src="{% static 'js/user.js' %}"></script>
 {% endblock %}

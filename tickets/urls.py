@@ -1,13 +1,14 @@
 
 from django.urls import path,include
-from . views import index ,TicketListView
+from . views import *
 # ,add_expenses,edit_expenses,delete_expenses,search_expenses,expenses_summary,summary_status,expenses_csv
 # ,add_expenses,edit_expenses,delete_expenses,search_expenses,expenses_summary,summary_status,expenses_csv
 from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
-    path('', TicketListView.as_view(),name='admins'),
-    path('datasheet/', include('datasheet.urls')),
-    path('django/', index,name='django'),
+    path('<int:id>/', TicketDetailView.as_view(),name='view_ticket'),
+    #  path('add-message/', CreateMessage.as_view(),name='add-message'),
+    # path('datasheet/', include('datasheet.urls')),
+    # path('', index,name='admins'),
     # path('add-ticket/', add_ticket,name='add-ticket'),
     # path('edit-ticket/<int:id>', edit_ticket,name='edit-ticket'),
     # path('delete-expenses/<int:id>', delete_expenses,name='delete-expenses'),

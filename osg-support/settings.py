@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'admins',
     'core',
     'datasheet',
+    'tickets',
 ]
 
 
