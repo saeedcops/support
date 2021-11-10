@@ -183,6 +183,33 @@ class AdminProfile(models.Model):
     class Meta:
         ordering = ['-name']
 
+class AppPermission(models.Model):
+    permission = models.CharField(max_length = 50)
+
+    def __str__(self):
+        return self.permission
+
+
+class Request(models.Model):
+    user = models.ForeignKey(
+            UserProfile,
+            related_name='userrequest',
+            on_delete = models.CASCADE)
+    manager = models.ForeignKey(
+            UserProfile,
+            related_name='manager',
+            on_delete = models.CASCADE)
+    manager_sign = models.BooleanField(default=False)
+    valid = models.BooleanField(default=False)
+    date = models.DateField(default=now)
+    kind= models.CharField(max_length = 10)
+    app_permission = models.ManyToManyField(AppPermission)
+    
+    
+    def __str__(self):
+        return self.user.name
+
+
 
 class Permission(models.Model):
     apps = models.ManyToManyField(Category)

@@ -34,6 +34,6 @@ def index(request):
         paginator = Paginator(tickets, 6)
         page_number = request.GET.get('page')
         page_obj = Paginator.get_page(paginator, page_number)
-        return render(request, 'admins/django.html', {'tickets': tickets, 'page_obj': page_obj})
+        return render(request, 'admin/index.html', {'tickets': tickets, 'page_obj': page_obj})
 
     return render(request, 'tickets/home.html')

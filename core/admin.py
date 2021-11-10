@@ -16,3 +16,6 @@ admin.site.register(Permission)
 admin.site.register(Share)
 admin.site.register(Printer)
 admin.site.register(Message)
+admin.site.register(AppPermission)
+admin.site.register(Request)
+
