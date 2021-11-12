@@ -24,16 +24,15 @@ class TicketListView(ListView):
     #     return context
 
 # Create your views here.
-def index(request):
-    print("User: ",str(request.user))
-    print("META: ",str(request.META['HTTP_X_FORWARDED_FOR']))
-    print("body: ",str(request.body))
-  
-    if request.user.is_staff:
-        tickets = Ticket.objects.all()
-        paginator = Paginator(tickets, 6)
+
+
+class ContactListView(View):
+
+
+    def get(self,request):
+
+        ctx= AdminProfile.objects.all()
+        paginator = Paginator(ctx, 6)
         page_number = request.GET.get('page')
         page_obj = Paginator.get_page(paginator, page_number)
-        return render(request, 'admin/index.html', {'tickets': tickets, 'page_obj': page_obj})
-
-    return render(request, 'tickets/home.html')
+        return render(request, 'admins/contacts.html', {'contacts': ctx, 'page_obj': page_obj})

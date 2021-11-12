@@ -30,6 +30,33 @@ class Home(View):
             return render(request, 'user/index.html', {'tickets': tickets, 'page_obj': page_obj})
 
 
+class ContactListView(View):
+
+
+    def get(self,request):
+
+        department = self.request.GET.get('department', "")
+
+        if department != "":
+            print("department",department)
+            ctx= UserProfile.objects.filter(department=department).values()
+
+            if department == "IT":
+                ctx= AdminProfile.objects.all().values()
+
+
+            print("Data:",str(ctx.values()))
+            data=ctx.values()
+            return JsonResponse(list(data),safe=False)
+
+        else:
+            ctx= AdminProfile.objects.all()
+            paginator = Paginator(ctx, 6)
+            page_number = request.GET.get('page')
+            page_obj = Paginator.get_page(paginator, page_number)
+            return render(request, 'user/contacts.html', {'contacts': ctx, 'page_obj': page_obj})
+
+
 
 
 class PermissionDetailView(DetailView):

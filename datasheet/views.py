@@ -1,25 +1,68 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic.list import ListView
 from django.http import JsonResponse
 from core.models import *
 from django.views import View
 from django.db.models import F
+from django.views.generic.edit import UpdateView
+from django.contrib import messages
+
+class PCUpdateView(UpdateView):
+    model = PC
+    context_object_name = 'pc'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_pc.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "PC updated successfully!")
+        return redirect('pc')
+
+
+
+class ServerUpdateView(UpdateView):
+    model = Server
+    context_object_name = 'server'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_server.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Server updated successfully!")
+        return redirect('pc')
+
+
+class PrinterUpdateView(UpdateView):
+    model = Printer
+    context_object_name = 'printer'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_printer.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Printer updated successfully!")
+        return redirect('pc')
+
+
+
+
 
 class PCListView(ListView):
-
     model = PC
     template_name = 'datasheet/index.html'
     # permission_classes = (permissions.IsAuthenticated,permissions.IsAdminUser,)
     context_object_name = 'pc'
     paginate_by = 5  # if pagination is desired
 
-    # def get_queryset(self):
-    #     filter_val = self.request.GET.get('filter', 'give-default-value')
-    #     order = self.request.GET.get('orderby', 'give-default-value')
-    #     new_context = Update.objects.filter(
-    #         state=filter_val,
-    #     ).order_by(order)
-    #     return new_context
+    def get_queryset(self):
+        admin=AdminProfile.objects.get(user =self.request.user)
+        new_context = PC.objects.filter(
+            branch=admin.branch,
+        )
+        return new_context
 
 
 class DeviceListView(View):
@@ -32,7 +75,7 @@ class DeviceListView(View):
 
     def get(self,request):
 
-        if True or request.user.is_staff:
+        if request.user.is_staff:
 
             device = self.request.GET.get('device', 'give-default-value')
             branch = self.request.GET.get('branch', 'give-default-value')

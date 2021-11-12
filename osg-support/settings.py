@@ -66,7 +66,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_ADFS = {
-    #thumprint 1B768C679C082F927549DEBCE48C4BE9B838A1B9
     "SERVER": "adfs.cops.com",
     "CLIENT_ID": "c71c316a-5696-4f92-9d67-b91efee5c0e2",
     # "RELYING_PARTY_ID": "b8af9f88-85a1-4a9c-8bf6-5bcd71a9e413",
@@ -165,6 +164,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 STATIC_ROOT=os.path.join(BASE_DIR,'/static')
+MEDIA_URL = '/img/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'/static/img')
 
 LOGGING = {
     'version': 1,

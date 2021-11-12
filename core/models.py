@@ -9,6 +9,11 @@ from django.contrib.auth import get_user_model
 # Create your models here. settings.AUTH_USER_MODEL
 
 
+def user_directory_path(instance, filename):
+  
+    # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
+    return 'requests/{0}/{1}'.format(instance.user.name, filename)
+
 class Branch(models.Model):
     name = models.CharField(max_length=20)
 
@@ -139,6 +144,7 @@ class UserProfile(models.Model):
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 200)
     department=models.CharField(max_length = 10)
+    phone =models.CharField(max_length = 15,null=True,blank=True)
 #     department = models.ForeignKey(
 #             Department,
 #             related_name='udepartment',
@@ -203,6 +209,10 @@ class Request(models.Model):
     valid = models.BooleanField(default=False)
     date = models.DateField(default=now)
     kind= models.CharField(max_length = 10)
+    file_scan = models.FileField(upload_to =user_directory_path,null=True,blank=True)
+    category = models.ForeignKey(Category,
+                related_name='userrequest',
+                on_delete = models.PROTECT,null=True,blank=True)
     app_permission = models.ManyToManyField(AppPermission)
     
     
@@ -266,4 +276,4 @@ class Ticket(models.Model):
 
     class Meta:
 
-        ordering=['-open_date']
+        ordering=['-status','-open_date']

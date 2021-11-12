@@ -23,7 +23,7 @@ def post_save_create_profile(sender, update_fields,instance, created, **kwargs):
                 
                 print("\n\n\n\n Admin Created \n")
                 AdminProfile.objects.create(user=instance,branch=Branch.objects.get(pk=1),
-                                            pc=PC.objects.get(pk=1),name=instance.username,
+                                            pc=PC.objects.get(pk=1),name=instance.first_name,
                                             email=instance.email,position="IT",phone="012232233")
 
         else:
@@ -34,5 +34,5 @@ def post_save_create_profile(sender, update_fields,instance, created, **kwargs):
             except ObjectDoesNotExist:
                 print("\n\n\n\n User Created \n")
                 UserProfile.objects.create(user=instance,branch=Branch.objects.get(pk=1),
-                                        pc=PC.objects.get(pk=1),name=instance.username,
+                                        pc=PC.objects.get(pk=1),name=instance.first_name,
                                         email=instance.email,department="HR")

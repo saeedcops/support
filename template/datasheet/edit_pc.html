@@ -1,0 +1,42 @@
+{% extends 'baseadmin.html' %}
+
+{% block content %}
+
+<div class="bg-light py-1 ps-1 m-sm-2">
+
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb mt-1">
+                <li class="breadcrumb-item"><a href="">Datasheet</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit PC</li>
+                      <li class="breadcrumb-item active" aria-current="page">{{pc.host_name}}</li>
+              </ol>
+            </nav>
+</div>
+
+
+    <div class="card m-sm-2">
+        <div class="card-body">
+            {% include 'partials/messages.html' %}
+     
+            <form action="{% url 'update_pc' pc.pk %}" method="post">
+                {% csrf_token %}
+                  {{ form.as_p }}
+                      <table>
+
+                      </table>
+                 <div class="form-group mt-5">
+                    <input type="submit" value="Save" class=" btn btn-primary form-control form-control-sm">
+                </div>
+
+
+
+            </form>
+          
+
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}

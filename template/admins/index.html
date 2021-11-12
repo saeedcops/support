@@ -47,7 +47,7 @@
     <table border=1 class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Priority</th>
+                <th> Status</th>
                 <th> User</th>
                 <th> Category</th>
                 <th> Description</th>
@@ -62,7 +62,11 @@
         {% for ex in page_obj %}
         <tr>
             <td style="display:none">{{ex.pk}}</td>
-            <td>{{ex.priority}}</td>
+            {% if ex.status == "closed" %}
+                  <td style="background:#b01c0b;">{{ex.status}}</td>
+            {% else %}
+                  <td style="background:#0bb069;">{{ex.status}}</td>
+            {% endif %}
             <td>{{ex.user.name}}</td>
             <td>{{ex.category}}</td>
             <td>{{ex.description}}</td>
@@ -83,7 +87,7 @@
             <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Priority</th>
+                <th> Status</th>
                 <th> User</th>
                 <th> Category</th>
                 <th> Description</th>
@@ -121,8 +125,8 @@
                         <li class="page-item active" aria-current="page">
                           <a class="page-link" href="#">{{ page_obj.number }}</a>
                         </li>
-                       <li class="page-item"><a class="page-link" href="#"></a></li>
                       {% if page_obj.has_next %}
+                      <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
                         <li class="page-item">
                           <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
                         </li>

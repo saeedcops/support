@@ -57,5 +57,9 @@ class TicketDetailView(View):
                 ticket.messages.add(message)
                 messages.success(self.request, "Message Added Successfully")
                 return render(request, 'tickets/view_ticket.html', {'ticket': ticket})
+                
+            else:
+                messages.error(self.request, "you dont have to comment in this ticket!")
+                return render(request, 'tickets/view_ticket.html', {'ticket': ticket})
 
 

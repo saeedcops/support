@@ -9,6 +9,7 @@ urlpatterns = [
     path('', Home.as_view(),name='ticket'),
     # path('add-ticket/', add_ticket,name='add-ticket'),
     path('add-ticket/', TicketCreateView.as_view(),name='add-ticket'),
+    path('contacts/', ContactListView.as_view(),name='contacts'),
     path('permission/<int:id>', PermissionDetailView.as_view(),name='permission'),
     # path('edit-ticket/<int:id>', edit_ticket,name='edit-ticket'),
     # path('delete-expenses/<int:id>', delete_expenses,name='delete-expenses'),

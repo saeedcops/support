@@ -49,7 +49,7 @@ function setPCTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr><td>'+
+            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.host_name+'</td><td>'+
                          item.os+'</td><td>'+item.ip+'</td><td>'+
                          item.ram+'</td><td>'+item.vlan+'</td><td>'+
@@ -81,7 +81,7 @@ function setServerTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr><td>'+
+            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.host_name+'</td><td>'+
                          item.os+'</td><td>'+item.ip+'</td><td>'+
                          item.ram+'</td><td>'+item.vlan+'</td><td>'+
@@ -114,7 +114,7 @@ function setPrinterTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr><td>'+
+            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.model+'</td><td>'+
                          item.ip+'</td><td>'+
                          item.name+'</td><td>'+
@@ -192,4 +192,32 @@ deviceItems.forEach(li =>
 });
 
 
+function clicked(tr) {
+
+    console.log("ok!",tr);
+    var cell = tr.getElementsByTagName("td")[0];
+    var id = cell.innerHTML;
+    window.location.href="https://osg-support.cops.com/admins/datasheet/"+device+"/"+id;
+}
+
+function addRowHandlers() {
+    var table = document.querySelector(".table");
+    var rows = table.getElementsByTagName("tr");
+    for (i = 0; i < rows.length; i++) {
+      var currentRow = table.rows[i];
+      var createClickHandler = function(row) {
+        return function() {
+          var cell = row.getElementsByTagName("td")[0];
+          var id = cell.innerHTML;
+         
+          window.location.href="https://osg-support.cops.com/admins/datasheet/PC/"+id;
+
+          
+        };
+      };
+      currentRow.onclick = createClickHandler(currentRow);
+    }
+  }
+
+  addRowHandlers();
 

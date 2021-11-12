@@ -1,4 +1,4 @@
-{% extends 'baseadmin.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
@@ -12,8 +12,8 @@
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Datasheet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Branch</li>
+                <li class="breadcrumb-item"><a href="#">Contacts</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Departments</li>
               </ol>
             </nav>
         </div>
@@ -25,42 +25,28 @@
 
     <div class="row">
 
-         <section >
-            <ul >
-            
-              <li class="blist" data-filter="HQ"> HQ</li>
-              <li class="blist" data-filter="Waraq"> Waraq</li>
-              <li class="blist" data-filter="Lowa"> Lowa</li>
-              <li class="blist" data-filter="Bolaq"> Bolaq</li>
-              <li class="blist" data-filter="Awsem"> Awsem</li>
-             
-            </ul>
-          
-          </section>
 
           <section>
             <ul>
             
-              <li class="list active" data-filter="PC"> PC</li>
-              <li class="list" data-filter="Servers"> Servers</li>
-              <li class="list" data-filter="Printers"> Printers</li>
-              <li class="list" data-filter="Switches"> Switches</li>
-              <li class="list" data-filter="Firewall"> Firewall</li>
-              <li class="list" data-filter="DVR"> DVR</li>
-              <li class="list" data-filter="Fingerprint"> Fingerprint</li>
-            <input id="searchText" type="text" class="form-control" placeholder="Search">
+              <li class="list active" data-filter="IT"> IT</li>
+              <li class="list" data-filter="Finance"> Finance</li>
+              <li class="list" data-filter="HR"> HR</li>
+              <li class="list" data-filter="Customer_service"> Customer service</li>
+              <li class="list" data-filter="Emergency"> Emergency</li>
+              <li class="list" data-filter="QS"> QS</li>
+              <li class="list" data-filter="Projects"> Projects</li>
+              <li class="list" data-filter="Legal"> Legal</li>
+              <input id="searchText" type="text" class="form-control" placeholder="Search">
             </ul>
-
-          
+         
           
           </section>
-            
-
 
     
     </div>
 
-    {% if pc.count %}
+    {% if contacts.count %}
     <div class="container">
 
     
@@ -71,15 +57,11 @@
     <table border=1 class="table table-stripped table-hover">
         <thead >
             <tr>
-                <th > Host Name</th>
-                <th > OS</th>
-                <th > IP</th>
-                <th > Ram</th>
-                <th > Vlan</th>
-                <th > CPU</th>
-                <th > Branch</th>
-                <th > User</th>
-            
+                <th > Name</th>
+                <th > Email</th>
+                <th > Phone</th>
+                <th > Department</th>
+
             </tr>
 
         </thead>
@@ -87,16 +69,10 @@
 
         {% for ex in page_obj %}
         <tr>
-            <td style="display:none">{{ex.pk}}</td>
-            <td>{{ex.host_name}}</td>
-            <td>{{ex.os}}</td>
-            <td>{{ex.ip}}</td>
-            <td>{{ex.ram}}</td>
-            <td>{{ex.vlan}}</td>
-            <td>{{ex.cpu}}</td>
-            <td>{{ex.branch}}</td>
-            <td>{{ex.user}}</td>
-           
+            <td>{{ex.name}}</td>
+            <td>{{ex.email}}</td>
+            <td>{{ex.phone}}</td>
+            <td>{{ex.position}}</td>
         </tr>
         {% endfor %}
 
@@ -113,38 +89,12 @@
         <table border=1 class="table table-stripped table-hover">
         <thead class="table-head">
             <tr>
-                 <th class="thead"> Host Name</th>
-                <th class="thead"> OS</th>
-                <th class="thead"> IP</th>
-                <th class="thead"> Ram</th>
-                <th class="thead"> Vlan</th>
-                <th class="thead"> CPU</th>
-                <th class="thead"> Branch</th>
-                <th class="thead"> User</th>
+                 
+                <th class="thead"> Name</th>
+                <th class="thead"> Email</th>
+                <th class="thead"> Phone</th>
+                <th class="thead"> Department</th>
             
-            </tr>
-
-        </thead>
-        <tbody class="table-body">
-        <tr>
-        </tr>
-
-        </tbody>
-    </table>
-    </div>
-    <!--
-    <div class="table-output" style="display:none">
-
-            <table class="table table-stripped table-hover">
-        <thead>
-            <tr>
-                <th> Host Name</th>
-                <th> OS</th>
-                <th> IP</th>
-                <th> Ram</th>
-                <th> Vlan</th>
-                <th> CPU</th>
-                <th> Branch</th>
                 <th></th>
             </tr>
 
@@ -154,7 +104,6 @@
         </tbody>
     </table>
     </div>
--->
     <div class="pagination-container">
         <div class="">
             Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
@@ -176,8 +125,9 @@
                         <li class="page-item active" aria-current="page">
                           <a class="page-link" href="#">{{ page_obj.number }}</a>
                         </li>
+                      
                       {% if page_obj.has_next %}
-                      <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
+                       <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
                         <li class="page-item">
                           <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
                         </li>
@@ -196,5 +146,5 @@
 
 </div>
 
- <script src="{% static 'js/datasheet.js' %}"></script>
+ <script src="{% static 'js/contacts.js' %}"></script>
 {% endblock %}

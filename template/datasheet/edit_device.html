@@ -1,0 +1,357 @@
+{% extends 'baseadmin.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+
+        <!-- Content -->
+        <div id="content" class="colM">
+          
+          <h1>Change pc</h1>
+          <h2>WAOSGF98</h2>
+          <div id="content-main">
+
+
+  <ul class="object-tools">
+    
+      
+
+<li>
+    
+    <a href="/root/core/pc/4/history/" class="historylink">History</a>
+</li>
+
+
+
+    
+  </ul>
+
+
+<form method="post" id="pc_form" novalidate><input type="hidden" name="csrfmiddlewaretoken" value="r6NSr3veazNoyiFrWCqR79GnW6SONJ94UD9vpYFbQfrj7RcgLEjvaXhcewUdYCOu">
+<div>
+
+
+
+
+
+
+
+  <fieldset class="module aligned ">
+    
+    
+    
+        <div class="form-row field-host_name">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_host_name">Host name:</label>
+                        
+                            <input type="text" name="host_name" value="WAOSGF98" class="vTextField" maxlength="15" required id="id_host_name">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-ip">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_ip">Ip:</label>
+                        
+                            <input type="text" name="ip" value="192.168.2.111" class="vTextField" maxlength="15" required id="id_ip">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-switch_port">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_switch_port">Switch port:</label>
+                        
+                            <input type="number" name="switch_port" value="9" class="vIntegerField" required id="id_switch_port">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-vlan">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_vlan">Vlan:</label>
+                        
+                            <input type="number" name="vlan" value="2" class="vIntegerField" required id="id_vlan">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-ram">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_ram">Ram:</label>
+                        
+                            <input type="number" name="ram" value="6" class="vIntegerField" required id="id_ram">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-cpu">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_cpu">Cpu:</label>
+                        
+                            <input type="text" name="cpu" value="core i7" class="vTextField" maxlength="10" required id="id_cpu">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-hard_disk">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_hard_disk">Hard disk:</label>
+                        
+                            <input type="text" name="hard_disk" value="500 SSD" class="vTextField" maxlength="10" required id="id_hard_disk">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-os">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_os">Os:</label>
+                        
+                            <input type="text" name="os" value="windows 10" class="vTextField" maxlength="10" required id="id_os">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-mac">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_mac">Mac:</label>
+                        
+                            <input type="text" name="mac" value="ww-er-45-r5-t7" class="vTextField" maxlength="17" required id="id_mac">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-model">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_model">Model:</label>
+                        
+                            <input type="text" name="model" value="lenovo" class="vTextField" maxlength="20" required id="id_model">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-serial_num">
+            
+            
+                <div>
+                    
+                    
+                        <label class="required" for="id_serial_num">Serial num:</label>
+                        
+                            <input type="text" name="serial_num" value="sn3939302" class="vTextField" maxlength="17" required id="id_serial_num">
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-user">
+            
+            
+                <div>
+                    
+                    
+                        <label for="id_user">User:</label>
+                        
+                            <div class="related-widget-wrapper">
+    <select name="user" id="id_user">
+  <option value="">---------</option>
+
+  <option value="35">adham</option>
+
+  <option value="70">Administrator</option>
+
+  <option value="69">ahmed</option>
+
+  <option value="68">hany</option>
+
+  <option value="1">medo</option>
+
+  <option value="2" selected>mohamed</option>
+
+</select>
+    
+        <a class="related-widget-wrapper-link change-related" id="change_id_user"
+            data-href-template="/root/auth/user/__fk__/change/?_to_field=id&amp;_popup=1"
+            title="Change selected user"><img src="/static/admin/img/icon-changelink.svg" alt="Change"></a><a class="related-widget-wrapper-link add-related" id="add_id_user"
+            href="/root/auth/user/add/?_to_field=id&amp;_popup=1"
+            title="Add another user"><img src="/static/admin/img/icon-addlink.svg" alt="Add"></a><a class="related-widget-wrapper-link delete-related" id="delete_id_user"
+            data-href-template="/root/auth/user/__fk__/delete/?_to_field=id&amp;_popup=1"
+            title="Delete selected user"><img src="/static/admin/img/icon-deletelink.svg" alt="Delete"></a>
+    
+</div>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+        <div class="form-row field-branch">
+            
+            
+                <div>
+                    
+                    
+                        <label for="id_branch">Branch:</label>
+                        
+                            <div class="related-widget-wrapper">
+    <select name="branch" id="id_branch">
+  <option value="">---------</option>
+
+  <option value="1">Awsem</option>
+
+  <option value="2">Bolaq</option>
+
+  <option value="3">HQ</option>
+
+  <option value="4">Lowa</option>
+
+  <option value="5" selected>Waraq</option>
+
+</select>
+    
+        <a class="related-widget-wrapper-link change-related" id="change_id_branch"
+            data-href-template="/root/core/branch/__fk__/change/?_to_field=id&amp;_popup=1"
+            title="Change selected branch"><img src="/static/admin/img/icon-changelink.svg" alt="Change"></a><a class="related-widget-wrapper-link add-related" id="add_id_branch"
+            href="/root/core/branch/add/?_to_field=id&amp;_popup=1"
+            title="Add another branch"><img src="/static/admin/img/icon-addlink.svg" alt="Add"></a><a class="related-widget-wrapper-link delete-related" id="delete_id_branch"
+            data-href-template="/root/core/branch/__fk__/delete/?_to_field=id&amp;_popup=1"
+            title="Delete selected branch"><img src="/static/admin/img/icon-deletelink.svg" alt="Delete"></a>
+    
+</div>
+                        
+                    
+                    
+                </div>
+            
+        </div>
+    
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="submit-row">
+
+<input type="submit" value="Save" class="default" name="_save">
+
+    
+    <p class="deletelink-box"><a href="/root/core/pc/4/delete/" class="deletelink">Delete</a></p>
+
+
+<input type="submit" value="Save and add another" name="_addanother">
+<input type="submit" value="Save and continue editing" name="_continue">
+
+
+</div>
+
+
+
+    <script id="django-admin-form-add-constants"
+            src="/static/admin/js/change_form.js"
+            
+            async>
+    </script>
+
+
+
+
+<script id="django-admin-prepopulated-fields-constants"
+        src="/static/admin/js/prepopulate_init.js"
+        data-prepopulated-fields="[]">
+</script>
+
+
+</div>
+</form></div>
+
+          
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+</div>
+
+ <script src="{% static 'js/datasheet.js' %}"></script>
+{% endblock %}
