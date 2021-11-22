@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.utils.timezone import now
 from django.contrib.auth.decorators import login_required
-from core.models import Category, Ticket, UserProfile,AdminProfile,Permission,Share,PC
+from core.models import *
 from django.core.paginator import Paginator
 from django.views.generic import DetailView,CreateView
 from django.shortcuts import get_object_or_404
@@ -19,7 +19,7 @@ class Home(View):
 
         if request.user.is_staff:
         
-            return redirect('admins')
+            return redirect('admin')
 
         else:
 
@@ -100,6 +100,19 @@ class TicketCreateView(CreateView):
         return kwargs
 
 
+
+
+class RequestCreateView(CreateView):
+    model = Request
+    context_object_name = 'request'
+    fields =  '__all__'
+    template_name = 'user/create_request.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Request created successfully!")
+        return redirect('permission',self.request.user.pk)
 
 
 # def add_ticket(request):

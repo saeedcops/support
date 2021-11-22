@@ -12,7 +12,7 @@
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Datasheet</a></li>
+                <li class="breadcrumb-item"><a href="#">Users Requests</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Branch</li>
               </ol>
             </nav>
@@ -22,130 +22,68 @@
     </div>
 
     {% include 'partials/messages.html' %}
-
-    <div class="row">
-
-         <section >
-            <ul >
-            
-              <li class="blist" data-filter="HQ"> HQ</li>
-              <li class="blist" data-filter="Waraq"> Waraq</li>
-              <li class="blist" data-filter="Lowa"> Lowa</li>
-              <li class="blist" data-filter="Bolaq"> Bolaq</li>
-              <li class="blist" data-filter="Awsem"> Awsem</li>
-             
-            </ul>
-          
-          </section>
-
-          <section>
-            <ul>
-            
-              <li class="list active" data-filter="PC"> PC</li>
-              <li class="list" data-filter="Servers"> Servers</li>
-              <li class="list" data-filter="Printers"> Printers</li>
-              <li class="list" data-filter="Switches"> Switches</li>
-              <li class="list" data-filter="Firewall"> Firewall</li>
-              <li class="list" data-filter="DVR"> DVR</li>
-              <li class="list" data-filter="Fingerprint"> Fingerprint</li>
-            <input id="searchText" type="text" class="form-control" placeholder="Search">
-            </ul>
-
-          
-          
-          </section>
-            
-
-
-    
-    </div>
-
-    {% if pc.count %}
+    {% if requests.count %}
     <div class="container">
 
-    
+
+
+    <div class="row">
+        <div class="col-md-8">
+
+        </div>
+         <div class="col-md-4">
+
+             <div class="form-group">
+                 <input id="searchText" type="text" class="form-control" placeholder="Search">
+             </div>
+
+             
+         </div>
+    </div>
 
 
     <div class="app-table">
 
     <table border=1 class="table table-stripped table-hover">
-        <thead >
+        <thead>
             <tr>
-                <th > Host Name</th>
-                <th > OS</th>
-                <th > IP</th>
-                <th > Ram</th>
-                <th > Vlan</th>
-                <th > CPU</th>
-                <th > Branch</th>
-                <th > User</th>
-            
+                <th> User</th>
+                <th> Category</th>
+                <th> Date</th>
+                <th> Manager</th>
+                <th> File</th>
+              
             </tr>
 
         </thead>
         <tbody>
-
         {% for ex in page_obj %}
         <tr>
             <td style="display:none">{{ex.pk}}</td>
-            <td>{{ex.host_name}}</td>
-            <td>{{ex.os}}</td>
-            <td>{{ex.ip}}</td>
-            <td>{{ex.ram}}</td>
-            <td>{{ex.vlan}}</td>
-            <td>{{ex.cpu}}</td>
-            <td>{{ex.branch}}</td>
-            <td>{{ex.user}}</td>
+           
+            <td>{{ex.user.name}}</td>
+            <td>{{ex.category}}</td>
+            <td>{{ex.date}}</td>
+            <td>{{ex.manager}}</td>
+            <td>{{ex.file_scan}}</td>
            
         </tr>
         {% endfor %}
-
         </tbody>
     </table>
 
-  </div>
-
+        </div>
 
     <h3 class="not-found" style="display:none">Result not found</h3>
-
-      <div class="table-output" style="display:none">
-
-        <table border=1 class="table table-stripped table-hover">
-        <thead class="table-head">
-            <tr>
-                 <th class="thead"> Host Name</th>
-                <th class="thead"> OS</th>
-                <th class="thead"> IP</th>
-                <th class="thead"> Ram</th>
-                <th class="thead"> Vlan</th>
-                <th class="thead"> CPU</th>
-                <th class="thead"> Branch</th>
-                <th class="thead"> User</th>
-            
-            </tr>
-
-        </thead>
-        <tbody class="table-body">
-        <tr>
-        </tr>
-
-        </tbody>
-    </table>
-    </div>
-    <!--
     <div class="table-output" style="display:none">
 
             <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Host Name</th>
-                <th> OS</th>
-                <th> IP</th>
-                <th> Ram</th>
-                <th> Vlan</th>
-                <th> CPU</th>
-                <th> Branch</th>
-                <th></th>
+                <th> User</th>
+                <th> Category</th>
+                <th> Date</th>
+                <th> Manager</th>
             </tr>
 
         </thead>
@@ -154,7 +92,7 @@
         </tbody>
     </table>
     </div>
--->
+
     <div class="pagination-container">
         <div class="">
             Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
@@ -195,6 +133,7 @@
     {% endif %}
 
 </div>
-
- <script src="{% static 'js/datasheet.js' %}"></script>
+<!--
+ <script src="{% static 'js/admin.js' %}"></script>
+ -->
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'baseadmin.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -6,9 +6,9 @@
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="{% url 'pc' %}">Datasheet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Printer</li>
-                <li class="breadcrumb-item active" aria-current="page">{{printer.ip}}</li>
+                <li class="breadcrumb-item"><a href="">Permission</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Requests</li>
+                <li class="breadcrumb-item active" aria-current="page">{{user.username}}</li>
               </ol>
             </nav>
 </div>
@@ -19,7 +19,7 @@
         <div class="card-body">
             {% include 'partials/messages.html' %}
           
-            <form action="{% url 'update_printer' printer.pk %}" method="post">
+            <form action="{% url 'requests'%}" method="post">
                 {% csrf_token %}
                   {{ form.as_p }}
                       <table>

@@ -18,4 +18,7 @@ admin.site.register(Printer)
 admin.site.register(Message)
 admin.site.register(AppPermission)
 admin.site.register(Request)
-
+admin.site.register(Switch)
+admin.site.register(Firewall)
+admin.site.register(FingerPrint)
+admin.site.register(DVR)

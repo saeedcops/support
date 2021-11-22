@@ -50,6 +50,8 @@
             <td style="display:none">{{ex.pk}}</td>
              {% if ex.status == "closed" %}
                   <td style="background:#b01c0b;">{{ex.status}}</td>
+            {% elif ex.status == "pending" %}
+                  <td style="background:#FFFB33;">{{ex.status}}</td>
             {% else %}
                   <td style="background:#0bb069;">{{ex.status}}</td>
             {% endif %}

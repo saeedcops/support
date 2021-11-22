@@ -7,8 +7,8 @@
 
 
 
-    <div class="row m-2">
-        <div class="col-md-10 bg-light py-1 ps-1">
+    <div class="row">
+        <div class="bg-light py-1 ps-1 m-sm-2">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
@@ -22,126 +22,36 @@
     </div>
 
     {% include 'partials/messages.html' %}
-    {% if tickets.count %}
-    <div class="container">
 
+      <div class="container">
+      
+        <div class="card mt-2">
+      
+          <div class="card-body">
+      
+             <div class="row">
+       
+                <div class="container col-3">
+                      <canvas id="admin" width="200" height="200"></canvas>
+                </div>
 
+                <div class="container col-3">
+                      <canvas id="category" width="200" height="200"></canvas>
+                </div>
 
-    <div class="row">
-        <div class="col-md-8">
+                <div class="container col-3">
+                   <canvas id="branch" width="200" height="200"></canvas>
+                </div>
+    
 
-        </div>
-         <div class="col-md-4">
-
-             <div class="form-group">
-                 <input id="searchText" type="text" class="form-control" placeholder="Search">
              </div>
-
-             
-         </div>
-    </div>
-
-
-    <div class="app-table">
-
-    <table border=1 class="table table-stripped table-hover">
-        <thead>
-            <tr>
-                <th> Status</th>
-                <th> User</th>
-                <th> Category</th>
-                <th> Description</th>
-                <th> Date</th>
-                <th> Branch</th>
-                <th> Admin</th>
-              
-            </tr>
-
-        </thead>
-        <tbody>
-        {% for ex in page_obj %}
-        <tr>
-            <td style="display:none">{{ex.pk}}</td>
-            {% if ex.status == "closed" %}
-                  <td style="background:#b01c0b;">{{ex.status}}</td>
-            {% else %}
-                  <td style="background:#0bb069;">{{ex.status}}</td>
-            {% endif %}
-            <td>{{ex.user.name}}</td>
-            <td>{{ex.category}}</td>
-            <td>{{ex.description}}</td>
-            <td>{{ex.open_date}}</td>
-            <td>{{ex.branch}}</td>
-            <td>{{ex.admin}}</td>
-           
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+          </div>
 
         </div>
 
-    <h3 class="not-found" style="display:none">Result not found</h3>
-    <div class="table-output" style="display:none">
+  
 
-            <table class="table table-stripped table-hover">
-        <thead>
-            <tr>
-                <th> Status</th>
-                <th> User</th>
-                <th> Category</th>
-                <th> Description</th>
-                <th> Date</th>
-                <th> Branch</th>
-                <th> Admin</th>
-                <th></th>
-            </tr>
-
-        </thead>
-        <tbody class="table-body">
-
-        </tbody>
-    </table>
-    </div>
-
-    <div class="pagination-container">
-        <div class="">
-            Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </div>
-
-       <nav aria-label="...">
-                  <ul class="pagination align-right float-right mr-auto">
-                      {% if page_obj.has_previous %}
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                       {% endif %}
-                      {% if page_obj.number == 1 %}
-                      <li class="page-item disabled">
-                          <a class="page-link" href="" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                      {% endif %}
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                          <a class="page-link" href="#">{{ page_obj.number }}</a>
-                        </li>
-                      {% if page_obj.has_next %}
-                      <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
-                        </li>
-                      {% endif %}
-                      {% if page_obj.paginator.num_pages == page_obj.number %}
-                      <li class="page-item disabled">
-                          <a class="page-link" href="">Next</a>
-                        </li>
-                      {% endif %}
-
-                  </ul>
-        </div>
-        </nav>
-</div>
-    {% endif %}
+  </div>
 
 </div>
 

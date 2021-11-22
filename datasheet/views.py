@@ -46,8 +46,57 @@ class PrinterUpdateView(UpdateView):
         messages.success(self.request, "Printer updated successfully!")
         return redirect('pc')
 
+class SwitchUpdateView(UpdateView):
+    model = Switch
+    context_object_name = 'switch'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_switch.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Switch updated successfully!")
+        return redirect('pc')
 
 
+
+class FirewallUpdateView(UpdateView):
+    model = Firewall
+    context_object_name = 'firewall'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_firewall.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Firewall updated successfully!")
+        return redirect('pc')
+
+
+class DVRUpdateView(UpdateView):
+    model = DVR
+    context_object_name = 'dvr'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_dvr.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "DVR updated successfully!")
+        return redirect('pc')
+
+
+class FingerPrintUpdateView(UpdateView):
+    model = FingerPrint
+    context_object_name = 'fingerprint'
+    fields =  '__all__'
+    template_name = 'datasheet/edit_fingerprint.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "FingerPrint updated successfully!")
+        return redirect('pc')
 
 
 class PCListView(ListView):
@@ -87,21 +136,23 @@ class DeviceListView(View):
                 ctx= PC.objects.filter(branch__name=branch).values(name=F('branch__name'),username=F('user__username'))
 
             elif device == "Servers":
+
                 ctx= Server.objects.filter(branch__name=branch).values(name=F('branch__name'))
             elif device == "Printers":
+
                 ctx= Printer.objects.filter(branch__name=branch).values(name=F('branch__name'))
 
             elif device == "Switches":
-                pass
+                ctx= Switch.objects.filter(branch__name=branch).values(name=F('branch__name'))
 
             elif device == "Firewall":
-                pass
+                ctx= Firewall.objects.filter(branch__name=branch).values(name=F('branch__name'))
 
             elif device == "DVR":
-                pass
+                ctx= DVR.objects.filter(branch__name=branch).values(name=F('branch__name'))
 
             elif device == "Fingerprint":
-                pass
+                ctx= FingerPrint.objects.filter(branch__name=branch).values(name=F('branch__name'))
 
             print("Data:",str(ctx.values()))
             # print("Branch:",str(ctx[0].branch))

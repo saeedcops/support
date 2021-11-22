@@ -40,6 +40,92 @@ class Category(models.Model):
 
 
 
+class FingerPrint(models.Model):
+    ip = models.CharField(max_length=15)
+    switch_port = models.IntegerField(default=0)
+    vlan = models.IntegerField(default=99)
+    model = models.CharField(max_length=20)
+    serial_num = models.CharField(max_length=17)
+    location = models.CharField(max_length=30)
+    branch=models.ForeignKey(
+            Branch,
+            verbose_name="Branch",
+            on_delete = models.PROTECT)
+
+    def __str__(self):
+        return self.ip
+
+    class Meta:
+        ordering=['-ip']
+
+
+
+class DVR(models.Model):
+    host_name = models.CharField(max_length=15)
+    ip = models.CharField(max_length=15)
+    switch_port = models.IntegerField(default=0)
+    cams = models.IntegerField(default=0)
+    vlan = models.IntegerField(default=99)
+    model = models.CharField(max_length=20)
+    serial_num = models.CharField(max_length=17)
+    location = models.CharField(max_length=30)
+    
+    branch=models.ForeignKey(
+            Branch,
+            verbose_name="Branch",
+            on_delete = models.PROTECT)
+
+    def __str__(self):
+        return self.host_name
+
+    class Meta:
+        ordering=['-host_name']
+
+
+
+class Firewall(models.Model):
+    host_name = models.CharField(max_length=15)
+    ip = models.CharField(max_length=15)
+    port_numbers = models.IntegerField(default=12)
+    gatewaies = models.CharField(max_length=255)
+    model = models.CharField(max_length=20)
+    serial_num = models.CharField(max_length=17)
+    role = models.CharField(max_length=30)
+    branch=models.ForeignKey(
+            Branch,
+            verbose_name="Branch",
+            on_delete = models.PROTECT,null=True,blank=True)
+
+    def __str__(self):
+        return self.host_name
+
+    class Meta:
+        ordering=['-host_name']
+
+
+
+class Switch(models.Model):
+    host_name = models.CharField(max_length=15)
+    ip = models.CharField(max_length=15) 
+    port_number = models.IntegerField(default=24)
+    vlan = ArrayField(ArrayField(models.IntegerField()))
+    trunk_ports= ArrayField(ArrayField(models.IntegerField()))
+    model = models.CharField(max_length=20) 
+    serial_num = models.CharField(max_length=17)
+    role = models.CharField(max_length=30) 
+    branch=models.ForeignKey(
+            Branch,
+            verbose_name="Branch",
+            on_delete = models.PROTECT,null=True,blank=True)
+
+    def __str__(self):
+        return self.host_name
+
+    class Meta:
+        ordering=['-host_name']
+        
+
+
 class Server(models.Model):
     host_name = models.CharField(max_length=15)
     ip = models.CharField(max_length=15) 
@@ -196,6 +282,7 @@ class AppPermission(models.Model):
         return self.permission
 
 
+
 class Request(models.Model):
     user = models.ForeignKey(
             UserProfile,
@@ -276,4 +363,4 @@ class Ticket(models.Model):
 
     class Meta:
 
-        ordering=['-status','-open_date']
+        ordering=['-status',]

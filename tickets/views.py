@@ -46,6 +46,7 @@ class TicketDetailView(View):
 
             else:
                 ticket.admin=AdminProfile.objects.get(user=self.request.user)
+                ticket.status="pending"
                 ticket.save()
                 messages.success(self.request, "Ticket Assigned to you!")
                 return render(request, 'tickets/view_ticket_admin.html', {'ticket': ticket})

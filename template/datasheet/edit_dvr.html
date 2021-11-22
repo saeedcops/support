@@ -7,8 +7,8 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
                 <li class="breadcrumb-item"><a href="{% url 'pc' %}">Datasheet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Printer</li>
-                <li class="breadcrumb-item active" aria-current="page">{{printer.ip}}</li>
+                <li class="breadcrumb-item active" aria-current="page">Edit DVR</li>
+                <li class="breadcrumb-item active" aria-current="page">{{dvr.host_name}}</li>
               </ol>
             </nav>
 </div>
@@ -19,7 +19,7 @@
         <div class="card-body">
             {% include 'partials/messages.html' %}
           
-            <form action="{% url 'update_printer' printer.pk %}" method="post">
+            <form action="{% url 'update_dvr' dvr.pk %}" method="post">
                 {% csrf_token %}
                   {{ form.as_p }}
                       <table>

@@ -28,6 +28,132 @@ async function getapi(url) {
     // show(data);
 }
 
+function setSwitchTable(data) {
+
+    appTable.style.display = "none";
+    tableOutput.style.display = "block";
+
+    tableBody.innerHTML = "";
+
+
+    thead[0].innerHTML = "Host Name";
+    thead[1].innerHTML = "IP";
+    thead[2].innerHTML = "Port numbers";
+    thead[3].innerHTML = "vlans";
+    thead[4].innerHTML = "Trunk ports";
+    thead[5].innerHTML = "model";
+    thead[6].innerHTML = "Branch";
+    thead[7].innerHTML = "";
+
+    data.forEach(item => {
+
+        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+            item.host_name + '</td><td>' +
+            item.ip + '</td><td>' + item.port_number + '</td><td>' +
+            item.vlan + '</td><td>' + item.trunk_ports + '</td><td>' +
+            item.model + '</td><td>' + item.name + '</td></tr>';
+
+    });
+
+
+
+}
+
+
+function setFirewallTable(data) {
+
+    appTable.style.display = "none";
+    tableOutput.style.display = "block";
+
+    tableBody.innerHTML = "";
+
+
+    thead[0].innerHTML = "Host Name";
+    thead[1].innerHTML = "IP";
+    thead[2].innerHTML = "Port numbers";
+    thead[3].innerHTML = "Gatewaies";
+    thead[4].innerHTML = "Model";
+    thead[5].innerHTML = "Branch";
+    thead[6].innerHTML = null;
+    thead[7].innerHTML = null;
+
+    data.forEach(item => {
+
+        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+            item.host_name + '</td><td>' +
+            item.ip + '</td><td>' + item.port_numbers + '</td><td>' +
+            item.gatewaies + '</td><td>' + item.model + '</td><td>' +
+            item.name + '</td></tr>';
+
+    });
+
+
+}
+
+
+function setFigerprintTable(data) {
+
+    appTable.style.display = "none";
+    tableOutput.style.display = "block";
+
+    tableBody.innerHTML = "";
+
+
+    thead[0].innerHTML = "IP";
+    thead[1].innerHTML = "Port number";
+    thead[2].innerHTML = "Vlan";
+    thead[3].innerHTML = "Location";
+    thead[4].innerHTML = "Model";
+    thead[5].innerHTML = "Branch";
+    thead[6].innerHTML = null;
+    thead[7].innerHTML = null;
+
+    data.forEach(item => {
+
+        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+            item.ip + '</td><td>' +
+            item.switch_port + '</td><td>' + item.vlan + '</td><td>' +
+            item.location + '</td><td>' + item.model + '</td><td>' +
+            item.name + '</td></tr>';
+
+    });
+
+
+
+}
+
+
+function setDvrTable(data) {
+
+    appTable.style.display = "none";
+    tableOutput.style.display = "block";
+
+    tableBody.innerHTML = "";
+
+
+    thead[0].innerHTML = "Host Name";
+    thead[1].innerHTML = "IP";
+    thead[2].innerHTML = "Port number";
+    thead[3].innerHTML = "Camera count";
+    thead[4].innerHTML = "Model";
+    thead[5].innerHTML = "Location";
+    thead[6].innerHTML = "Branch";
+    thead[7].innerHTML = null;
+
+    data.forEach(item => {
+
+        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+            item.host_name + '</td><td>' +
+            item.ip + '</td><td>' + item.switch_port + '</td><td>' +
+            item.cams + '</td><td>' + item.model + '</td><td>' +
+            item.location + '</td><td>' + item.name + '</td></tr>';
+
+    });
+
+
+
+
+}
 
 
 function setPCTable(data) {
@@ -150,16 +276,16 @@ function getData() {
                 
             }else if (device=='Switches') {
                 
-                setPCTable(data);
+                setSwitchTable(data);
             } else if (device=='Firewall') {
 
-                setPCTable(data);
+                setFirewallTable(data);
             }else if (device=='DVR') {
 
-                setPCTable(data);
+                setDvrTable(data);
                 
             } else if (device=='Fingerprint') {
-                setPCTable(data);
+                setFigerprintTable(data);
             }
 
         }
