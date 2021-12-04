@@ -6,6 +6,8 @@ from . views import *
 from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path('<int:id>/', TicketDetailView.as_view(),name='view_ticket'),
+    path('search/',csrf_exempt(TicketSearchView.as_view()),name='ticket_search'),
+    path('', TicketListView.as_view(),name='admin-tickets'),
     #  path('add-message/', CreateMessage.as_view(),name='add-message'),
     # path('datasheet/', include('datasheet.urls')),
     # path('', index,name='admins'),

@@ -68,7 +68,6 @@ AUTHENTICATION_BACKENDS = [
 AUTH_ADFS = {
     "SERVER": "adfs.cops.com",
     "CLIENT_ID": "c71c316a-5696-4f92-9d67-b91efee5c0e2",
-    # "RELYING_PARTY_ID": "b8af9f88-85a1-4a9c-8bf6-5bcd71a9e413",
     "RELYING_PARTY_ID": "osg-support.cops.com",
     # Make sure to read the documentation about the AUDIENCE setting
     # when you configured the identifier as a URL!
@@ -78,7 +77,11 @@ AUTH_ADFS = {
     # "CA_BUNDLE":"/adfs-pub.pem",
      "CLAIM_MAPPING": {"first_name": "given_name",
                       "last_name": "family_name",
+                      "ip": "userip",
+                      "department": "department",
+                      "phone": "phone",
                       "email": "email"},
+
     "USERNAME_CLAIM": "winaccountname",
     "GROUP_CLAIM": "group",
     "GROUP_TO_FLAG_MAPPING": {"is_staff": "Domain Admins",
@@ -167,28 +170,29 @@ STATIC_ROOT=os.path.join(BASE_DIR,'/static')
 MEDIA_URL = '/img/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'/static/img')
 
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'formatters': {
-#         'verbose': {
-#             'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
-#         },
-#     },
-#     'handlers': {
-#         'console': {
-#             'class': 'logging.StreamHandler',
-#             'formatter': 'verbose'
-#         },
-#     },
-#     'loggers': {
-#         'django_auth_adfs': {
-#             'handlers': ['console'],
-#             'level': 'DEBUG',
-#         },
-#     },
-# }
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django_auth_adfs': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
 
+AUTH_USER_MODEL = 'core.User'
 from django.contrib import messages
 
 # change error to danger

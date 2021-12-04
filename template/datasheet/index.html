@@ -3,11 +3,6 @@
 
 {% block content %}
 
-<div class="container">
-
-
-
-    <div class="row">
         <div class="bg-light py-1 ps-1 m-sm-2">
 
             <nav aria-label="breadcrumb">
@@ -19,7 +14,8 @@
         </div>
 
     
-    </div>
+<div class="card m-sm-2">
+  <div class="card-body">  
 
     {% include 'partials/messages.html' %}
 
@@ -28,11 +24,12 @@
          <section >
             <ul >
             
-              <li class="blist" data-filter="HQ"> HQ</li>
-              <li class="blist" data-filter="Waraq"> Waraq</li>
-              <li class="blist" data-filter="Lowa"> Lowa</li>
-              <li class="blist" data-filter="Bolaq"> Bolaq</li>
-              <li class="blist" data-filter="Awsem"> Awsem</li>
+              {% for dep in branch %}
+
+                  <li class="blist" data-filter={{dep.name}}>{{dep.name}}</li>
+
+              {% endfor %}
+
              
             </ul>
           
@@ -59,12 +56,6 @@
 
     
     </div>
-
-    {% if pc.count %}
-    <div class="container">
-
-    
-
 
     <div class="app-table">
 
@@ -132,29 +123,7 @@
         </tbody>
     </table>
     </div>
-    <!--
-    <div class="table-output" style="display:none">
 
-            <table class="table table-stripped table-hover">
-        <thead>
-            <tr>
-                <th> Host Name</th>
-                <th> OS</th>
-                <th> IP</th>
-                <th> Ram</th>
-                <th> Vlan</th>
-                <th> CPU</th>
-                <th> Branch</th>
-                <th></th>
-            </tr>
-
-        </thead>
-        <tbody class="table-body">
-
-        </tbody>
-    </table>
-    </div>
--->
     <div class="pagination-container">
         <div class="">
             Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
@@ -192,8 +161,8 @@
         </div>
         </nav>
 </div>
-    {% endif %}
 
+</div>
 </div>
 
  <script src="{% static 'js/datasheet.js' %}"></script>

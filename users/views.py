@@ -12,6 +12,8 @@ from django.core.paginator import Paginator
 from django.views.generic import DetailView,CreateView
 from django.shortcuts import get_object_or_404
 from .forms import TicketCreateForm
+from django.views.generic.edit import UpdateView
+from django.views.generic.list import ListView
 
 class Home(View):
     
@@ -30,7 +32,27 @@ class Home(View):
             return render(request, 'user/index.html', {'tickets': tickets, 'page_obj': page_obj})
 
 
+
+class Profile(View):
+
+    def get(self,request):
+
+        pro=UserProfile.objects.get(user=request.user)
+
+        return redirect('user-profile',pro.pk)
+
+
 class ContactListView(View):
+
+    def post(self,request):
+
+        search_str = json.loads(request.body).get('searchText')
+        department = json.loads(request.body).get('department')
+        contact = UserProfile.objects.filter(department=department,name__istartswith=search_str)
+        if department == "IT":
+            contact= AdminProfile.objects.filter(name__istartswith=search_str)
+        data = contact.values()
+        return JsonResponse(list(data), safe=False)
 
 
     def get(self,request):
@@ -51,24 +73,12 @@ class ContactListView(View):
 
         else:
             ctx= AdminProfile.objects.all()
+            dep= Department.objects.all()
             paginator = Paginator(ctx, 6)
             page_number = request.GET.get('page')
             page_obj = Paginator.get_page(paginator, page_number)
-            return render(request, 'user/contacts.html', {'contacts': ctx, 'page_obj': page_obj})
+            return render(request, 'user/contacts.html', {'contacts': dep, 'page_obj': page_obj})
 
-
-
-
-class PermissionDetailView(DetailView):
-
-    model = Permission
-    # context_object_name = 'permission'
-    template_name = 'user/permission.html'
-    
-    def get_object(self):
-
-        user=User.objects.get(pk=self.kwargs.get("id"))
-        return get_object_or_404(Permission, user=user)
 
 
 
@@ -100,19 +110,57 @@ class TicketCreateView(CreateView):
         return kwargs
 
 
+class RequestListView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        requests=Request.objects.filter(user=UserProfile.objects.get(user=self.request.user))
+        paginator = Paginator(requests, 6)
+        page_number = request.GET.get('page')
+        page_obj = Paginator.get_page(paginator, page_number)
+        return render(request, 'user/user_requests.html', {'requests': requests, 'page_obj': page_obj})
+
+
+class RequestUpdateView(UpdateView):
+
+    model = Request
+    context_object_name = 'request'
+    fields =  ['file_scan','category']
+    template_name = 'user/edit_request.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Request updated successfully!")
+        return redirect('requests')
 
 
 class RequestCreateView(CreateView):
     model = Request
     context_object_name = 'request'
-    fields =  '__all__'
+    fields =  ['file_scan','category']
     template_name = 'user/create_request.html'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        self.object.user=UserProfile.objects.get(user=self.request.user)
         self.object.save()
         messages.success(self.request, "Request created successfully!")
-        return redirect('permission',self.request.user.pk)
+        return redirect('requests')
+
+
+class ProfileUpdateView(UpdateView):
+
+    model = UserProfile
+    context_object_name = 'profile'
+    fields =  ['image','name','email','phone']
+    template_name = 'user/edit_profile.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Profile updated successfully!")
+        return redirect('user-profile',self.object.pk)
 
 
 # def add_ticket(request):

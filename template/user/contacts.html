@@ -3,11 +3,7 @@
 
 {% block content %}
 
-<div class="container">
 
-
-
-    <div class="row">
         <div class="bg-light py-1 ps-1 m-sm-2">
 
             <nav aria-label="breadcrumb">
@@ -18,38 +14,28 @@
             </nav>
         </div>
 
-    
-    </div>
+<div class="card m-sm-2">
+  <div class="card-body">       
 
     {% include 'partials/messages.html' %}
 
-    <div class="row">
-
-
           <section>
             <ul>
-            
-              <li class="list active" data-filter="IT"> IT</li>
-              <li class="list" data-filter="Finance"> Finance</li>
-              <li class="list" data-filter="HR"> HR</li>
-              <li class="list" data-filter="Customer_service"> Customer service</li>
-              <li class="list" data-filter="Emergency"> Emergency</li>
-              <li class="list" data-filter="QS"> QS</li>
-              <li class="list" data-filter="Projects"> Projects</li>
-              <li class="list" data-filter="Legal"> Legal</li>
+
+              {% for dep in contacts %}
+
+                  <li class="list" data-filter={{dep.name}}>{{dep.name}}</li>
+
+              {% endfor %}
+
+         
               <input id="searchText" type="text" class="form-control" placeholder="Search">
+                  
             </ul>
          
           
           </section>
 
-    
-    </div>
-
-    {% if contacts.count %}
-    <div class="container">
-
-    
 
 
     <div class="app-table">
@@ -104,6 +90,7 @@
         </tbody>
     </table>
     </div>
+
     <div class="pagination-container">
         <div class="">
             Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
@@ -125,9 +112,8 @@
                         <li class="page-item active" aria-current="page">
                           <a class="page-link" href="#">{{ page_obj.number }}</a>
                         </li>
-                      
                       {% if page_obj.has_next %}
-                       <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
+                      <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
                         <li class="page-item">
                           <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
                         </li>
@@ -141,9 +127,8 @@
                   </ul>
         </div>
         </nav>
-</div>
-    {% endif %}
-
+    </div>
+  </div>
 </div>
 
  <script src="{% static 'js/contacts.js' %}"></script>

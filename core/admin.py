@@ -22,3 +22,6 @@ admin.site.register(Switch)
 admin.site.register(Firewall)
 admin.site.register(FingerPrint)
 admin.site.register(DVR)
+admin.site.register(Department)
+
+admin.site.register(User)

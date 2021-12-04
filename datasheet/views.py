@@ -6,6 +6,8 @@ from django.views import View
 from django.db.models import F
 from django.views.generic.edit import UpdateView
 from django.contrib import messages
+import json
+from django.core.paginator import Paginator
 
 class PCUpdateView(UpdateView):
     model = PC
@@ -45,6 +47,7 @@ class PrinterUpdateView(UpdateView):
         self.object.save()
         messages.success(self.request, "Printer updated successfully!")
         return redirect('pc')
+
 
 class SwitchUpdateView(UpdateView):
     model = Switch
@@ -99,28 +102,95 @@ class FingerPrintUpdateView(UpdateView):
         return redirect('pc')
 
 
-class PCListView(ListView):
-    model = PC
-    template_name = 'datasheet/index.html'
-    # permission_classes = (permissions.IsAuthenticated,permissions.IsAdminUser,)
-    context_object_name = 'pc'
-    paginate_by = 5  # if pagination is desired
+class PCListView(View):
 
-    def get_queryset(self):
-        admin=AdminProfile.objects.get(user =self.request.user)
-        new_context = PC.objects.filter(
-            branch=admin.branch,
-        )
-        return new_context
+    def get(self,request):
+
+        if request.user.is_staff:
+             
+            admin=AdminProfile.objects.get(user =self.request.user)
+            ctx= PC.objects.filter(branch=admin.branch)
+            branch= Branch.objects.all()
+            paginator = Paginator(ctx, 6)
+            page_number = request.GET.get('page')
+            page_obj = Paginator.get_page(paginator, page_number)
+            return render(request, 'datasheet/index.html', {'branch': branch, 'page_obj': page_obj})
 
 
 class DeviceListView(View):
 
-    # model = Server
-    # template_name = 'datasheet/index.html'
-    # # permission_classes = (permissions.IsAuthenticated,permissions.IsAdminUser,)
-    # context_object_name = 'pc'
-    # paginate_by = 5  # if pagination is desired
+
+    def post(self,request):
+
+        if request.user.is_staff:
+
+            search_str = json.loads(request.body).get('searchText')
+            device = json.loads(request.body).get('device')
+
+            if device == "PC":
+                ctx= PC.objects.filter(host_name__istartswith=search_str) | \
+                     PC.objects.filter(ip__istartswith=search_str) | \
+                     PC.objects.filter(user__username__istartswith=search_str) | \
+                     PC.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name'),username=F('user__username')).values()
+
+            elif device == "Servers":
+                ctx= Server.objects.filter(host_name__istartswith=search_str) | \
+                     Server.objects.filter(ip__istartswith=search_str) | \
+                     Server.objects.filter(role__istartswith=search_str) | \
+                     Server.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name')).values()
+
+            elif device == "Printers":
+                ctx= Printer.objects.filter(model__istartswith=search_str) | \
+                     Printer.objects.filter(ip__istartswith=search_str) | \
+                     Printer.objects.filter(role__istartswith=search_str) | \
+                     Printer.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name')).values()
+
+            elif device == "Switches":
+                ctx= Switch.objects.filter(model__istartswith=search_str) | \
+                     Switch.objects.filter(ip__istartswith=search_str) | \
+                     Switch.objects.filter(host_name__istartswith=search_str) | \
+                     Switch.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name')).values()
+
+            elif device == "Firewall":
+                ctx= Firewall.objects.filter(model__istartswith=search_str) | \
+                     Firewall.objects.filter(ip__istartswith=search_str) | \
+                     Firewall.objects.filter(host_name__istartswith=search_str) | \
+                     Firewall.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name')).values()
+
+            elif device == "DVR":
+                ctx= DVR.objects.filter(model__istartswith=search_str) | \
+                     DVR.objects.filter(ip__istartswith=search_str) | \
+                     DVR.objects.filter(host_name__istartswith=search_str) | \
+                     DVR.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name')).values()
+
+            elif device == "Fingerprint":
+                ctx= FingerPrint.objects.filter(model__istartswith=search_str) | \
+                     FingerPrint.objects.filter(ip__istartswith=search_str) | \
+                     FingerPrint.objects.filter(location__istartswith=search_str) | \
+                     FingerPrint.objects.filter(branch__name__istartswith=search_str)
+
+                data=ctx.values(name=F('branch__name')).values()
+
+            print("Data:",str(ctx.values()))
+            # data=ctx.values(name=F('branch__name')).values()
+            return JsonResponse(list(data),safe=False)
+        else:
+            return JsonResponse()
+
+
+
 
     def get(self,request):
 

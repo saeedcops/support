@@ -6,12 +6,14 @@ const tableOutput=document.querySelector(".table-output");
 const appTable=document.querySelector(".app-table");
 const tableBody=document.querySelector(".table-body");
 const tableHead=document.querySelector(".table-head");
-
-
+const pagination=document.querySelector(".pagination-container");
+const searchText=document.querySelector("#searchText");
+const notFound=document.querySelector(".not-found");
 var branchLastli=branchItems[0];
 var deviceLastli=deviceItems[0];
 var branch=branchLastli.getAttribute("data-filter");
 var device=deviceLastli.getAttribute("data-filter");
+
 
 // 
 async function getapi(url) {
@@ -250,6 +252,83 @@ function setPrinterTable(data) {
                 
    
 }
+
+
+
+
+searchText.addEventListener('keyup',(e)=>{
+
+    const search=e.target.value;
+    console.log("Value",search);
+  
+    if(search.trim().length > 0){
+        pagination.style.display="none";
+        tableBody.innerHTML="";
+        
+        fetch("/admins/datasheet/devices/",{
+        body:JSON.stringify({ searchText:search, device:device}),
+        method:"POST",
+        }).then((res)=>res.json())
+        .then((data) =>{
+  
+        console.log('Data',data);
+        if(data != null){
+  
+            if(data.length === 0){
+  
+                console.log('length',0);
+                notFound.style.display="block";
+                tableOutput.style.display="none";
+    
+            }else{
+  
+                notFound.style.display="none";
+                appTable.style.display="none";
+                tableOutput.style.display="block";
+                tableBody.innerHTML = "";
+  
+                if(device=='PC'){
+
+                    setPCTable(data);
+    
+                }else if (device=='Servers') {
+    
+                    setServerTable(data);
+    
+                    
+                } else if (device=='Printers') {
+                    setPrinterTable(data);
+                    
+                }else if (device=='Switches') {
+                    
+                    setSwitchTable(data);
+                } else if (device=='Firewall') {
+    
+                    setFirewallTable(data);
+                }else if (device=='DVR') {
+    
+                    setDvrTable(data);
+                    
+                } else if (device=='Fingerprint') {
+                    setFigerprintTable(data);
+                }
+            }
+            
+        }
+  
+  
+      });
+  
+    }else{
+  
+        tableOutput.style.display="none";
+        notFound.style.display="none";
+        pagination.style.display="block";
+        appTable.style.display="block";
+    }
+  
+});
+  
 
 function getData() {
 

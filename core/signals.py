@@ -1,6 +1,8 @@
 from django.db.models.signals import post_save
 # from .models import User
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+
+from django.conf import settings
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
 import random
@@ -8,7 +10,7 @@ from .models import AdminProfile,UserProfile,PC,Branch
 # from push_notifications.models import  GCMDevice
 # and not instance.is_staff
 
-@receiver(post_save, sender=User)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def post_save_create_profile(sender, update_fields,instance, created, **kwargs):
     
     if instance.first_name:

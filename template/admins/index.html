@@ -3,11 +3,6 @@
 
 {% block content %}
 
-<div class="container">
-
-
-
-    <div class="row">
         <div class="bg-light py-1 ps-1 m-sm-2">
 
             <nav aria-label="breadcrumb">
@@ -19,15 +14,12 @@
         </div>
 
     
-    </div>
+<div class="card m-sm-2">
+  <div class="card-body">  
 
     {% include 'partials/messages.html' %}
 
-      <div class="container">
-      
-        <div class="card mt-2">
-      
-          <div class="card-body">
+    
       
              <div class="row">
        
@@ -50,10 +42,6 @@
         </div>
 
   
-
-  </div>
-
-</div>
 
  <script src="{% static 'js/admin.js' %}"></script>
 {% endblock %}

@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils.timezone import now
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User as USER
 
 from django.contrib.postgres.fields import ArrayField
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here. settings.AUTH_USER_MODEL
 
@@ -14,6 +15,19 @@ def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
     return 'requests/{0}/{1}'.format(instance.user.name, filename)
 
+def user_image_path(instance, filename):
+  
+    # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
+    return 'profile/{0}/{1}'.format(instance.user.username, filename)
+
+
+class User(AbstractUser):
+    phone = models.CharField(max_length=20, blank=True)
+    ip = models.CharField(max_length=20, blank=True)
+    department = models.CharField(max_length=20,null=True, blank=True)
+
+
+
 class Branch(models.Model):
     name = models.CharField(max_length=20)
 
@@ -21,12 +35,11 @@ class Branch(models.Model):
         return self.name
 
 
-# class Department(models.Model):
-#     name = models.CharField(max_length=20)
+class Department(models.Model):
+    name = models.CharField(max_length=20)
 
-#     def __str__(self):
-#         return self.name
-
+    def __str__(self):
+        return self.name
 
 
 class Category(models.Model):
@@ -178,17 +191,18 @@ class PC(models.Model):
     model = models.CharField(max_length=20) 
     serial_num = models.CharField(max_length=17)     
     user = models.ForeignKey(
-            User,
+           settings.AUTH_USER_MODEL,
             related_name='userprofile',
             on_delete = models.PROTECT,null=True,blank=True)
 
-#     department=models.CharField(max_length = 10,null=True,blank=True)
+    department=models.ForeignKey(
+            Department,
+            on_delete = models.PROTECT,null=True,blank=True)
 
     branch=models.ForeignKey(
             Branch,
             verbose_name="Branch",
             on_delete = models.PROTECT,null=True,blank=True)
-    # category = models.CharField(max_length=20, default="Support")
 
     def __str__(self):
         return self.host_name
@@ -224,13 +238,14 @@ class Printer(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
-            User,
+            settings.AUTH_USER_MODEL,
             related_name='user',
             on_delete = models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 200)
     department=models.CharField(max_length = 10)
     phone =models.CharField(max_length = 15,null=True,blank=True)
+    image = models.ImageField(upload_to = user_image_path,null=True,blank=True)
 #     department = models.ForeignKey(
 #             Department,
 #             related_name='udepartment',
@@ -254,13 +269,14 @@ class UserProfile(models.Model):
 
 class AdminProfile(models.Model):
     user = models.OneToOneField(
-            User,
+            settings.AUTH_USER_MODEL,
             related_name='admin',
             on_delete = models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 50)
     phone =models.CharField(max_length = 15)
     position =models.CharField(max_length = 20)
+    image = models.ImageField(upload_to = user_image_path,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
             on_delete = models.PROTECT,null=True,blank=True)
@@ -288,23 +304,23 @@ class Request(models.Model):
             UserProfile,
             related_name='userrequest',
             on_delete = models.CASCADE)
-    manager = models.ForeignKey(
-            UserProfile,
-            related_name='manager',
-            on_delete = models.CASCADE)
-    manager_sign = models.BooleanField(default=False)
     valid = models.BooleanField(default=False)
     date = models.DateField(default=now)
-    kind= models.CharField(max_length = 10)
     file_scan = models.FileField(upload_to =user_directory_path,null=True,blank=True)
+    branch=models.ForeignKey(
+            Branch,
+            related_name='branchrequest',
+            on_delete = models.PROTECT,null=True,blank=True)
     category = models.ForeignKey(Category,
                 related_name='userrequest',
                 on_delete = models.PROTECT,null=True,blank=True)
-    app_permission = models.ManyToManyField(AppPermission)
-    
+
     
     def __str__(self):
         return self.user.name
+
+    class Meta:
+        ordering = ['-date']
 
 
 
@@ -313,7 +329,7 @@ class Permission(models.Model):
     name = models.CharField(max_length = 50)
     share = models.ManyToManyField(Share,related_name='usershare')
     user = models.ForeignKey(
-            User,
+            settings.AUTH_USER_MODEL,
             related_name='userpro',
             on_delete = models.CASCADE,null=True,blank=True)
     
@@ -335,7 +351,7 @@ class Message(models.Model):
 
 class Ticket(models.Model):
     status = models.CharField(default= "open",max_length = 10)
-    priority =  models.IntegerField()
+    # priority =  models.IntegerField()
     messages = models.ManyToManyField(Message)
     open_date = models.DateTimeField(default=now)
     closed_date = models.DateTimeField(null=True,blank=True)

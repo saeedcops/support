@@ -2,13 +2,8 @@
 {% load static %}
 
 {% block content %}
-
-<div class="container">
-
-
-
-    <div class="row m-2">
-        <div class="col-md-10 bg-light py-1 ps-1">
+<div class="row ">
+        <div class="col-md-8 bg-light py-1 ps-1 m-sm-2">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
@@ -16,16 +11,22 @@
                 <li class="breadcrumb-item active" aria-current="page">My Tickets</li>
               </ol>
             </nav>
+           
         </div>
 
-        <div class="col-md-2">
-            <a href="{% url 'add-ticket' %}" class="btn btn-primary m-sm-1">Add Ticket</a>
-        </div>
+        <div class="col-md-2 ">
+          <a href="{% url 'add-ticket' %}" class="btn btn-primary m-sm-1">Add Ticket</a>
+      </div>
     </div>
+
+        
+     
+
+    <div class="card m-sm-2">
+      <div class="card-body">  
 
     {% include 'partials/messages.html' %}
     {% if tickets.count %}
-    <div class="container">
 
 
 
@@ -128,7 +129,7 @@
         </nav>
 </div>
     {% endif %}
-
+  </div>
 </div>
 
  <script src="{% static 'js/user.js' %}"></script>

@@ -7,6 +7,7 @@ from django.utils.timezone import now
 from core.models import *
 from django.core.paginator import Paginator
 from django.views.generic.list import ListView
+from django.views.generic.edit import UpdateView
 from django.http import JsonResponse
 from django.db.models import F
 
@@ -20,46 +21,52 @@ class Home(View):
             return render(request, 'admins/index.html')
 
 
-
-
-class TicketListView(ListView):
-
-    model = Ticket
-    template_name = 'admins/tickets.html'
-    # permission_classes = (permissions.IsAuthenticated,permissions.IsAdminUser,)
-    context_object_name = 'tickets'
-    paginate_by = 5  # if pagination is desired
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['now'] = now()
-    #     return context
-
-# Create your views here.
-
-
-class TicketJson(View):
+class Profile(View):
 
     def get(self,request):
 
+        if request.user.is_staff:
+            pro=AdminProfile.objects.get(user=request.user)
+
+            return redirect('admin-profile',pro.pk)
+
+
+class RequestJson(View):
+
+    def post(self,request):
 
         if request.user.is_staff:
 
-            category = self.request.GET.get('category', 'give-default-value')
+            search_str = json.loads(request.body).get('searchText')
+            ctx =Request.objects.filter(branch__name__istartswith=search_str) | \
+                    Request.objects.filter(user__name__istartswith=search_str) | \
+                    Request.objects.filter(category__name__istartswith=search_str)
+
+            data=ctx.values(usern=F('user__name'),
+                            categoryn=F('category__name'),
+                            branchn=F('branch__name')).values()
+
+            return JsonResponse(list(data),safe=False)
+        else:
+            print("Not admin")
+            return JsonResponse()
+
+
+    def get(self,request):
+        print("ot admin")
+
+        if request.user.is_staff:
+            print(" admin")
+
             branch = self.request.GET.get('branch', 'give-default-value')
-            print("Branch:",branch)
-            ctx= Ticket.objects.filter(
-                branch__name=branch,category__name=category).values(usern=F('user__name'),
-                categoryn=F('category__name'),
-                branchn=F('branch__name'),
-                adminn=F('admin__name'))
+            
+            ctx= Request.objects.filter(
+                branch__name=branch).values(usern=F('user__name'),
+                                            categoryn=F('category__name'),
+                                            branchn=F('branch__name'))
 
             data=ctx.values()
-            # paginator = Paginator(ctx.values(), 3)
-            # page_number = request.GET.get('page')
-            # page_obj = Paginator.get_page(paginator, page_number)
-           
-            print("Data:",str(data))
+
             return JsonResponse(list(data),safe=False)
         else:
             print("Not admin")
@@ -69,13 +76,14 @@ class TicketJson(View):
 class ContactListView(View):
 
 
-    def get(self,request):
+    def get(self,request):        
 
         ctx= AdminProfile.objects.all()
+        dep= Department.objects.all()
         paginator = Paginator(ctx, 6)
         page_number = request.GET.get('page')
         page_obj = Paginator.get_page(paginator, page_number)
-        return render(request, 'admins/contacts.html', {'contacts': ctx, 'page_obj': page_obj})
+        return render(request, 'admins/contacts.html', {'contacts': dep, 'page_obj': page_obj})
 
 
 class Summary(View):
@@ -130,10 +138,42 @@ class Summary(View):
 
 
 
-class RequestListView(ListView):
+class RequestListView(View):
+
+
+    def get(self,request):
+
+        ctx= Request.objects.all()
+        branch= Branch.objects.all()
+        paginator = Paginator(ctx, 6)
+        page_number = request.GET.get('page')
+        page_obj = Paginator.get_page(paginator, page_number)
+        return render(request, 'admins/user_requests.html', {'branch': branch, 'page_obj': page_obj})
+
+
+class RequestUpdateView(UpdateView):
 
     model = Request
-    template_name = 'admins/user_requests.html'
-    # permission_classes = (permissions.IsAuthenticated,permissions.IsAdminUser,)
-    context_object_name = 'requests'
-    paginate_by = 5  # if pagination is desired
+    context_object_name = 'request'
+    fields =  '__all__'
+    template_name = 'admins/edit_request.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Request updated successfully!")
+        return redirect('admin-requests')
+
+
+class ProfileUpdateView(UpdateView):
+
+    model = AdminProfile
+    context_object_name = 'profile'
+    fields =  fields =  ['image','name','email','phone']
+    template_name = 'admins/edit_profile.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Profile updated successfully!")
+        return redirect('admin-profile',self.object.pk)

@@ -3,42 +3,43 @@
 
 {% block content %}
 
-<div class="container">
-
-
-
-    <div class="row">
         <div class="bg-light py-1 ps-1 m-sm-2">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Users Requests</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Branch</li>
+                <li class="breadcrumb-item"><a href="{% url 'admin-requests' %}">Requests</a></li>
+                <li class="breadcrumb-item active" aria-current="page"></li>
               </ol>
             </nav>
         </div>
 
     
-    </div>
 
+        <div class="card m-sm-2">
+          <div class="card-body">  
     {% include 'partials/messages.html' %}
-    {% if requests.count %}
-    <div class="container">
 
+        <div class="row">
 
+         <section >
+            <ul >
+            
+              {% for dep in branch %}
 
-    <div class="row">
-        <div class="col-md-8">
+                  <li class="blist" data-filter={{dep.name}}>{{dep.name}}</li>
 
-        </div>
-         <div class="col-md-4">
+              {% endfor %}
 
-             <div class="form-group">
-                 <input id="searchText" type="text" class="form-control" placeholder="Search">
-             </div>
+         
+              <input id="searchText" type="text" class="form-control" placeholder="Search">
+              
+          
+            </ul>
+          
+          </section>
+            
 
-             
-         </div>
+    
     </div>
 
 
@@ -47,11 +48,12 @@
     <table border=1 class="table table-stripped table-hover">
         <thead>
             <tr>
+
+                <th> Status</th>
                 <th> User</th>
                 <th> Category</th>
                 <th> Date</th>
-                <th> Manager</th>
-                <th> File</th>
+                <th> Branch</th>
               
             </tr>
 
@@ -61,11 +63,15 @@
         <tr>
             <td style="display:none">{{ex.pk}}</td>
            
+           {% if ex.valid %}
+                  <td style="background:#0bb069;">valid</td>
+            {% else %}
+                  <td style="background:#b01c0b;">not valid</td>
+            {% endif %}
             <td>{{ex.user.name}}</td>
             <td>{{ex.category}}</td>
             <td>{{ex.date}}</td>
-            <td>{{ex.manager}}</td>
-            <td>{{ex.file_scan}}</td>
+            <td>{{ex.branch}}</td>
            
         </tr>
         {% endfor %}
@@ -77,13 +83,15 @@
     <h3 class="not-found" style="display:none">Result not found</h3>
     <div class="table-output" style="display:none">
 
-            <table class="table table-stripped table-hover">
+            <table border=1 class="table table-stripped table-hover">
         <thead>
             <tr>
+                 <th> Status</th>
                 <th> User</th>
                 <th> Category</th>
                 <th> Date</th>
-                <th> Manager</th>
+                <th> Branch</th>
+                
             </tr>
 
         </thead>
@@ -130,10 +138,9 @@
         </div>
         </nav>
 </div>
-    {% endif %}
-
 </div>
-<!--
- <script src="{% static 'js/admin.js' %}"></script>
- -->
+</div>
+
+ <script src="{% static 'js/requests.js' %}"></script>
+
 {% endblock %}

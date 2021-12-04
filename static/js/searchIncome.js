@@ -14,6 +14,7 @@ searchText.addEventListener('keyup',(e)=>{
         if(search.trim().length > 0){
             paginationContainer.style.display="none";
             tableBody.innerHTML="";
+            
             fetch("/income/search-income/",{
             body:JSON.stringify({ searchText:search }),
             method:"POST",

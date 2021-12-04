@@ -1,62 +1,34 @@
-{% extends 'baseadmin.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block content %}
 
 
-    <div class="bg-light py-1 ps-1 m-sm-2">
+  <div class="row m-2">
+        <div class="col-md-10 bg-light py-1 ps-1">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="">Tickets</a></li>
-                <li class="breadcrumb-item active" aria-current="page"></li>
+                 <li class="breadcrumb-item"><a href="{% url 'requests' %}">Requests</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ requests.user.name }}</li>
               </ol>
             </nav>
+        </div>
+
+        <div class="col-md-2">
+            <a href="{% url 'create-request' %}" class="btn btn-primary m-sm-1">Add Request</a>
+        </div>
     </div>
 
 
-<div class="card m-sm-2">
-  <div class="card-body">  
+    <div class="card m-sm-2">
+      <div class="card-body"> 
 
     {% include 'partials/messages.html' %}
 
-      <div class="row">
-
-         <section >
-            <ul >
-
-              {% for dep in branch %}
-
-                  <li class="blist" data-filter={{dep.name}}>{{dep.name}}</li>
-
-              {% endfor %}
-             
-            </ul>
-          
-          </section>
-
-          <section>
-            <ul>
-
-              {% for dep in category %}
-
-                  <li class="list" data-filter={{dep.name}}>{{dep.name}}</li>
-
-              {% endfor %}
-
-         
-              <input id="searchText" type="text" class="form-control" placeholder="Search">
-
-            </ul>
-
-          
-          </section>
-            
-
-    
-    </div>
-
-
+      
+  
+    {% if requests.count %}
     <div class="app-table">
 
     <table border=1 class="table table-stripped table-hover">
@@ -65,10 +37,7 @@
                 <th> Status</th>
                 <th> User</th>
                 <th> Category</th>
-                <th> Description</th>
                 <th> Date</th>
-                <th> Branch</th>
-                <th> Admin</th>
               
             </tr>
 
@@ -77,43 +46,32 @@
         {% for ex in page_obj %}
         <tr>
             <td style="display:none">{{ex.pk}}</td>
-            {% if ex.status == "closed" %}
-                  <td style="background:#b01c0b;">{{ex.status}}</td>
-
-            {% elif ex.status == "pending" %}
-                  <td style="background:#FFFB33;">{{ex.status}}</td>
-
+            {% if ex.valid %}
+                  <td style="background:#0bb069;">valid</td>
             {% else %}
-                  <td style="background:#0bb069;">{{ex.status}}</td>
+                  <td style="background:#b01c0b;">not valid</td>
             {% endif %}
             <td>{{ex.user.name}}</td>
             <td>{{ex.category}}</td>
-            <td>{{ex.description}}</td>
-            <td>{{ex.open_date}}</td>
-            <td>{{ex.branch}}</td>
-            <td>{{ex.admin}}</td>
+            <td>{{ex.date}}</td>
            
         </tr>
         {% endfor %}
         </tbody>
     </table>
 
-   </div>
+  </div>
 
     <h3 class="not-found" style="display:none">Result not found</h3>
     <div class="table-output" style="display:none">
 
-       <table border=1 class="table table-stripped table-hover">
+            <table class="table table-stripped table-hover">
         <thead>
             <tr>
-                <th> Status</th>
                 <th> User</th>
                 <th> Category</th>
-                <th> Description</th>
                 <th> Date</th>
-                <th> Branch</th>
-                <th> Admin</th>
-                <th></th>
+                <th> Manager</th>
             </tr>
 
         </thead>
@@ -160,10 +118,11 @@
         </div>
         </nav>
 </div>
+    {% endif %}
 
+  </div>
 </div>
 
-</div>
+ <script src="{% static 'js/user_request.js' %}"></script>
 
- <script src="{% static 'js/tickets.js' %}"></script>
 {% endblock %}

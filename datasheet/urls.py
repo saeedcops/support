@@ -14,6 +14,6 @@ urlpatterns = [
     path('DVR/<int:pk>/', DVRUpdateView.as_view(),name='update_dvr'),
     path('Fingerprint/<int:pk>/', FingerPrintUpdateView.as_view(),name='update_fingerprint'),
 
-    path('devices/', DeviceListView.as_view(),name='servers'),
+    path('devices/', csrf_exempt(DeviceListView.as_view()),name='servers'),
     path('printers/', PrinterListView.as_view(),name='printers'),
 ]

@@ -6,6 +6,75 @@ from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from django.utils.timezone import now
 import datetime
+import json
+from django.http import JsonResponse, HttpResponse
+from django.db.models import F
+from django.views.generic.list import ListView
+
+from django.core.paginator import Paginator
+
+
+class TicketListView(View):
+
+    def get(self,request):
+        
+        if request.user.is_staff:
+
+            ctx= Ticket.objects.all()
+            branch= Branch.objects.all()
+            category= Category.objects.all()
+            paginator = Paginator(ctx, 6)
+            page_number = request.GET.get('page')
+            page_obj = Paginator.get_page(paginator, page_number)
+            return render(request, 'admins/tickets.html', {'branch': branch,'category': category, 'page_obj': page_obj})
+
+
+
+
+class TicketSearchView(View):
+
+    def get(self,request):
+
+        if request.user.is_staff:
+
+            category = self.request.GET.get('category', 'give-default-value')
+            branch = self.request.GET.get('branch', 'give-default-value')
+            print("Branch:",branch)
+            ctx= Ticket.objects.filter(
+                branch__name=branch,category__name=category).values(usern=F('user__name'),
+                categoryn=F('category__name'),
+                branchn=F('branch__name'),
+                adminn=F('admin__name'))
+
+            data=ctx.values()
+           
+            print("Data:",str(data))
+            return JsonResponse(list(data),safe=False)
+        else:
+            print("Not admin")
+            return JsonResponse()
+
+
+    def post(self, request, *args, **kwargs):
+
+        if request.user.is_staff:
+
+            search_str = json.loads(request.body).get('searchText')
+            ticket =Ticket.objects.filter(status__istartswith=search_str) | \
+                    Ticket.objects.filter(user__name__istartswith=search_str) | \
+                    Ticket.objects.filter(category__name__istartswith=search_str) | \
+                    Ticket.objects.filter(branch__name__istartswith=search_str) | \
+                    Ticket.objects.filter(description__icontains=search_str) | \
+                    Ticket.objects.filter(open_date__istartswith=search_str)
+
+            data = ticket.values(usern=F('user__name'),
+                categoryn=F('category__name'),
+                branchn=F('branch__name'),
+                adminn=F('admin__name')).values()
+
+            return JsonResponse(list(data), safe=False)
+
+
 
 class TicketDetailView(View):
     

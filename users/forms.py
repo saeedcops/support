@@ -4,7 +4,6 @@ class TicketCreateForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields=[
-            'priority',
             'description',
             'branch',
             'category',
