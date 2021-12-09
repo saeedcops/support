@@ -19,8 +19,9 @@ class TicketListView(View):
     def get(self,request):
         
         if request.user.is_staff:
+            admin=AdminProfile.objects.get(user =self.request.user)
 
-            ctx= Ticket.objects.all()
+            ctx= Ticket.objects.filter(branch=admin.branch)
             branch= Branch.objects.all()
             category= Category.objects.all()
             paginator = Paginator(ctx, 6)

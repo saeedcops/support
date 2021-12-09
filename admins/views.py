@@ -18,6 +18,7 @@ class Home(View):
 
         if request.user.is_staff:
 
+
             return render(request, 'admins/index.html')
 
 

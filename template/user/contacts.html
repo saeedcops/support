@@ -1,135 +1,132 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
 
-        <div class="bg-light py-1 ps-1 m-sm-2">
+<div class="bg-light py-1 ps-1 m-sm-2">
 
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Contacts</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Departments</li>
-              </ol>
-            </nav>
-        </div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-1">
+            <li class="breadcrumb-item"><a href="#">Contacts</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Departments</li>
+        </ol>
+    </nav>
+</div>
 
 <div class="card m-sm-2">
-  <div class="card-body">       
+    <div class="card-body">
 
-    {% include 'partials/messages.html' %}
+        {% include 'partials/messages.html' %}
 
-          <section>
+        <section>
             <ul>
 
-              {% for dep in contacts %}
+                {% for dep in contacts %}
 
-                  <li class="list" data-filter={{dep.name}}>{{dep.name}}</li>
+                <li class="list" data-filter={{dep.name}}>{{dep.name}}</li>
 
-              {% endfor %}
+                {% endfor %}
 
-         
-              <input id="searchText" type="text" class="form-control" placeholder="Search">
-                  
+
+                <input id="searchText" type="text" class="form-control" placeholder="Search">
+
             </ul>
-         
-          
-          </section>
+
+
+        </section>
 
 
 
-    <div class="app-table">
+        <div class="app-table">
 
-    <table border=1 class="table table-stripped table-hover">
-        <thead >
-            <tr>
-                <th > Name</th>
-                <th > Email</th>
-                <th > Phone</th>
-                <th > Department</th>
+            <table border=1 class="table table-stripped table-hover">
+                <thead>
+                    <tr>
+                        <th> Image</th>
+                        <th> Name</th>
+                        <th> Email</th>
+                        <th> Phone</th>
+                        <th> Department</th>
 
-            </tr>
+                    </tr>
 
-        </thead>
-        <tbody>
+                </thead>
+                <tbody>
 
-        {% for ex in page_obj %}
-        <tr>
-            <td>{{ex.name}}</td>
-            <td>{{ex.email}}</td>
-            <td>{{ex.phone}}</td>
-            <td>{{ex.position}}</td>
-        </tr>
-        {% endfor %}
+                    {% for ex in page_obj %}
+                    <tr>
+                        <td><img src="https://osg-support.cops.com/img/{{ ex.image }}" class="img-rounded" alt="not-found" /></td>
+                        <td>{{ex.name}}</td>
+                        <td>{{ex.email}}</td>
+                        <td>{{ex.phone}}</td>
+                        <td>{{ex.position}}</td>
+                    </tr>
+                    {% endfor %}
 
-        </tbody>
-    </table>
+                </tbody>
+            </table>
 
-  </div>
-
-
-    <h3 class="not-found" style="display:none">Result not found</h3>
-
-      <div class="table-output" style="display:none">
-
-        <table border=1 class="table table-stripped table-hover">
-        <thead class="table-head">
-            <tr>
-                 
-                <th class="thead"> Name</th>
-                <th class="thead"> Email</th>
-                <th class="thead"> Phone</th>
-                <th class="thead"> Department</th>
-            
-                <th></th>
-            </tr>
-
-        </thead>
-        <tbody class="table-body">
-
-        </tbody>
-    </table>
-    </div>
-
-    <div class="pagination-container">
-        <div class="">
-            Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
         </div>
 
-       <nav aria-label="...">
-                  <ul class="pagination align-right float-right mr-auto">
-                      {% if page_obj.has_previous %}
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                       {% endif %}
-                      {% if page_obj.number == 1 %}
-                      <li class="page-item disabled">
-                          <a class="page-link" href="" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                      {% endif %}
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                          <a class="page-link" href="#">{{ page_obj.number }}</a>
-                        </li>
-                      {% if page_obj.has_next %}
-                      <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
-                        <li class="page-item">
-                          <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
-                        </li>
-                      {% endif %}
-                      {% if page_obj.paginator.num_pages == page_obj.number %}
-                      <li class="page-item disabled">
-                          <a class="page-link" href="">Next</a>
-                        </li>
-                      {% endif %}
 
-                  </ul>
+        <h3 class="not-found" style="display:none">Result not found</h3>
+
+        <div class="table-output" style="display:none">
+
+            <table border=1 class="table table-stripped table-hover">
+                <thead class="table-head">
+                    <tr>
+                        <th class="thead"> Image</th>
+                        <th class="thead"> Name</th>
+                        <th class="thead"> Email</th>
+                        <th class="thead"> Phone</th>
+                        <th class="thead"> Department</th>
+
+                        <th></th>
+                    </tr>
+
+                </thead>
+                <tbody class="table-body">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-container">
+            <div class="">
+                Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </div>
+
+            <nav aria-label="...">
+                <ul class="pagination align-right float-right mr-auto">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    {% endif %} {% if page_obj.number == 1 %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    {% endif %}
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">{{ page_obj.number }}</a>
+                    </li>
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+                    </li>
+                    {% endif %} {% if page_obj.paginator.num_pages == page_obj.number %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="">Next</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
         </div>
         </nav>
     </div>
-  </div>
+</div>
 </div>
 
- <script src="{% static 'js/contacts.js' %}"></script>
+<script src="{% static 'js/contacts.js' %}"></script>
 {% endblock %}

@@ -243,13 +243,13 @@ class UserProfile(models.Model):
             on_delete = models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 200)
-    department=models.CharField(max_length = 10)
+    department=models.CharField(max_length = 15,null=True,blank=True)
     phone =models.CharField(max_length = 15,null=True,blank=True)
     image = models.ImageField(upload_to = user_image_path,null=True,blank=True)
-#     department = models.ForeignKey(
-#             Department,
-#             related_name='udepartment',
-#             on_delete = models.PROTECT,null=True,blank=True)
+    # department = models.ForeignKey(
+    #         Department,
+    #         related_name='udepartment',
+    #         on_delete = models.PROTECT,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
             on_delete = models.PROTECT,null=True,blank=True)

@@ -67,7 +67,7 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_ADFS = {
     "SERVER": "adfs.cops.com",
-    "CLIENT_ID": "c71c316a-5696-4f92-9d67-b91efee5c0e2",
+    "CLIENT_ID": "8d53f8d4-739f-4828-b75d-87e950164c2a",
     "RELYING_PARTY_ID": "osg-support.cops.com",
     # Make sure to read the documentation about the AUDIENCE setting
     # when you configured the identifier as a URL!

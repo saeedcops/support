@@ -125,7 +125,7 @@ class RequestUpdateView(UpdateView):
 
     model = Request
     context_object_name = 'request'
-    fields =  ['file_scan','category']
+    fields =  ['file_scan','category','branch']
     template_name = 'user/edit_request.html'
 
     def form_valid(self, form):
@@ -138,7 +138,7 @@ class RequestUpdateView(UpdateView):
 class RequestCreateView(CreateView):
     model = Request
     context_object_name = 'request'
-    fields =  ['file_scan','category']
+    fields =  ['file_scan','category','branch']
     template_name = 'user/create_request.html'
 
     def form_valid(self, form):
