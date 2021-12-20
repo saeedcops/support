@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+import notifications.urls
 # from userticket import urls
 
 urlpatterns = [
@@ -26,6 +27,7 @@ urlpatterns = [
     path('admins/', include('admins.urls')),
     path('', include('users.urls')),
     path('tickets/', include('tickets.urls')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     
     
 

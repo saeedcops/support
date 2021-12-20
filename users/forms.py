@@ -5,7 +5,6 @@ class TicketCreateForm(forms.ModelForm):
         model = Ticket
         fields=[
             'description',
-            'branch',
             'category',
             ]
         exclude = ('user','admin','closed_date',)

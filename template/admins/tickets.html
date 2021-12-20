@@ -4,7 +4,7 @@
 {% block content %}
 
 
-    <div class="bg-light py-1 ps-1 m-sm-2">
+    <div class="bg-light">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
@@ -30,11 +30,12 @@
                   <li class="blist" data-filter={{dep.name}}>{{dep.name}}</li>
 
               {% endfor %}
-             
+
+              <input id="searchText" type="text" class="form-control" placeholder="Search">
             </ul>
           
           </section>
-
+<!--
           <section>
             <ul>
 
@@ -51,7 +52,7 @@
 
           
           </section>
-            
+    -->        
 
     
     </div>
@@ -59,7 +60,7 @@
 
     <div class="app-table">
 
-    <table border=1 class="table table-stripped table-hover">
+    <table class="table table-stripped table-hover">
         <thead>
             <tr>
                 <th> Status</th>
@@ -86,7 +87,7 @@
             {% else %}
                   <td style="background:#0bb069;">{{ex.status}}</td>
             {% endif %}
-            <td>{{ex.user.name}}</td>
+            <td>{{ex.user.first_name}}</td>
             <td>{{ex.category}}</td>
             <td>{{ex.description}}</td>
             <td>{{ex.open_date}}</td>
@@ -103,7 +104,7 @@
     <h3 class="not-found" style="display:none">Result not found</h3>
     <div class="table-output" style="display:none">
 
-       <table border=1 class="table table-stripped table-hover">
+       <table class="table table-stripped table-hover">
         <thead>
             <tr>
                 <th> Status</th>

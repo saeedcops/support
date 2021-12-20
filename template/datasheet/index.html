@@ -3,7 +3,7 @@
 
 {% block content %}
 
-        <div class="bg-light py-1 ps-1 m-sm-2">
+        <div class="bg-light">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
@@ -21,7 +21,7 @@
 
     <div class="row">
 
-         <section >
+         <section class="col-md-10">
             <ul >
             
               {% for dep in branch %}
@@ -30,36 +30,46 @@
 
               {% endfor %}
 
-             
             </ul>
-          
+           
           </section>
+          <div class="col-md-2 action">
 
-          <section>
+              <a href="{% url 'upload' %}" class="btn btn-primary m-sm-1">Upload Datasheet</a>
+
+        </div>
+        
+      </div>
+
+
+    <div class="row">    
+          <section class="col-md-8">
             <ul>
             
               <li class="list active" data-filter="PC"> PC</li>
               <li class="list" data-filter="Servers"> Servers</li>
+              <li class="list" data-filter="Backup"> Backup</li>
               <li class="list" data-filter="Printers"> Printers</li>
               <li class="list" data-filter="Switches"> Switches</li>
               <li class="list" data-filter="Firewall"> Firewall</li>
+              <li class="list" data-filter="AP"> AP</li>
+              <li class="list" data-filter="Router"> Router</li>
               <li class="list" data-filter="DVR"> DVR</li>
-              <li class="list" data-filter="Fingerprint"> Fingerprint</li>
-            <input id="searchText" type="text" class="form-control" placeholder="Search">
+              <li class="list" data-filter="FP"> FP</li>
             </ul>
 
           
           
           </section>
-            
-
-
+          <div class="col-md-4" >
+            <input id="searchText" type="text" class="form-control" placeholder="Search">
+        </div>
     
     </div>
 
     <div class="app-table">
 
-    <table border=1 class="table table-stripped table-hover">
+    <table class="table table-stripped table-hover">
         <thead >
             <tr>
                 <th > Host Name</th>
@@ -76,7 +86,7 @@
         </thead>
         <tbody>
 
-        {% for ex in page_obj %}
+        {% for ex in pc %}
         <tr>
             <td style="display:none">{{ex.pk}}</td>
             <td>{{ex.host_name}}</td>
@@ -101,7 +111,7 @@
 
       <div class="table-output" style="display:none">
 
-        <table border=1 class="table table-stripped table-hover">
+        <table class="table table-stripped table-hover">
         <thead class="table-head">
             <tr>
                  <th class="thead"> Host Name</th>
@@ -123,7 +133,7 @@
         </tbody>
     </table>
     </div>
-
+<!--
     <div class="pagination-container">
         <div class="">
             Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
@@ -161,7 +171,7 @@
         </div>
         </nav>
 </div>
-
+-->
 </div>
 </div>
 

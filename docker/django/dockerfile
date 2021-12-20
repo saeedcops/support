@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.8
 # it will enable python to do stdout logs instead of being buffered
 ENV PYTHONUNBUFFERED 1
 ENV LANG en_US.utf8
@@ -6,13 +6,17 @@ ENV LANG en_US.utf8
 
 RUN apt-get update
 RUN apt-get install -y --reinstall ca-certificates
-# RUN apt-get install -y apache2 apache2-dev
-# RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  libldap2-dev libsasl2-dev slapd ldap-utils
-# creating 
+RUN apt-get install -y autoconf gcc libdatetime-perl make build-essential g++ python-dev
+
+# RUN wget http://www.opsview.com/sites/default/files/wmi-1.3.16.tar_.bz2
+RUN mkdir /tmp/wmic
 RUN mkdir /app
 
 # copy all file in app folder
 COPY . /app
+
+# RUN make /tmp/wmic/wmi-1.3.16/GNUmakefile "CPP=gcc -E -ffreestanding"
+# COPY wmi-1.3.16/Samba/source/bin/wmic /bin
 # copy requriements.txt in app folder
 COPY requirements.txt /requirements.txt
 # copy db connectivity test script, because we have made /app as current working directory so script can be executed.
@@ -42,6 +46,11 @@ RUN pip install -r requirements.txt
 RUN chmod +x /db_connectivity.sh
 RUN chmod +x /gunicorn.sh
 
+COPY wmi-1.4.1/ /tmp/wmic/wmi-1.4.1/
+WORKDIR /tmp/wmic/wmi-1.4.1/
+RUN export ZENHOME=/usr
+RUN make "CPP=gcc -E -ffreestanding"
+# COPY Samba/source/bin/wmic /bin
 # making /app as a current working dir
 WORKDIR /app
 

@@ -26,7 +26,7 @@ def post_save_create_profile(sender, update_fields,instance, created, **kwargs):
                 print("\n\n\n\n Admin Created \n")
                 AdminProfile.objects.create(user=instance,branch=Branch.objects.get(pk=1),
                                             pc=PC.objects.get(pk=1),name=instance.first_name,
-                                            email=instance.email,position="IT",phone="012232233")
+                                            email=instance.email,phone=instance.phone)
 
         else:
             try:
@@ -37,4 +37,4 @@ def post_save_create_profile(sender, update_fields,instance, created, **kwargs):
                 print("\n\n\n\n User Created \n")
                 UserProfile.objects.create(user=instance,branch=Branch.objects.get(pk=1),
                                         pc=PC.objects.get(pk=1),name=instance.first_name,
-                                        email=instance.email,department="HR")
+                                        email=instance.email,department=instance.department,phone=instance.phone)

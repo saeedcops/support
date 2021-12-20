@@ -10,6 +10,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import UpdateView
 from django.http import JsonResponse
 from django.db.models import F
+from django.conf import settings
+from notifications.signals import notify
 
 
 class Home(View):
@@ -17,6 +19,7 @@ class Home(View):
     def get(self,request):
 
         if request.user.is_staff:
+
 
             return render(request, 'admins/index.html')
 
@@ -26,9 +29,23 @@ class Profile(View):
     def get(self,request):
 
         if request.user.is_staff:
-            pro=AdminProfile.objects.get(user=request.user)
 
-            return redirect('admin-profile',pro.pk)
+            return redirect('admin-profile',request.user.pk)
+
+
+class ProfileUpdateView(UpdateView):
+
+    model = User
+    context_object_name = 'profile'
+    fields =  fields =  ['image','first_name','email','phone']
+    template_name = 'admins/edit_profile.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Profile updated successfully!")
+        return redirect('admin-profile',self.object.pk)
+
 
 
 class RequestJson(View):
@@ -39,10 +56,10 @@ class RequestJson(View):
 
             search_str = json.loads(request.body).get('searchText')
             ctx =Request.objects.filter(branch__name__istartswith=search_str) | \
-                    Request.objects.filter(user__name__istartswith=search_str) | \
+                    Request.objects.filter(user__first_name__istartswith=search_str) | \
                     Request.objects.filter(category__name__istartswith=search_str)
 
-            data=ctx.values(usern=F('user__name'),
+            data=ctx.values(usern=F('user__first_name'),
                             categoryn=F('category__name'),
                             branchn=F('branch__name')).values()
 
@@ -61,7 +78,7 @@ class RequestJson(View):
             branch = self.request.GET.get('branch', 'give-default-value')
             
             ctx= Request.objects.filter(
-                branch__name=branch).values(usern=F('user__name'),
+                branch__name=branch).values(usern=F('user__first_name'),
                                             categoryn=F('category__name'),
                                             branchn=F('branch__name'))
 
@@ -78,7 +95,7 @@ class ContactListView(View):
 
     def get(self,request):        
 
-        ctx= AdminProfile.objects.all()
+        ctx= User.objects.all()
         dep= Department.objects.all()
         paginator = Paginator(ctx, 6)
         page_number = request.GET.get('page')
@@ -117,7 +134,7 @@ class Summary(View):
          for admin in admin_list:
 
              filter_tickets = atickets.filter(admin=admin)
-             admin_json[admin.name] = len(filter_tickets)
+             admin_json[admin.username] = len(filter_tickets)
 
          for category in category_list:
 
@@ -161,19 +178,13 @@ class RequestUpdateView(UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
+
+        if self.object.valid:
+
+            recipient = self.object.user
+            notify.send(self.request.user, recipient=recipient, target=self.object,data="/img/"+str(self.object.file_scan),
+                        verb="تم تفعيل الصلاحيات", description=self.request.user.image)
+
         messages.success(self.request, "Request updated successfully!")
         return redirect('admin-requests')
 
-
-class ProfileUpdateView(UpdateView):
-
-    model = AdminProfile
-    context_object_name = 'profile'
-    fields =  fields =  ['image','name','email','phone']
-    template_name = 'admins/edit_profile.html'
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        messages.success(self.request, "Profile updated successfully!")
-        return redirect('admin-profile',self.object.pk)

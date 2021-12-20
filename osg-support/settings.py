@@ -40,12 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_auth_adfs',
+    'notifications',
     'users',
     'admins',
     'core',
     'datasheet',
     'tickets',
 ]
+
+DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
 
 
 MIDDLEWARE = [

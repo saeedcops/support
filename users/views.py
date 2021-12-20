@@ -14,10 +14,15 @@ from django.shortcuts import get_object_or_404
 from .forms import TicketCreateForm
 from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
+from core.util import link_user_pc
+from notifications.signals import notify
+
 
 class Home(View):
     
     def get(self, request, *args, **kwargs):
+
+        link_user_pc(request.META['HTTP_X_FORWARDED_FOR'],request.user)
 
         if request.user.is_staff:
         
@@ -25,7 +30,7 @@ class Home(View):
 
         else:
 
-            tickets = Ticket.objects.filter(user=UserProfile.objects.get(user=request.user))
+            tickets = Ticket.objects.filter(user=request.user)
             paginator = Paginator(tickets, 6)
             page_number = request.GET.get('page')
             page_obj = Paginator.get_page(paginator, page_number)
@@ -37,9 +42,22 @@ class Profile(View):
 
     def get(self,request):
 
-        pro=UserProfile.objects.get(user=request.user)
 
-        return redirect('user-profile',pro.pk)
+        return redirect('user-profile',request.user.pk)
+
+
+class ProfileUpdateView(UpdateView):
+
+    model = User
+    context_object_name = 'profile'
+    fields =  ['image','first_name','email','phone']
+    template_name = 'user/edit_profile.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        messages.success(self.request, "Profile updated successfully!")
+        return redirect('user-profile',self.object.pk)
 
 
 class ContactListView(View):
@@ -48,9 +66,11 @@ class ContactListView(View):
 
         search_str = json.loads(request.body).get('searchText')
         department = json.loads(request.body).get('department')
-        contact = UserProfile.objects.filter(department=department,name__istartswith=search_str)
-        if department == "IT":
-            contact= AdminProfile.objects.filter(name__istartswith=search_str)
+        contact = User.objects.filter(first_name__istartswith=search_str) | \
+                  User.objects.filter(department__istartswith=search_str)| \
+                  User.objects.filter(phone__istartswith=search_str)
+
+
         data = contact.values()
         return JsonResponse(list(data), safe=False)
 
@@ -61,10 +81,7 @@ class ContactListView(View):
 
         if department != "":
             print("department",department)
-            ctx= UserProfile.objects.filter(department=department).values()
-
-            if department == "IT":
-                ctx= AdminProfile.objects.all().values()
+            ctx= User.objects.filter(department=department).values()
 
 
             print("Data:",str(ctx.values()))
@@ -72,7 +89,7 @@ class ContactListView(View):
             return JsonResponse(list(data),safe=False)
 
         else:
-            ctx= AdminProfile.objects.all()
+            ctx= User.objects.all()
             dep= Department.objects.all()
             paginator = Paginator(ctx, 6)
             page_number = request.GET.get('page')
@@ -89,24 +106,25 @@ class TicketCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user = UserProfile.objects.get(user=self.request.user)
-        self.object.pc=PC.objects.get(pk=1)
-        print("user ",str(self.object.user))
-        print("PC ",str(self.object.pc))
-        print("category ",str(self.object.category))
-      
+        self.object.user = self.request.user
+        self.object.pc=self.request.user.pc
+        self.object.branch=self.request.user.branch
         self.object.save()
         messages.success(self.request, "Ticket Added Successfully")
+
+        recipient = User.objects.filter(is_staff=True)
+        notify.send(self.object.user, recipient=recipient, target=self.object,data="/tickets/"+str(self.object.pk),
+                    verb=self.object.description, description=self.object.user.image)
         return redirect('ticket')
 
     def get_initial(self, *args, **kwargs):
         initial = super(TicketCreateView, self).get_initial(**kwargs)
-        initial['description'] = 'Error in '
+        initial['description'] = ''
         return initial
 
     def get_form_kwargs(self, *args, **kwargs):
         kwargs = super(TicketCreateView, self).get_form_kwargs(*args, **kwargs)
-        kwargs['user'] = UserProfile.objects.get(user=self.request.user)
+        kwargs['user'] = self.request.user
         return kwargs
 
 
@@ -114,7 +132,7 @@ class RequestListView(View):
 
     def get(self, request, *args, **kwargs):
 
-        requests=Request.objects.filter(user=UserProfile.objects.get(user=self.request.user))
+        requests=Request.objects.filter(user=self.request.user)
         paginator = Paginator(requests, 6)
         page_number = request.GET.get('page')
         page_obj = Paginator.get_page(paginator, page_number)
@@ -125,7 +143,7 @@ class RequestUpdateView(UpdateView):
 
     model = Request
     context_object_name = 'request'
-    fields =  ['file_scan','category']
+    fields =  ['file_scan','category','branch']
     template_name = 'user/edit_request.html'
 
     def form_valid(self, form):
@@ -138,29 +156,20 @@ class RequestUpdateView(UpdateView):
 class RequestCreateView(CreateView):
     model = Request
     context_object_name = 'request'
-    fields =  ['file_scan','category']
+    fields =  ['file_scan','category','branch']
     template_name = 'user/create_request.html'
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.user=UserProfile.objects.get(user=self.request.user)
+        self.object.user=self.request.user
         self.object.save()
+        recipient = User.objects.filter(is_staff=True)
+        notify.send(self.object.user, recipient=recipient, target=self.object,data="/admins/requests/"+str(self.object.pk),
+                    verb=self.object.category, description=self.object.user.image)
         messages.success(self.request, "Request created successfully!")
         return redirect('requests')
 
 
-class ProfileUpdateView(UpdateView):
-
-    model = UserProfile
-    context_object_name = 'profile'
-    fields =  ['image','name','email','phone']
-    template_name = 'user/edit_profile.html'
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        messages.success(self.request, "Profile updated successfully!")
-        return redirect('user-profile',self.object.pk)
 
 
 # def add_ticket(request):

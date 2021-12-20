@@ -6,7 +6,7 @@ const tableOutput=document.querySelector(".table-output");
 const appTable=document.querySelector(".app-table");
 const tableBody=document.querySelector(".table-body");
 const tableHead=document.querySelector(".table-head");
-const pagination=document.querySelector(".pagination-container");
+// const pagination=document.querySelector(".pagination-container");
 const searchText=document.querySelector("#searchText");
 const notFound=document.querySelector(".not-found");
 var branchLastli=branchItems[0];
@@ -30,7 +30,7 @@ async function getapi(url) {
     // show(data);
 }
 
-function setSwitchTable(data) {
+function setNetworkTable(data) {
 
     appTable.style.display = "none";
     tableOutput.style.display = "block";
@@ -38,22 +38,22 @@ function setSwitchTable(data) {
     tableBody.innerHTML = "";
 
 
-    thead[0].innerHTML = "Host Name";
-    thead[1].innerHTML = "IP";
-    thead[2].innerHTML = "Port numbers";
-    thead[3].innerHTML = "vlans";
-    thead[4].innerHTML = "Trunk ports";
-    thead[5].innerHTML = "model";
-    thead[6].innerHTML = "Branch";
-    thead[7].innerHTML = "";
+    thead[0].innerHTML = "Device";
+    thead[1].innerHTML = "Model";
+    thead[2].innerHTML = "IP";
+    thead[3].innerHTML = "Location";
+    thead[4].innerHTML = "Port numbers";
+    thead[5].innerHTML = "Branch";
+    thead[6].innerHTML = "Username";
+    thead[7].innerHTML = "Password";
 
     data.forEach(item => {
 
         tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
-            item.host_name + '</td><td>' +
-            item.ip + '</td><td>' + item.port_number + '</td><td>' +
-            item.vlan + '</td><td>' + item.trunk_ports + '</td><td>' +
-            item.model + '</td><td>' + item.name + '</td></tr>';
+            item.device + '</td><td>' +
+            item.model + '</td><td>' + item.ip + '</td><td>' +
+            item.location + '</td><td>' + item.ports + '</td><td>' +
+            item.name + '</td><td>' + item.username + '</td><td>' + item.password + '</td></tr>';
 
     });
 
@@ -157,6 +157,36 @@ function setDvrTable(data) {
 
 }
 
+function setBackupTable(data) {
+
+    appTable.style.display="none";
+    tableOutput.style.display="block";
+
+    tableBody.innerHTML = "";
+   
+    
+    thead[0].innerHTML="Data";
+    thead[1].innerHTML="Server";
+    thead[2].innerHTML="Internal path";
+    thead[3].innerHTML="Internal schadule";
+    thead[4].innerHTML="Internal agent";
+    thead[5].innerHTML="External path";
+    thead[6].innerHTML="External schadule";
+    thead[7].innerHTML="External agent";
+
+    data.forEach(item=>{
+
+            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
+                         item.data+'</td><td>'+
+                         item.sname+'</td><td>'+item.internal_path+'</td><td>'+
+                         item.internal_schadule+'</td><td>'+item.internal_agent+'</td><td>'+
+                         item.external_path+'</td><td>'+item.external_schadule+'</td><td>'+item.external_agent+'</td></tr>';
+
+    });
+
+                
+   
+}
 
 function setPCTable(data) {
 
@@ -234,11 +264,11 @@ function setPrinterTable(data) {
     thead[0].innerHTML="Model";
     thead[1].innerHTML="IP";
     thead[2].innerHTML="Branch";
-    thead[3].innerHTML="Role";
-    thead[4].innerHTML=null;
-    thead[5].innerHTML=null;
-    thead[6].innerHTML=null;
-    thead[7].innerHTML=null;
+    thead[3].innerHTML="Office";
+    thead[4].innerHTML="Share Path";
+    thead[5].innerHTML="Switch Port";
+    thead[6].innerHTML="Vlan";
+    thead[7].innerHTML="";
 
     data.forEach(item=>{
 
@@ -246,7 +276,10 @@ function setPrinterTable(data) {
                          item.model+'</td><td>'+
                          item.ip+'</td><td>'+
                          item.name+'</td><td>'+
-                         item.role+'</td></tr>';
+                         item.office+'</td><td>'+
+                         item.scan_share+'</td><td>'+
+                         item.switch_port+'</td><td>'+
+                         item.vlan+'</td></tr>';
 
     });
                 
@@ -262,7 +295,7 @@ searchText.addEventListener('keyup',(e)=>{
     console.log("Value",search);
   
     if(search.trim().length > 0){
-        pagination.style.display="none";
+        // pagination.style.display="none";
         tableBody.innerHTML="";
         
         fetch("/admins/datasheet/devices/",{
@@ -299,18 +332,11 @@ searchText.addEventListener('keyup',(e)=>{
                 } else if (device=='Printers') {
                     setPrinterTable(data);
                     
-                }else if (device=='Switches') {
+                }else if (device=='Backup') {
+                    setBackupTable(data);
                     
-                    setSwitchTable(data);
-                } else if (device=='Firewall') {
-    
-                    setFirewallTable(data);
-                }else if (device=='DVR') {
-    
-                    setDvrTable(data);
-                    
-                } else if (device=='Fingerprint') {
-                    setFigerprintTable(data);
+                }else {
+                    setNetworkTable(data);
                 }
             }
             
@@ -323,7 +349,7 @@ searchText.addEventListener('keyup',(e)=>{
   
         tableOutput.style.display="none";
         notFound.style.display="none";
-        pagination.style.display="block";
+        // pagination.style.display="block";
         appTable.style.display="block";
     }
   
@@ -353,18 +379,11 @@ function getData() {
             } else if (device=='Printers') {
                 setPrinterTable(data);
                 
-            }else if (device=='Switches') {
+            }else if (device=='Backup') {
+                setBackupTable(data);
                 
-                setSwitchTable(data);
-            } else if (device=='Firewall') {
-
-                setFirewallTable(data);
-            }else if (device=='DVR') {
-
-                setDvrTable(data);
-                
-            } else if (device=='Fingerprint') {
-                setFigerprintTable(data);
+            }else {
+                setNetworkTable(data);
             }
 
         }
@@ -402,6 +421,9 @@ function clicked(tr) {
     console.log("ok!",tr);
     var cell = tr.getElementsByTagName("td")[0];
     var id = cell.innerHTML;
+    if(device!=="PC" || device!=="Servers" || device!=="Backup" || device!=="Printers"){
+        device="Network";
+    }
     window.location.href="https://osg-support.cops.com/admins/datasheet/"+device+"/"+id;
 }
 

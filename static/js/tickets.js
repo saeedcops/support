@@ -1,4 +1,4 @@
-const categoryItems=document.querySelectorAll(".list");
+// const categoryItems=document.querySelectorAll(".list");
 const branchItems=document.querySelectorAll(".blist");
 const pagination=document.querySelector(".pagination-container");
 const tableOutput=document.querySelector(".table-output");
@@ -7,9 +7,9 @@ const tableBody=document.querySelector(".table-body");
 const searchText=document.querySelector("#searchText");
 const notFound=document.querySelector(".not-found");
 var branchLastli=branchItems[0];
-var categoryLastli=categoryItems[0];
+// var categoryLastli=categoryItems[0];
 var branch=branchLastli.getAttribute("data-filter");
-var category=categoryLastli.getAttribute("data-filter");
+// var category=categoryLastli.getAttribute("data-filter");
 
 
 
@@ -120,7 +120,7 @@ function setTicketTable(data) {
 
 function getData() {
 
-    fetch("/tickets/search/?category="+category+"&branch="+branch,{
+    fetch("/tickets/search/?branch="+branch,{
         // body:JSON.stringify({ device:device }),
         method:"GET",
         }).then((res)=>res.json())

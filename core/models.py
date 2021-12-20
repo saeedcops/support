@@ -13,19 +13,12 @@ from django.contrib.auth.models import AbstractUser
 def user_directory_path(instance, filename):
   
     # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
-    return 'requests/{0}/{1}'.format(instance.user.name, filename)
+    return 'requests/{0}/{1}'.format(instance.user.username, filename)
 
 def user_image_path(instance, filename):
   
     # file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
-    return 'profile/{0}/{1}'.format(instance.user.username, filename)
-
-
-class User(AbstractUser):
-    phone = models.CharField(max_length=20, blank=True)
-    ip = models.CharField(max_length=20, blank=True)
-    department = models.CharField(max_length=20,null=True, blank=True)
-
+    return 'profile/{0}/{1}'.format(instance.username, filename)
 
 
 class Branch(models.Model):
@@ -36,7 +29,7 @@ class Branch(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20,unique=True)
 
     def __str__(self):
         return self.name
@@ -57,16 +50,16 @@ class FingerPrint(models.Model):
     ip = models.CharField(max_length=15)
     switch_port = models.IntegerField(default=0)
     vlan = models.IntegerField(default=99)
-    model = models.CharField(max_length=20)
-    serial_num = models.CharField(max_length=17)
-    location = models.CharField(max_length=30)
+    model = models.CharField(max_length=30)
+    serial_num = models.CharField(max_length=17,null=True,blank=True)
+    location = models.CharField(max_length=30,null=True,blank=True)
     branch=models.ForeignKey(
             Branch,
             verbose_name="Branch",
             on_delete = models.PROTECT)
 
     def __str__(self):
-        return self.ip
+        return self.model
 
     class Meta:
         ordering=['-ip']
@@ -74,14 +67,16 @@ class FingerPrint(models.Model):
 
 
 class DVR(models.Model):
-    host_name = models.CharField(max_length=15)
-    ip = models.CharField(max_length=15)
+    host_name = models.CharField(max_length=15,null=True,blank=True)
+    ip = models.CharField(max_length=20,unique=True)
     switch_port = models.IntegerField(default=0)
     cams = models.IntegerField(default=0)
     vlan = models.IntegerField(default=99)
-    model = models.CharField(max_length=20)
-    serial_num = models.CharField(max_length=17)
-    location = models.CharField(max_length=30)
+    model = models.CharField(max_length=50)
+    serial_num = models.CharField(max_length=20,null=True,blank=True)
+    username = models.CharField(max_length=20,null=True,blank=True)
+    password = models.CharField(max_length=20,null=True,blank=True)
+    location = models.CharField(max_length=50)
     
     branch=models.ForeignKey(
             Branch,
@@ -140,23 +135,22 @@ class Switch(models.Model):
 
 
 class Server(models.Model):
-    host_name = models.CharField(max_length=15)
-    ip = models.CharField(max_length=15) 
+    host_name = models.CharField(max_length=30,unique=True)
+    ip = models.CharField(max_length=50) 
     switch_port = models.IntegerField(default=0)
     vlan = models.IntegerField(default=0)
-    ram = models.IntegerField(default=0)
-    cpu = models.CharField(max_length=10)
-    hard_disk=models.CharField(max_length=10)
+    ram = models.CharField(max_length=50)
+    cpu = models.CharField(max_length=50)
+    hard_disk=models.CharField(max_length=50)
     os = models.CharField(max_length=50)
-    mac = models.CharField(max_length=17) 
-    model = models.CharField(max_length=20) 
-    serial_num = models.CharField(max_length=17)
+    mac = models.CharField(max_length=50) 
+    model = models.CharField(max_length=50) 
+    serial_num = models.CharField(max_length=50,null=True,blank=True)
     role = models.CharField(max_length=30) 
     branch=models.ForeignKey(
             Branch,
             verbose_name="Branch",
             on_delete = models.PROTECT,null=True,blank=True)
-    # category = models.CharField(max_length=20, default="Support")
 
     def __str__(self):
         return self.host_name
@@ -179,17 +173,17 @@ class Share(models.Model):
 
 
 class PC(models.Model):
-    host_name = models.CharField(max_length=15)
-    ip = models.CharField(max_length=15) 
+    host_name = models.CharField(max_length=50,unique=True)
+    ip = models.CharField(max_length=50) 
     switch_port = models.IntegerField(default=0)
     vlan = models.IntegerField(default=0)
-    ram = models.IntegerField(default=0)
-    cpu = models.CharField(max_length=10)
-    hard_disk=models.CharField(max_length=10)
-    os = models.CharField(max_length=10)
-    mac = models.CharField(max_length=17) 
-    model = models.CharField(max_length=20) 
-    serial_num = models.CharField(max_length=17)     
+    ram = models.CharField(max_length=50,null=True,blank=True)
+    cpu = models.CharField(max_length=50,null=True,blank=True)
+    hard_disk=models.CharField(max_length=50,null=True,blank=True)
+    os = models.CharField(max_length=50,null=True,blank=True)
+    mac = models.CharField(max_length=50,null=True,blank=True) 
+    model = models.CharField(max_length=50,null=True,blank=True) 
+    serial_num = models.CharField(max_length=50,null=True,blank=True)     
     user = models.ForeignKey(
            settings.AUTH_USER_MODEL,
             related_name='userprofile',
@@ -211,17 +205,96 @@ class PC(models.Model):
         ordering=['-host_name']
 
 
+class Network(models.Model):
+    device = models.CharField(max_length=20)
+    model = models.CharField(max_length=30,null=True,blank=True)
+    ports =models.CharField(default="1",max_length=20)
+    location = models.CharField(max_length=30,null=True,blank=True)
+    ip =models.CharField(max_length=20,unique=True)
+    username = models.CharField(max_length=20,null=True,blank=True)
+    password = models.CharField(max_length=20,null=True,blank=True)
+    serial_num = models.CharField(max_length=50,null=True,blank=True) 
+    branch=models.ForeignKey(
+            Branch,
+            related_name='branchnetwork',
+            on_delete = models.PROTECT,null=True,blank=True)
+    
+    def __str__(self):
+        return self.device
+
+    class Meta:
+        ordering = ['-device']
+
+
+
+class Backup(models.Model):
+    data = models.CharField(max_length=100)
+    descreption = models.CharField(max_length=50,null=True,blank=True)
+    internal_path =models.CharField(max_length=70,null=True,blank=True)
+    internal_schadule =models.CharField(max_length=50,null=True,blank=True)
+    internal_agent =models.CharField(max_length=50,null=True,blank=True)
+    external_path =models.CharField(max_length=70,null=True,blank=True)
+    external_schadule =models.CharField(max_length=50,null=True,blank=True)
+    external_agent =models.CharField(max_length=50,null=True,blank=True)
+    server=models.ForeignKey(
+            Server,
+            related_name='bkb',
+            on_delete = models.CASCADE)
+    branch=models.ForeignKey(
+            Branch,
+            related_name='branchbkb',
+            on_delete = models.PROTECT,null=True,blank=True)
+    
+    def __str__(self):
+        return self.data
+
+    class Meta:
+        ordering = ['-data']
+
+
+class Storage(models.Model):
+    model = models.CharField(max_length=20)
+    capacity = models.CharField(max_length=20)
+    ip =models.CharField(max_length=50,unique=True)
+    serial_num = models.CharField(max_length=50,null=True,blank=True) 
+    branch=models.ForeignKey(
+            Branch,
+            related_name='branchstore',
+            on_delete = models.PROTECT,null=True,blank=True)
+    
+    def __str__(self):
+        return self.model
+
+    class Meta:
+        ordering = ['-ip']
+
+
+class Stock(models.Model):
+    status = models.CharField(default="Used",max_length=20)
+    qty =models.CharField(default="1",max_length=20)
+    item = models.CharField(max_length=100)
+    branch=models.ForeignKey(
+            Branch,
+            related_name='branchstock',
+            on_delete = models.PROTECT,null=True,blank=True)
+    
+    def __str__(self):
+        return self.item
+
+    class Meta:
+        ordering = ['-status']
+
+
+
 class Printer(models.Model):
-    kind = models.CharField(max_length=15)
-    ip = models.CharField(max_length=15) 
+    ip = models.CharField(max_length=30,unique=True) 
     switch_port = models.IntegerField(default=0)
     vlan = models.IntegerField(default=0)
-    mac = models.CharField(max_length=17) 
-    model = models.CharField(max_length=20) 
-    serial_num = models.CharField(max_length=17)
-    role = models.CharField(max_length=30) 
-    connected_pc = models.ManyToManyField(PC)
-#     department=models.CharField(max_length = 10,null=True,blank=True)
+    mac = models.CharField(max_length=30,null=True,blank=True) 
+    model = models.CharField(max_length=50,null=True,blank=True) 
+    serial_num = models.CharField(max_length=30,null=True,blank=True)
+    office=models.CharField(max_length = 50,null=True,blank=True)
+    scan_share=models.CharField(max_length = 150,null=True,blank=True)
     branch=models.ForeignKey(
             Branch,
             verbose_name="Branch",
@@ -234,22 +307,41 @@ class Printer(models.Model):
         ordering=['-ip']
 
 
+class User(AbstractUser):
+    phone = models.CharField(max_length=20, blank=True)
+    ip = models.CharField(max_length=20, blank=True)
+    image = models.ImageField(upload_to = user_image_path,null=True,blank=True)
+
+    department=models.CharField(max_length = 15,null=True,blank=True)
+    # department = models.ForeignKey(
+    #         Department,
+    #         related_name='udepartment',
+    #         on_delete = models.PROTECT,null=True,blank=True)
+    pc=models.ForeignKey(
+            PC,
+            related_name='userpc',
+            on_delete = models.PROTECT,null=True,blank=True)
+    branch=models.ForeignKey(
+            Branch,
+            related_name='userbranch',
+            on_delete = models.PROTECT,null=True,blank=True)
+
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(
             settings.AUTH_USER_MODEL,
-            related_name='user',
+            related_name='userpr',
             on_delete = models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 200)
-    department=models.CharField(max_length = 10)
+    department=models.CharField(max_length = 15,null=True,blank=True)
     phone =models.CharField(max_length = 15,null=True,blank=True)
     image = models.ImageField(upload_to = user_image_path,null=True,blank=True)
-#     department = models.ForeignKey(
-#             Department,
-#             related_name='udepartment',
-#             on_delete = models.PROTECT,null=True,blank=True)
+    # department = models.ForeignKey(
+    #         Department,
+    #         related_name='udepartment',
+    #         on_delete = models.PROTECT,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
             on_delete = models.PROTECT,null=True,blank=True)
@@ -270,7 +362,7 @@ class UserProfile(models.Model):
 class AdminProfile(models.Model):
     user = models.OneToOneField(
             settings.AUTH_USER_MODEL,
-            related_name='admin',
+            related_name='adminpr',
             on_delete = models.CASCADE,null=True,blank=True)
     name = models.CharField(max_length = 50)
     email = models.EmailField(max_length = 50)
@@ -291,6 +383,7 @@ class AdminProfile(models.Model):
     class Meta:
         ordering = ['-name']
 
+
 class AppPermission(models.Model):
     permission = models.CharField(max_length = 50)
 
@@ -301,7 +394,7 @@ class AppPermission(models.Model):
 
 class Request(models.Model):
     user = models.ForeignKey(
-            UserProfile,
+            settings.AUTH_USER_MODEL,
             related_name='userrequest',
             on_delete = models.CASCADE)
     valid = models.BooleanField(default=False)
@@ -317,7 +410,7 @@ class Request(models.Model):
 
     
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
     class Meta:
         ordering = ['-date']
@@ -357,11 +450,11 @@ class Ticket(models.Model):
     closed_date = models.DateTimeField(null=True,blank=True)
     description = models.TextField()
     user = models.ForeignKey(
-            UserProfile,
+            settings.AUTH_USER_MODEL,
             related_name='userticket',
             on_delete = models.CASCADE)
     admin = models.ForeignKey(
-            AdminProfile,
+            settings.AUTH_USER_MODEL,
             related_name='admin',
             on_delete = models.CASCADE,null=True,blank=True)
     pc=models.ForeignKey(
@@ -375,8 +468,8 @@ class Ticket(models.Model):
             on_delete = models.PROTECT)
 
     def __str__(self):
-        return self.user.name
+        return self.user.username
 
     class Meta:
 
-        ordering=['-status',]
+        ordering=['-open_date',]
