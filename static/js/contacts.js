@@ -20,7 +20,11 @@ searchText.addEventListener('keyup', (e) => {
         tableBody.innerHTML = "";
 
         fetch("/contacts/", {
+<<<<<<< HEAD
                 body: JSON.stringify({searchText: search, department: department }),
+=======
+                body: JSON.stringify({ searchText: search, department: department }),
+>>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
                 method: "POST",
             }).then((res) => res.json())
             .then((data) => {
@@ -43,10 +47,17 @@ searchText.addEventListener('keyup', (e) => {
 
                             tableBody.innerHTML += '<tr><td><img src="https://osg-support.cops.com/img/' +
                                 item.image + '" class="img-rounded" alt="not-found" /></td><td>' +
+<<<<<<< HEAD
                                 item.first_name + '</td><td>' +
                                 item.email + '</td><td>' +
                                 item.phone + '</td><td>' +
                                 item.department + '</td></tr>';
+=======
+                                item.name + '</td><td>' +
+                                item.email + '</td><td>' +
+                                item.phone + '</td><td>' +
+                                department + '</td></tr>';
+>>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
                         });
                     }
 
@@ -88,10 +99,17 @@ function getData() {
 
                     tableBody.innerHTML += '<tr><td><img src="https://osg-support.cops.com/img/' +
                         item.image + '" class="img-rounded" alt="not-found" /></td><td>' +
+<<<<<<< HEAD
                         item.first_name + '</td><td>' +
                         item.email + '</td><td>' +
                         item.phone + '</td><td>' +
                         item.department + '</td></tr>';
+=======
+                        item.name + '</td><td>' +
+                        item.email + '</td><td>' +
+                        item.phone + '</td><td>' +
+                        department + '</td></tr>';
+>>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
 
                 });
 

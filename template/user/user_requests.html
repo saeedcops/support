@@ -2,7 +2,11 @@
 
 
 <div class="row m-2">
+<<<<<<< HEAD
     <div class="col-md-10 bg-light">
+=======
+    <div class="col-md-10 bg-light py-1 ps-1">
+>>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mt-1">
@@ -16,6 +20,7 @@
         <a href="{% url 'create-request' %}" class="btn btn-primary m-sm-1">Add Request</a>
     </div>
 </div>
+<<<<<<< HEAD
 
 
 {% if requests.count %}
@@ -29,6 +34,21 @@
         <div class="app-table">
 
             <table class="table table-stripped table-hover">
+=======
+
+
+{% if requests.count %}
+<div class="card m-sm-2">
+    <div class="card-body">
+
+        {% include 'partials/messages.html' %}
+
+
+
+        <div class="app-table">
+
+            <table border=1 class="table table-stripped table-hover">
+>>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
                 <thead>
                     <tr>
                         <th> Status</th>
