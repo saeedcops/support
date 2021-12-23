@@ -8,7 +8,7 @@
               <ol class="breadcrumb mt-1">
                 <li class="breadcrumb-item"><a href="{% url 'admin-requests' %}">Requests</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit Request</li>
-                <li class="breadcrumb-item active" aria-current="page">{{request.user.name}}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{requests.user.username}}</li>
               </ol>
             </nav>
 </div>
@@ -19,7 +19,7 @@
         <div class="card-body">
             {% include 'partials/messages.html' %}
           
-            <form enctype="multipart/form-data" action="{% url 'edit-requests' request.pk %}" method="post">
+            <form enctype="multipart/form-data" action="{% url 'edit-requests' requests.pk %}" method="post">
                 {% csrf_token %}
                   {{ form.as_p }}
                       <table>

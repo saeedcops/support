@@ -149,17 +149,6 @@ branchItems.forEach(li =>
 
 
 
-categoryItems.forEach(li =>
-        li.onclick = () => {
-            category=li.getAttribute("data-filter");
-            console.log(category);
-            li.classList.add('active');
-            categoryLastli.classList.remove('active');
-            categoryLastli=li;
-            getData();
-
-});
-
 
 function clicked(tr) {
 

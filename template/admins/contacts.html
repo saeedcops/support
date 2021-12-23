@@ -1,11 +1,7 @@
 {% extends 'baseadmin.html' %} {% load static %} {% block content %}
 
 
-<<<<<<< HEAD
 <div class="bg-light ">
-=======
-<div class="bg-light py-1 ps-1 m-sm-2">
->>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mt-1">
@@ -41,11 +37,7 @@
 
         <div class="app-table">
 
-<<<<<<< HEAD
             <table class="table table-stripped table-hover">
-=======
-            <table border=1 class="table table-stripped table-hover">
->>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
                 <thead>
                     <tr>
                         <th> Image</th>
@@ -62,17 +54,10 @@
                     {% for ex in page_obj %}
                     <tr>
                         <td><img src="https://osg-support.cops.com/img/{{ex.image}}" class="img-rounded" alt="not-found" /></td>
-<<<<<<< HEAD
                         <td>{{ex.first_name}}</td>
                         <td>{{ex.email}}</td>
                         <td>{{ex.phone}}</td>
                         <td>{{ex.department}}</td>
-=======
-                        <td>{{ex.name}}</td>
-                        <td>{{ex.email}}</td>
-                        <td>{{ex.phone}}</td>
-                        <td>{{ex.position}}</td>
->>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
                     </tr>
                     {% endfor %}
 
@@ -86,11 +71,7 @@
 
         <div class="table-output" style="display:none">
 
-<<<<<<< HEAD
             <table class="table table-stripped table-hover">
-=======
-            <table border=1 class="table table-stripped table-hover">
->>>>>>> a88a61d5e1db0365cf1023e8cfccd760ddcef486
                 <thead class="table-head">
                     <tr>
 

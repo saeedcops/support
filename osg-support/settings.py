@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -54,6 +55,7 @@ DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -70,7 +72,7 @@ AUTHENTICATION_BACKENDS = [
 
 AUTH_ADFS = {
     "SERVER": "adfs.cops.com",
-    "CLIENT_ID": "8d53f8d4-739f-4828-b75d-87e950164c2a",
+    "CLIENT_ID": "c71c316a-5696-4f92-9d67-b91efee5c0e2",
     "RELYING_PARTY_ID": "osg-support.cops.com",
     # Make sure to read the documentation about the AUDIENCE setting
     # when you configured the identifier as a URL!
@@ -202,3 +204,18 @@ from django.contrib import messages
 MESSAGE_TAGS={
     messages.ERROR:"danger"
 }
+
+#add Lang
+LOCALE_PATHS = (
+   os.path.join(BASE_DIR, 'locale'),
+)
+
+LANGUAGES = (
+    ('ar', _('Arabic')),
+    ('en', _('English')),
+)
+
+MULTILINGUAL_LANGUAGES = (
+    "en-us",
+    "ar-ae",
+)

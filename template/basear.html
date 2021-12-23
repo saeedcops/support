@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <html lang="ar" dir="rtl">
   <head>
      <meta charset="utf-8">
@@ -19,7 +20,6 @@
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="عرض/إخفاء لوحة التنقل">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="بحث" aria-label="بحث">
   
   <div class="navbar-nav">
     <div class="nav-item text-nowrap">
@@ -28,14 +28,14 @@
   </div>
 </header>
 
-<div class="container-fluid">
+<div class="container-fluid" >
   <div class="row">
 
    {% include 'partials/_sidebarar.html' %}
 
-   <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-   
-   
+   <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 bmain">
+
+    <h1> {% trans "Category" %} </h1>
       {% block content %}
      
         
@@ -47,10 +47,5 @@
 </div>
 
 
-
-    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.24.1/feather.min.js" integrity="sha384-EbSscX4STvYAC/DxHse8z5gEDaNiKAIGW+EpfzYTfQrgIlHywXXrM9SUIZ0BlyfF" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha384-i+dHPTzZw7YVZOx9lbH5l6lP74sLRtMtwN2XjVqjf3uAGAREAF4LMIUDTWEVs4LI" crossorigin="anonymous"></script>
-  </body>
+ </body>
 </html>

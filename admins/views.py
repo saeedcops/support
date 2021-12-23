@@ -171,7 +171,7 @@ class RequestListView(View):
 class RequestUpdateView(UpdateView):
 
     model = Request
-    context_object_name = 'request'
+    context_object_name = 'requests'
     fields =  '__all__'
     template_name = 'admins/edit_request.html'
 

@@ -7,6 +7,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
+from django.utils.translation import gettext_lazy as _
+
 # Create your models here. settings.AUTH_USER_MODEL
 
 
@@ -22,27 +24,36 @@ def user_image_path(instance, filename):
 
 
 class Branch(models.Model):
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
-
-
-class Department(models.Model):
-    name = models.CharField(max_length=20,unique=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Category(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20,verbose_name = _("Name"))
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name_plural = 'Categories'
+        verbose_name = _("Branch")
+        verbose_name_plural = _("Branchs")
+
+
+class Department(models.Model):
+    name = models.CharField(max_length=20,unique=True,verbose_name = _("Name"))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Department")
+        verbose_name_plural = _("Departments")
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=20,verbose_name = _("Name"))
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("Category")
+        verbose_name_plural = _('Categories')
 
 
 
@@ -308,11 +319,11 @@ class Printer(models.Model):
 
 
 class User(AbstractUser):
-    phone = models.CharField(max_length=20, blank=True)
+    phone = models.CharField(max_length=20, blank=True,verbose_name = _("Phone"))
     ip = models.CharField(max_length=20, blank=True)
-    image = models.ImageField(upload_to = user_image_path,null=True,blank=True)
+    image = models.ImageField(upload_to = user_image_path,null=True,blank=True,verbose_name = _("Image"))
 
-    department=models.CharField(max_length = 15,null=True,blank=True)
+    department=models.CharField(max_length = 15,null=True,blank=True,verbose_name = _("Department"))
     # department = models.ForeignKey(
     #         Department,
     #         related_name='udepartment',
@@ -323,9 +334,9 @@ class User(AbstractUser):
             on_delete = models.PROTECT,null=True,blank=True)
     branch=models.ForeignKey(
             Branch,
+            verbose_name = _("Branch"),
             related_name='userbranch',
             on_delete = models.PROTECT,null=True,blank=True)
-
 
 
 class UserProfile(models.Model):
@@ -396,16 +407,19 @@ class Request(models.Model):
     user = models.ForeignKey(
             settings.AUTH_USER_MODEL,
             related_name='userrequest',
+            verbose_name = _("User"),
             on_delete = models.CASCADE)
-    valid = models.BooleanField(default=False)
-    date = models.DateField(default=now)
-    file_scan = models.FileField(upload_to =user_directory_path,null=True,blank=True)
+    valid = models.BooleanField(default=False,verbose_name = _("Valid"))
+    date = models.DateField(default=now,verbose_name = _("Date"))
+    file_scan = models.FileField(upload_to =user_directory_path,null=True,blank=True,verbose_name = _("File"))
     branch=models.ForeignKey(
             Branch,
+            verbose_name = _("Branch"),
             related_name='branchrequest',
             on_delete = models.PROTECT,null=True,blank=True)
     category = models.ForeignKey(Category,
                 related_name='userrequest',
+                verbose_name = _("Category"),
                 on_delete = models.PROTECT,null=True,blank=True)
 
     
@@ -433,38 +447,47 @@ class Permission(models.Model):
 
 class Message(models.Model):
     sender = models.IntegerField(default = 1)
-    name = models.CharField(default= " ",max_length = 50)
-    text = models.TextField()
-    date = models.DateField(default=now)
+    name = models.CharField(default= " ",max_length = 50,verbose_name = _("Name"))
+    text = models.TextField(verbose_name = _("Text"))
+    date = models.DateField(default=now,verbose_name = _("Date"))
     
     def __str__(self):
         return self.text
 
+    class Meta:
+        verbose_name = _("Message")
+        verbose_name_plural = _('Messages')
+
 
 
 class Ticket(models.Model):
-    status = models.CharField(default= "open",max_length = 10)
+    status = models.CharField(default= "open",max_length = 10,verbose_name = _("Status"))
     # priority =  models.IntegerField()
-    messages = models.ManyToManyField(Message)
-    open_date = models.DateTimeField(default=now)
-    closed_date = models.DateTimeField(null=True,blank=True)
-    description = models.TextField()
+    messages = models.ManyToManyField(Message,verbose_name = _("Messages"))
+    open_date = models.DateTimeField(default=now,verbose_name = _("Open Date"))
+    closed_date = models.DateTimeField(null=True,blank=True,verbose_name = _("Closed Date"))
+    description = models.TextField(verbose_name = _("Description"))
     user = models.ForeignKey(
             settings.AUTH_USER_MODEL,
             related_name='userticket',
+            verbose_name = _("User"),
             on_delete = models.CASCADE)
     admin = models.ForeignKey(
             settings.AUTH_USER_MODEL,
             related_name='admin',
+            verbose_name = _("Admin"),
             on_delete = models.CASCADE,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
+            verbose_name = _("PC"),
             on_delete = models.PROTECT)
     branch=models.ForeignKey(
             Branch,
+            verbose_name = _("Branch"),
             on_delete = models.PROTECT)
     category = models.ForeignKey(
             Category,
+            verbose_name = _("Category"),
             on_delete = models.PROTECT)
 
     def __str__(self):
@@ -473,3 +496,5 @@ class Ticket(models.Model):
     class Meta:
 
         ordering=['-open_date',]
+        verbose_name = _("Ticket")
+        verbose_name_plural = _('Tickets')
