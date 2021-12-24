@@ -317,12 +317,15 @@ class Printer(models.Model):
     class Meta:
         ordering=['-ip']
 
-
+# auth.PermissionsMixin
 class User(AbstractUser):
     phone = models.CharField(max_length=20, blank=True,verbose_name = _("Phone"))
     ip = models.CharField(max_length=20, blank=True)
     image = models.ImageField(upload_to = user_image_path,null=True,blank=True,verbose_name = _("Image"))
-
+    language = models.CharField(max_length=10,
+                                verbose_name =_("Language"),
+                                choices=settings.LANGUAGES,
+                                default=settings.LANGUAGE_CODE)
     department=models.CharField(max_length = 15,null=True,blank=True,verbose_name = _("Department"))
     # department = models.ForeignKey(
     #         Department,

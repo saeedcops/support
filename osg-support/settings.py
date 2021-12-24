@@ -210,6 +210,8 @@ LOCALE_PATHS = (
    os.path.join(BASE_DIR, 'locale'),
 )
 
+LANGUAGE_CODE = 'ar'
+
 LANGUAGES = (
     ('ar', _('Arabic')),
     ('en', _('English')),

@@ -2,6 +2,13 @@ body {
     font-size: .875rem;
   }
 
+  .bmain{
+
+    position: fixed;
+    right: 0;
+  
+   
+}
   .feather {
     width: 16px;
     height: 16px;

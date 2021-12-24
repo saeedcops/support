@@ -1,6 +1,8 @@
 {% load static %}
 {% load notifications_tags %} 
-<html lang="en">
+{% load i18n %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}  
+<html dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}">
 
 <head>
     <meta charset="utf-8">
@@ -14,7 +16,11 @@
     <link href=" {% static 'css/main.css' %} " rel="stylesheet">
     <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
 <!--   Custom styles for this template -->
-    <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% if LANGUAGE_BIDI %}
+<link href="{% static 'css/dashboardar.css' %}" rel="stylesheet">
+{% else %}
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+{% endif %}
 </head>
 
 <body>
@@ -40,7 +46,7 @@
                 
                 <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
                   
-                  <div class="notification-heading"><h4 class="menu-title">Notifications</h4>
+                  <div class="notification-heading"><h4 class="menu-title">{% trans "Notifications" %}</h4>
                   </div>
                   <li class="divider"></li>
                  <div class="notifications-wrapper">            
@@ -53,6 +59,15 @@
 
         </div>
         
+        <div class="row langrow">
+            <p style="color:#fff;">عربي</p>
+            <label class="switch" >
+                <input type="checkbox" id="langbox" onchange="langbox(this)"{% if LANGUAGE_BIDI %}checked{% endif %}>
+                <span class="slider round"></span>
+            </label>
+            <p style="color:#fff;">English</p>
+        </div> 
+
         <div class="navbar-nav px-3" style="display:flex; flex-direction:row;align-items:center;">
 
             
@@ -77,7 +92,7 @@
 
             {% include 'partials/_sidebar.html' %}
 
-            <main id="main" role="main" class="col offset-2">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 bmain">
 
                 {% block content %} {% endblock %}
             </main>
@@ -89,7 +104,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-    
+    <script src="{% static 'js/language.js' %}" type="text/javascript"></script>
 
     <script src= "{% static 'js/notify.js' %}"></script>
     {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge' fetch=20 menu_class="dropdown-menu" %}

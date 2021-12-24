@@ -1,13 +1,13 @@
 {% extends 'baseadmin.html' %}
-
+{% load i18n %}
 {% block content %}
 
 <div class="bg-light">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="{% url 'pc' %}">Datasheet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Upload Datasheet</li>
+                <li class="breadcrumb-item"><a href="{% url 'pc' %}">{% trans "Datasheet" %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans "Upload Datasheet" %}</li>
               </ol>
             </nav>
 </div>
@@ -21,11 +21,11 @@
             <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
               {% csrf_token %}
               <div class="form-group">
-                  <label for="exampleFormControlFile1">Select excel datasheet file!</label>
-                  <input type="file" title="Upload excel file" name="file"
+                  <label for="exampleFormControlFile1">{% trans "Select excel datasheet file" %}</label>
+                  <input type="file" title="{% trans "Upload excel file" %}" name="file"
                   class="form-control-file" id="exampleFormControlFile1" required="required">
               </div>
-              <input type="submit" value="Upload" name="time" class="mt-4 mb-4 btn btn-primary">
+              <input type="submit" value="{% trans "Upload" %}" name="time" class="mt-4 mb-4 btn btn-primary">
           </form>
 
         </div>

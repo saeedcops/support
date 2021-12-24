@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block content %}
 
 <div class="bg-light">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="">Tickets</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Add Ticket</li>
+                <li class="breadcrumb-item"><a href="#">{% trans "Tickets" %}</a></li>
               </ol>
             </nav>
 </div>
@@ -27,7 +26,7 @@
                 
 
                  <div class="form-group mt-5">
-                    <input type="submit" value="Submit" class=" btn btn-primary form-control form-control-sm">
+                    <input type="submit" value="{% trans "Submit" %}" class=" btn btn-primary form-control form-control-sm">
                 </div>
 
             </form>

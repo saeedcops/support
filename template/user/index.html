@@ -1,18 +1,20 @@
-{% extends 'basear.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load i18n %} {% load static %} {% block content %}
+
 <div class="row m-2">
     <div class="col-md-10 bg-light">
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Tickets</a></li>
-                <li class="breadcrumb-item active" aria-current="page">My Tickets</li>
+                <li class="breadcrumb-item"><a href="#">{% trans "Tickets" %}</a></li>
             </ol>
         </nav>
 
     </div>
 
     <div class="col-md-2 ">
-        <a href="{% url 'add-ticket' %}" class="btn btn-primary m-sm-1">Add Ticket</a>
+
+        <a href="{% url 'add-ticket' %}" class="btn btn-primary m-sm-1">{% trans "Add Ticket" %}</a>
+
     </div>
 </div>
 
@@ -30,12 +32,12 @@
             <table class="table table-stripped table-hover">
                 <thead>
                     <tr>
-                        <th> Status</th>
-                        <th> Category</th>
-                        <th> Description</th>
-                        <th> Date</th>
-                        <th> Branch</th>
-                        <th> Admin</th>
+                        <th>{% trans "Status" %} </th>
+                        <th> {% trans "Category" %}</th>
+                        <th>{% trans "Description" %} </th>
+                        <th>{% trans "Date" %}</th>
+                        <th> {% trans "Branch" %}</th>
+                        <th>{% trans "Admin" %} </th>
 
                     </tr>
 
@@ -45,11 +47,11 @@
                     <tr>
                         <td style="display:none">{{ex.pk}}</td>
                         {% if ex.status == "closed" %}
-                        <td style="background:#b01c0b;">{{ex.status}}</td>
+                        <td style="background:#b01c0b;">{% trans "closed" %}</td>
                         {% elif ex.status == "pending" %}
-                        <td style="background:#FFFB33;">{{ex.status}}</td>
+                        <td style="background:#FFFB33;">{% trans "pending" %}</td>
                         {% else %}
-                        <td style="background:#0bb069;">{{ex.status}}</td>
+                        <td style="background:#0bb069;">{% trans "open" %}</td>
                         {% endif %}
                         <td>{{ex.category}}</td>
                         <td>{{ex.description}}</td>
@@ -70,12 +72,12 @@
             <table class="table table-stripped table-hover">
                 <thead>
                     <tr>
-                        <th> Status </th>
-                        <th> Category</th>
-                        <th> Description</th>
-                        <th> Date</th>
-                        <th> Branch</th>
-                        <th> Admin</th>
+                        <th>{% trans "Status" %} </th>
+                        <th> {% trans "Category" %}</th>
+                        <th>{% trans "Description" %} </th>
+                        <th>{% trans "Date" %}</th>
+                        <th> {% trans "Branch" %}</th>
+                        <th>{% trans "Admin" %} </th>
                         <th></th>
                     </tr>
 
@@ -88,18 +90,18 @@
 
         <div class="pagination-container">
             <div class="">
-                Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                {% trans "Showing page" %}  {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
             </div>
 
             <nav aria-label="...">
                 <ul class="pagination align-right float-right mr-auto">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+                        <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">{% trans "Previous" %}</a>
                     </li>
                     {% endif %} {% if page_obj.number == 1 %}
                     <li class="page-item disabled">
-                        <a class="page-link" href="" tabindex="-1" aria-disabled="true">Previous</a>
+                        <a class="page-link" href="" tabindex="-1" aria-disabled="true">{% trans "Previous" %}</a>
                     </li>
                     {% endif %}
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -109,11 +111,11 @@
                     {% if page_obj.has_next %}
                     <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+                        <a class="page-link" href="?page={{page_obj.next_page_number}}">{% trans "Next" %}</a>
                     </li>
                     {% endif %} {% if page_obj.paginator.num_pages == page_obj.number %}
                     <li class="page-item disabled">
-                        <a class="page-link" href="">Next</a>
+                        <a class="page-link" href="">{% trans "Next" %}</a>
                     </li>
                     {% endif %}
 

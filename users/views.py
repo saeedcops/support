@@ -16,6 +16,7 @@ from django.views.generic.edit import UpdateView
 from django.views.generic.list import ListView
 from core.util import link_user_pc
 from notifications.signals import notify
+from django.utils import translation
 
 
 class Home(View):
@@ -23,6 +24,7 @@ class Home(View):
     def get(self, request, *args, **kwargs):
 
         link_user_pc(request.META['HTTP_X_FORWARDED_FOR'],request.user)
+        translation.activate(request.user.language)
 
         if request.user.is_staff:
         
@@ -36,6 +38,21 @@ class Home(View):
             page_obj = Paginator.get_page(paginator, page_number)
             return render(request, 'user/index.html', {'tickets': tickets, 'page_obj': page_obj})
 
+
+class Language(View):
+    
+    def get(self, request, *args, **kwargs):
+
+        user= request.user
+
+        if user.language=="en":
+            user.language="ar"
+            user.save()
+        else:
+            user.language="en"
+            user.save()
+        
+        return redirect('ticket')
 
 
 class Profile(View):

@@ -1,11 +1,11 @@
-{% extends 'baseadmin.html' %} {% block content %}
+{% extends 'baseadmin.html' %} {% load i18n %} {% block content %}
 
 <div class="bg-light">
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mt-1">
-            <li class="breadcrumb-item"><a href="">Profile</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
+            <li class="breadcrumb-item"><a href="">{% trans "Profile" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "Edit Profile" %}</li>
             <li class="breadcrumb-item active" aria-current="page">{{profile.name}}</li>
         </ol>
     </nav>

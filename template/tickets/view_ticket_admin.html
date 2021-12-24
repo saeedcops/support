@@ -1,11 +1,11 @@
-{% extends 'baseadmin.html' %} {% block content %}
+{% extends 'baseadmin.html' %} {% load i18n %} {% block content %}
 
 <div class="bg-light">
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mt-1">
-            <li class="breadcrumb-item"><a href="">Tickets</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Ticket Discus</li>
+            <li class="breadcrumb-item"><a href="">{% trans "Tickets" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "Ticket Discus" %}</li>
             <li class="breadcrumb-item active" aria-current="page">{{ticket.user}}</li>
         </ol>
     </nav>
@@ -40,14 +40,14 @@
                     <div class="col-md-auto ">
                         <h4> {{ ticket.description}}</h4>
                         <hr>
-                        <h6> Create : {{ ticket.open_date}}</h6>
-                        <h6> Closed : {{ ticket.closed_date}}</h6>
-                        <h6> Status : {{ ticket.status}}</h6>
-                        <h6> Category : {{ ticket.category}}</h6>
-                        <h6> PC : {{ ticket.pc}}</h6>
-                        <h6> IP : {{ ticket.pc.ip}}</h6>
-                        <h6> Branch : {{ ticket.branch}}</h6>
-                        <h6> Admin : {{ ticket.admin}}</h6>
+                        <h6>{% trans "Create :" %}  {{ ticket.open_date}}</h6>
+                        <h6>{% trans "Closed :" %}  {{ ticket.closed_date}}</h6>
+                        <h6>{% trans "Status :" %}  {{ ticket.status}}</h6>
+                        <h6>{% trans "Category :" %} {{ ticket.category}}</h6>
+                        <h6>{% trans "PC :" %}  {{ ticket.pc}}</h6>
+                        <h6>{% trans "IP :" %}  {{ ticket.pc.ip}}</h6>
+                        <h6>{% trans "Branch :" %}  {{ ticket.branch}}</h6>
+                        <h6> {% trans "Admin :" %} {{ ticket.admin}}</h6>
                     </div>
 
                 </div>
@@ -59,12 +59,12 @@
                 {% if ticket.admin %} {% if ticket.admin == request.user and ticket.closed_date == null%}
                 <form action="{% url 'view_ticket' ticket.pk %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-danger m-sm-1">Close</button>
+                    <button type="submit" class="btn btn-outline-danger m-sm-1">{% trans "Close" %}</button>
                 </form>
                 {% endif %} {% else %}
                 <form action="{% url 'view_ticket' ticket.pk %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-success m-sm-1">Flow</button>
+                    <button type="submit" class="btn btn-outline-success m-sm-1">{% trans "Flow" %}</button>
                 </form>
                 {% endif %}
 
@@ -104,18 +104,16 @@
 </div>
 
 {% endfor %} {% if ticket.admin == request.user and ticket.closed_date == null%}
+
 <form action="{% url 'view_ticket' ticket.pk %}" method="post">
     {% csrf_token %}
     <div class="form-group">
-        <label for="exampleInputEmail1">Send Message</label>
-        <input name="message" type="text" class="form-control" id="exampleInputEmail1" placeholder="Enter message">
+        <label for="exampleInputEmail1">{% trans "Send Message" %}</label>
+        <input name="message" type="text" class="form-control" id="exampleInputEmail1" placeholder="{% trans "Enter message" %}">
         <small id="emailHelp" class="form-text text-muted"> .</small>
     </div>
 
-
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{% trans "Send" %}</button>
 </form>
 
 {% endif %} {% endblock content %}

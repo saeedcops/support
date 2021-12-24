@@ -1,12 +1,11 @@
-{% extends 'baseadmin.html' %} {% load static %} {% block content %}
+{% extends 'baseadmin.html' %} {% load i18n %} {% load static %} {% block content %}
 
 
 <div class="bg-light ">
 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb mt-1">
-            <li class="breadcrumb-item"><a href="#">Contacts</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Departments</li>
+            <li class="breadcrumb-item"><a href="#">{% trans "Contacts" %}</a></li>
         </ol>
     </nav>
 </div>
@@ -26,7 +25,7 @@
                 {% endfor %}
 
 
-                <input id="searchText" type="text" class="form-control" placeholder="Search">
+                <input id="searchText" type="text" class="form-control" placeholder="{% trans "Search" %}">
 
             </ul>
 
@@ -40,11 +39,11 @@
             <table class="table table-stripped table-hover">
                 <thead>
                     <tr>
-                        <th> Image</th>
-                        <th> Name</th>
-                        <th> Email</th>
-                        <th> Phone</th>
-                        <th> Department</th>
+                        <th>{% trans "Image" %} </th>
+                        <th>{% trans "Name" %} </th>
+                        <th>{% trans "Email" %} </th>
+                        <th>{% trans "Phone" %} </th>
+                        <th>{% trans "Department" %} </th>
 
                     </tr>
 
@@ -67,7 +66,7 @@
         </div>
 
 
-        <h3 class="not-found" style="display:none">Result not found</h3>
+        <h3 class="not-found" style="display:none">{% trans "Result not found" %}</h3>
 
         <div class="table-output" style="display:none">
 
@@ -75,11 +74,11 @@
                 <thead class="table-head">
                     <tr>
 
-                        <th class="thead"> Image</th>
-                        <th class="thead"> Name</th>
-                        <th class="thead"> Email</th>
-                        <th class="thead"> Phone</th>
-                        <th class="thead"> Department</th>
+                        <th class="thead"> {% trans "Image" %}</th>
+                        <th class="thead">{% trans "Name" %} </th>
+                        <th class="thead"> {% trans "Email" %}</th>
+                        <th class="thead"> {% trans "Phone" %}</th>
+                        <th class="thead"> {% trans "Department" %}</th>
 
                         <th></th>
                     </tr>
@@ -93,18 +92,18 @@
 
         <div class="pagination-container">
             <div class="">
-                Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                {% trans "Showing page" %}  {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
             </div>
 
             <nav aria-label="...">
                 <ul class="pagination align-right float-right mr-auto">
                     {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">Previous</a>
+                        <a class="page-link" href="?page={{page_obj.previous_page_number}}" tabindex="-1" aria-disabled="true">{% trans "Previous" %}</a>
                     </li>
                     {% endif %} {% if page_obj.number == 1 %}
                     <li class="page-item disabled">
-                        <a class="page-link" href="" tabindex="-1" aria-disabled="true">Previous</a>
+                        <a class="page-link" href="" tabindex="-1" aria-disabled="true">{% trans "Previous" %}</a>
                     </li>
                     {% endif %}
                     <li class="page-item"><a class="page-link" href="#">1</a></li>
@@ -114,11 +113,11 @@
                     {% if page_obj.has_next %}
                     <li class="page-item"><a class="page-link" href="#">{{ page_obj.next_page_number  }}</a></li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+                        <a class="page-link" href="?page={{page_obj.next_page_number}}">{% trans "Next" %}</a>
                     </li>
                     {% endif %} {% if page_obj.paginator.num_pages == page_obj.number %}
                     <li class="page-item disabled">
-                        <a class="page-link" href="">Next</a>
+                        <a class="page-link" href="">{% trans "Next" %}</a>
                     </li>
                     {% endif %}
 

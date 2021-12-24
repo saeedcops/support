@@ -1,4 +1,5 @@
 {% extends 'baseadmin.html' %}
+{% load i18n %}
 {% load static %}
 
 {% block content %}
@@ -7,8 +8,8 @@
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="#">Datasheet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Branch</li>
+                <li class="breadcrumb-item"><a href="#">{% trans "Datasheet" %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans "Branch" %}</li>
               </ol>
             </nav>
         </div>
@@ -35,7 +36,7 @@
           </section>
           <div class="col-md-2 action">
 
-              <a href="{% url 'upload' %}" class="btn btn-primary m-sm-1">Upload Datasheet</a>
+              <a href="{% url 'upload' %}" class="btn btn-primary m-sm-1">{% trans "Upload Datasheet" %}</a>
 
         </div>
         
@@ -62,7 +63,7 @@
           
           </section>
           <div class="col-md-4" >
-            <input id="searchText" type="text" class="form-control" placeholder="Search">
+            <input id="searchText" type="text" class="form-control" placeholder="{% trans "Search" %}">
         </div>
     
     </div>
@@ -107,7 +108,7 @@
   </div>
 
 
-    <h3 class="not-found" style="display:none">Result not found</h3>
+    <h3 class="not-found" style="display:none">{% trans "Result not found" %}</h3>
 
       <div class="table-output" style="display:none">
 

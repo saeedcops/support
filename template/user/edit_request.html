@@ -1,13 +1,13 @@
-{% extends 'basear.html' %}
-
+{% extends 'base.html' %}
+{% load i18n %}
 {% block content %}
 
 <div class="bg-light">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="{% url 'requests' %}">Requests</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit Request</li>
+                <li class="breadcrumb-item"><a href="{% url 'requests' %}">{% trans "Requests" %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans "Edit Request" %}</li>
                 <li class="breadcrumb-item active" aria-current="page">{{request.user.name}}</li>
               </ol>
             </nav>

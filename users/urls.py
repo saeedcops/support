@@ -6,6 +6,7 @@ urlpatterns = [
     # path('', index,name='ticket'),
     path('', Home.as_view(),name='ticket'),
     # path('add-ticket/', add_ticket,name='add-ticket'),
+    path('language/', Language.as_view(),name='language'),
     path('add-ticket/', TicketCreateView.as_view(),name='add-ticket'),
     path('contacts/',csrf_exempt( ContactListView.as_view()),name='contacts'),
     path('requests/', RequestListView.as_view(),name='requests'),

@@ -1,13 +1,13 @@
 {% extends 'baseadmin.html' %}
-
+{% load i18n %}
 {% block content %}
 
 <div class="bg-light">
 
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="{% url 'pc' %}">Datasheet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit {{network.device}}</li>
+                <li class="breadcrumb-item"><a href="{% url 'pc' %}">{% trans "Datasheet" %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans "Edit" %} {{network.device}}</li>
                 <li class="breadcrumb-item active" aria-current="page">{{network.ip}}</li>
               </ol>
             </nav>
@@ -26,7 +26,7 @@
 
                       </table>
                  <div class="form-group mt-5">
-                    <input type="submit" value="Submit" class=" btn btn-primary form-control form-control-sm">
+                    <input type="submit" value="{% trans "Submit" %}" class=" btn btn-primary form-control form-control-sm">
                 </div>
 
             </form>
