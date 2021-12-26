@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load i18n %} {% load static %} {% block content %}
 
-<div class="row m-2">
-    <div class="col-md-10 bg-light">
+<div class="row">
+    <div class="col-md-10">
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mt-1">
@@ -17,8 +17,6 @@
 
     </div>
 </div>
-
-
 
 {% if tickets.count %}
 <div class="card m-sm-2">
@@ -90,7 +88,7 @@
 
         <div class="pagination-container">
             <div class="">
-                {% trans "Showing page" %}  {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
+                {% trans "Showing page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
             </div>
 
             <nav aria-label="...">

@@ -14,7 +14,7 @@
     <div class="card-body">
 
         {% include 'partials/messages.html' %}
-
+        <input id="searchText" type="text" class="form-control" placeholder="{% trans " Search " %}">
         <section>
             <ul>
 
@@ -25,10 +25,9 @@
                 {% endfor %}
 
 
-                <input id="searchText" type="text" class="form-control" placeholder="{% trans "Search" %}">
+
 
             </ul>
-
 
         </section>
 
@@ -39,11 +38,11 @@
             <table class="table table-stripped table-hover">
                 <thead>
                     <tr>
-                        <th>{% trans "Image" %} </th>
-                        <th> {% trans "Name" %}</th>
-                        <th>{% trans "Email" %} </th>
-                        <th>{% trans "Phone" %} </th>
-                        <th> {% trans "Department" %}</th>
+                        <th>{% trans "Image" %}</th>
+                        <th>{% trans "Name" %}</th>
+                        <th>{% trans "Email" %}</th>
+                        <th>{% trans "Phone" %}</th>
+                        <th>{% trans "Department" %}</th>
 
                     </tr>
 
@@ -91,7 +90,7 @@
 
         <div class="pagination-container">
             <div class="">
-                {% trans "Showing page" %}  {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
+                {% trans "Showing page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
             </div>
 
             <nav aria-label="...">

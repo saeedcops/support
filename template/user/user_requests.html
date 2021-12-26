@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% load i18n %} {% load static %} {% block content %}
 
 
-<div class="row m-2">
-    <div class="col-md-10 bg-light">
+<div class="row">
+    <div class="col-md-10">
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mt-1">
@@ -48,7 +48,7 @@
                         {% else %}
                         <td style="background:#b01c0b;">{% trans "invalid" %}</td>
                         {% endif %}
-                        <td>{{ex.user.name}}</td>
+                        <td>{{ex.user.username}}</td>
                         <td>{{ex.category}}</td>
                         <td>{{ex.date}}</td>
 
@@ -63,7 +63,7 @@
 
         <div class="pagination-container">
             <div class="">
-                {% trans "Showing page" %}  {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
+                {% trans "Showing page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}
             </div>
 
             <nav aria-label="...">

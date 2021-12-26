@@ -2,12 +2,13 @@ body {
     font-size: .875rem;
 }
 
-.bmain{
-
+.bmain {
     position: fixed;
     left: 0;
-  
-   
+    text-align: right;
+    overflow: auto;
+    max-height: 100vh;
+    padding-bottom: 40px;
 }
 
 .feather {
@@ -16,16 +17,19 @@ body {
     vertical-align: text-bottom;
 }
 
+
 /*
  * Sidebar
  */
 
 .sidebar {
     position: fixed;
+    margin-top: 10px;
     top: 0;
     right: 0;
     bottom: 0;
     z-index: 100;
+    text-align: right;
     /* Behind the navbar */
     padding: 48px 0 0;
     /* Height of navbar */
@@ -109,35 +113,30 @@ body {
 
 section {
     padding: 5px;
-
     margin: 5px auto;
 }
-
 
 section ul {
     display: flex;
     margin-bottom: 2px;
-
 }
 
-
 section ul li {
-  list-style: none;
-  background: #eee;
-  padding: 5px 10px;
-  margin: 5px;
-  letter-spacing: 1px;
-  cursor: pointer;
+    list-style: none;
+    background: #eee;
+    padding: 5px 10px;
+    margin: 5px;
+    letter-spacing: 1px;
+    cursor: pointer;
 }
 
 section ul li.active {
-  
-  background: #03a9f4;
-  color: #eee;
+    background: #03a9f4;
+    color: #eee;
 }
 
 img {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
 }
