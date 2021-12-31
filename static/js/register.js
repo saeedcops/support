@@ -11,11 +11,11 @@ const submitBtn=document.querySelector(".submit-btn");
 
 const handleToggle=(e)=>{
 
-    if(passwordToggle.textContent==="SHOW"){
-        passwordToggle.textContent="HIDE";
+    if(passwordToggle.textContent==="اظهار"){
+        passwordToggle.textContent="اخفاء";
         passwordField.type="text";
     }else{
-        passwordToggle.textContent="SHOW";
+        passwordToggle.textContent="اظهار";
          passwordField.type="password";
     }
 

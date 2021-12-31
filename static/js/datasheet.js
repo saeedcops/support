@@ -1,7 +1,7 @@
 const deviceItems=document.querySelectorAll(".list");
 const branchItems=document.querySelectorAll(".blist");
 const thead=document.querySelectorAll(".thead");
-
+var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
 const tableOutput=document.querySelector(".table-output");
 const appTable=document.querySelector(".app-table");
 const tableBody=document.querySelector(".table-body");
@@ -23,7 +23,7 @@ async function getapi(url) {
     
     // Storing data in form of JSON
     var data = await response.json();
-    console.log(data);
+
     if (response) {
         // hideloader();
     }
@@ -49,7 +49,7 @@ function setNetworkTable(data) {
 
     data.forEach(item => {
 
-        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+        tableBody.innerHTML += '<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>' +
             item.device + '</td><td>' +
             item.model + '</td><td>' + item.ip + '</td><td>' +
             item.location + '</td><td>' + item.ports + '</td><td>' +
@@ -81,7 +81,7 @@ function setFirewallTable(data) {
 
     data.forEach(item => {
 
-        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+        tableBody.innerHTML += '<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>' +
             item.host_name + '</td><td>' +
             item.ip + '</td><td>' + item.port_numbers + '</td><td>' +
             item.gatewaies + '</td><td>' + item.model + '</td><td>' +
@@ -112,7 +112,7 @@ function setFigerprintTable(data) {
 
     data.forEach(item => {
 
-        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+        tableBody.innerHTML += '<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>' +
             item.ip + '</td><td>' +
             item.switch_port + '</td><td>' + item.vlan + '</td><td>' +
             item.location + '</td><td>' + item.model + '</td><td>' +
@@ -144,7 +144,7 @@ function setDvrTable(data) {
 
     data.forEach(item => {
 
-        tableBody.innerHTML += '<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>' +
+        tableBody.innerHTML += '<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>' +
             item.host_name + '</td><td>' +
             item.ip + '</td><td>' + item.switch_port + '</td><td>' +
             item.cams + '</td><td>' + item.model + '</td><td>' +
@@ -176,7 +176,7 @@ function setBackupTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
+            tableBody.innerHTML+='<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.data+'</td><td>'+
                          item.sname+'</td><td>'+item.internal_path+'</td><td>'+
                          item.internal_schadule+'</td><td>'+item.internal_agent+'</td><td>'+
@@ -207,7 +207,7 @@ function setPCTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
+            tableBody.innerHTML+='<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.host_name+'</td><td>'+
                          item.os+'</td><td>'+item.ip+'</td><td>'+
                          item.ram+'</td><td>'+item.vlan+'</td><td>'+
@@ -239,7 +239,7 @@ function setServerTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
+            tableBody.innerHTML+='<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.host_name+'</td><td>'+
                          item.os+'</td><td>'+item.ip+'</td><td>'+
                          item.ram+'</td><td>'+item.vlan+'</td><td>'+
@@ -272,7 +272,7 @@ function setPrinterTable(data) {
 
     data.forEach(item=>{
 
-            tableBody.innerHTML+='<tr onclick=clicked(this)> <td style="display:none">'+item.id+'</td><td>'+
+            tableBody.innerHTML+='<tr onclick=clickeddata(this)> <td style="display:none">'+item.id+'</td><td>'+
                          item.model+'</td><td>'+
                          item.ip+'</td><td>'+
                          item.name+'</td><td>'+
@@ -416,15 +416,28 @@ deviceItems.forEach(li =>
 });
 
 
-function clicked(tr) {
+function clickeddata(tr) {
 
     console.log("ok!",tr);
     var cell = tr.getElementsByTagName("td")[0];
     var id = cell.innerHTML;
-    if(device!=="PC" || device!=="Servers" || device!=="Backup" || device!=="Printers"){
-        device="Network";
+    console.log("device ok!",device);
+
+    if(device==="PC" || device==="Servers" || device==="Backup" || device==="Printers"){
+
+        if(dir==="ltr"){
+            window.location.href="https://osg-support.cops.com/en/admins/datasheet/"+device+"/"+id;
+          }else{
+            window.location.href="https://osg-support.cops.com/ar/admins/datasheet/"+device+"/"+id;
+          }
+
+    }else{
+        if(dir==="ltr"){
+            window.location.href="https://osg-support.cops.com/en/admins/datasheet/Network/"+id;
+          }else{
+            window.location.href="https://osg-support.cops.com/ar/admins/datasheet/Network/"+id;
+          }
     }
-    window.location.href="https://osg-support.cops.com/admins/datasheet/"+device+"/"+id;
 }
 
 function addRowHandlers() {
@@ -437,7 +450,13 @@ function addRowHandlers() {
           var cell = row.getElementsByTagName("td")[0];
           var id = cell.innerHTML;
          
-          window.location.href="https://osg-support.cops.com/admins/datasheet/PC/"+id;
+          
+
+          if(dir==="ltr"){
+            window.location.href="https://osg-support.cops.com/en/admins/datasheet/PC/"+id;
+          }else{
+            window.location.href="https://osg-support.cops.com/ar/admins/datasheet/PC/"+id;
+          }
 
           
         };

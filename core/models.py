@@ -8,7 +8,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 
 from django.utils.translation import gettext_lazy as _
-
+from django.contrib.auth.models import PermissionsMixin
 # Create your models here. settings.AUTH_USER_MODEL
 
 
@@ -317,11 +317,11 @@ class Printer(models.Model):
     class Meta:
         ordering=['-ip']
 
-# auth.PermissionsMixin
+# PermissionsMixin,
 class User(AbstractUser):
     phone = models.CharField(max_length=20, blank=True,verbose_name = _("Phone"))
     ip = models.CharField(max_length=20, blank=True)
-    image = models.ImageField(upload_to = user_image_path,null=True,blank=True,verbose_name = _("Image"))
+    image = models.ImageField(upload_to = user_image_path,default="profile.png",verbose_name = _("Image"))
     language = models.CharField(max_length=10,
                                 verbose_name =_("Language"),
                                 choices=settings.LANGUAGES,

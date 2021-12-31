@@ -7,6 +7,20 @@ volumes:
   postgres_data:
  
 services:
+
+  # sql:
+  #   image: microsoft/mssql-server-linux
+  #   environment:
+  #     SA_PASSWORD: StrongPass123
+  #     ACCEPT_EULA: Y
+  #     MSSQL_PID: Developer
+  #   ports:
+  #     - "1433:1433"
+
+#TO BACKUP POSTGRES RUN THIS SCRIPT TO DOWNLOAD IMAGE AND BACKUP IN THAT VOLUME
+# docker run -it --name pgback -v /path/backup/host:/var/lib/postgresql/data --network composeNetwork postgres /bin/bash
+#TO RESTORE RUN THIS SCRIPT
+# docker start -a -i pgback
   postgres:
     command: postgres -c max_connections=100
     build:

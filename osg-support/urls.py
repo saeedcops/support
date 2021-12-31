@@ -26,6 +26,7 @@ urlpatterns = [
     path('root/', admin.site.urls),
     path('oauth2/', include('django_auth_adfs.urls')),
     path('admins/', include('admins.urls')),
+    path('auth/', include('authentication.urls')),
     path('', include('users.urls')),
     path('tickets/', include('tickets.urls')),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),

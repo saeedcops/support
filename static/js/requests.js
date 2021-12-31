@@ -1,4 +1,4 @@
-
+var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
 const branchItems=document.querySelectorAll(".blist");
 const pagination=document.querySelector(".pagination-container");
 const tableOutput=document.querySelector(".table-output");
@@ -124,7 +124,13 @@ function clicked(tr) {
     console.log("ok!",tr);
     var cell = tr.getElementsByTagName("td")[0];
     var id = cell.innerHTML;
-    window.location.href="https://osg-support.cops.com/admins/requests/"+id;
+
+    
+    if(dir==="ltr"){
+      window.location.href="https://osg-support.cops.com/en/admins/requests/"+id;
+    }else{
+      window.location.href="https://osg-support.cops.com/ar/admins/requests/"+id;
+    }
 }
 
 
@@ -140,7 +146,11 @@ function addRowHandlers() {
           var cell = row.getElementsByTagName("td")[0];
           var id = cell.innerHTML;
          
-          window.location.href="https://osg-support.cops.com/admins/requests/"+id;
+          if(dir==="ltr"){
+            window.location.href="https://osg-support.cops.com/en/admins/requests/"+id;
+          }else{
+            window.location.href="https://osg-support.cops.com/ar/admins/requests/"+id;
+          }
 
           
         };

@@ -1,3 +1,6 @@
+
+var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
+
 function addRowHandlers() {
     var table = document.querySelector(".table");
     var rows = table.getElementsByTagName("tr");
@@ -7,7 +10,12 @@ function addRowHandlers() {
             return function() {
                 var cell = row.getElementsByTagName("td")[0];
                 var id = cell.innerHTML;
-                window.location.href = "ar/tickets/" + id;
+                
+                if(dir==="ltr"){
+                    window.location.href = "https://osg-support.cops.com/en/tickets/" + id;
+                  }else{
+                    window.location.href = "https://osg-support.cops.com/ar/tickets/" + id;
+                  }
 
 
             };

@@ -1,3 +1,6 @@
+
+var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
+
 function addRowHandlers() {
     var table = document.querySelector(".table");
     var rows = table.getElementsByTagName("tr");
@@ -8,7 +11,12 @@ function addRowHandlers() {
                 var cell = row.getElementsByTagName("td")[0];
                 var id = cell.innerHTML;
 
-                window.location.href = "https://osg-support.cops.com/requests/" + id;
+                
+                if(dir==="ltr"){
+                    window.location.href = "https://osg-support.cops.com/en/requests/" + id;
+                  }else{
+                    window.location.href = "https://osg-support.cops.com/ar/requests/" + id;
+                  }
 
 
             };
@@ -17,4 +25,7 @@ function addRowHandlers() {
     }
 }
 
+
 addRowHandlers();
+
+console.log("DIR :",dir);

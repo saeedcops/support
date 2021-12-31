@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'core',
     'datasheet',
     'tickets',
+    'authentication',
 ]
 
 DJANGO_NOTIFICATIONS_CONFIG = { 'USE_JSONFIELD': True}
@@ -63,12 +64,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
       # You can specify URLs for which login is not enforced by
     # specifying them in the LOGIN_EXEMPT_URLS setting.
-    'django_auth_adfs.middleware.LoginRequiredMiddleware',
+
+    # 'django_auth_adfs.middleware.LoginRequiredMiddleware',
 ]
 
-AUTHENTICATION_BACKENDS = [
-   'django_auth_adfs.backend.AdfsAuthCodeBackend',
-]
+# AUTHENTICATION_BACKENDS = [
+#    'django_auth_adfs.backend.AdfsAuthCodeBackend',
+# ]
 
 AUTH_ADFS = {
     "SERVER": "adfs.cops.com",
@@ -94,9 +96,8 @@ AUTH_ADFS = {
 }
 
 # Configure django to redirect users to the right URL for login
-LOGIN_URL = "django_auth_adfs:login"
-LOGIN_REDIRECT_URL = "/"
-# CUSTOM_FAILED_RESPONSE_VIEW = 'dot.path.to.custom.views.login_failed'
+# LOGIN_URL = "django_auth_adfs:login"
+# LOGIN_REDIRECT_URL = "/"
 
 ROOT_URLCONF = 'osg-support.urls'
 
@@ -175,27 +176,27 @@ STATIC_ROOT=os.path.join(BASE_DIR,'/static')
 MEDIA_URL = '/img/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'/static/img')
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django_auth_adfs': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'verbose': {
+#             'format': '%(levelname)s %(asctime)s %(name)s %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#             'formatter': 'verbose'
+#         },
+#     },
+#     'loggers': {
+#         'django_auth_adfs': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
 
 AUTH_USER_MODEL = 'core.User'
 from django.contrib import messages

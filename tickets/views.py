@@ -11,12 +11,13 @@ from django.http import JsonResponse, HttpResponse
 from django.db.models import F
 from django.views.generic.list import ListView
 from notifications.signals import notify
-
+from django.utils.translation import gettext_lazy as _
 from django.core.paginator import Paginator
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
 
 
-class TicketListView(View):
-
+class TicketListView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
     def get(self,request):
         
         if request.user.is_staff:
@@ -33,7 +34,8 @@ class TicketListView(View):
 
 
 
-class TicketSearchView(View):
+class TicketSearchView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
     def get(self,request):
 
@@ -78,7 +80,8 @@ class TicketSearchView(View):
 
 
 
-class TicketDetailView(View):
+class TicketDetailView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
     
     def get(self, request, *args, **kwargs):
 
@@ -109,7 +112,7 @@ class TicketDetailView(View):
                     notify.send(request.user, recipient=recipient, target=ticket,data="/tickets/"+str(ticket.pk),
                                 verb="تم حل المشكلة", description=request.user.image)
 
-                    messages.success(self.request, "Ticket has been closed!")
+                    messages.success(self.request, _("Ticket has been closed!"))
                     return render(request, 'tickets/view_ticket_admin.html', {'ticket': ticket})
 
                 msg=request.POST["message"]
@@ -120,14 +123,14 @@ class TicketDetailView(View):
                 notify.send(request.user, recipient=recipient, target=ticket,data="/tickets/"+str(ticket.pk),
                             verb=msg, description=request.user.image)
 
-                messages.success(self.request, "Message Added Successfully")
+                messages.success(self.request, _("Message Sent Successfully"))
                 return render(request, 'tickets/view_ticket_admin.html', {'ticket': ticket})
 
             else:
                 ticket.admin=self.request.user
                 ticket.status="pending"
                 ticket.save()
-                messages.success(self.request, "Ticket Assigned to you!")
+                messages.success(self.request, _("Ticket Assigned to you!"))
                 return render(request, 'tickets/view_ticket_admin.html', {'ticket': ticket})
 
         else:
@@ -140,11 +143,11 @@ class TicketDetailView(View):
                     notify.send(request.user, recipient=recipient, target=ticket,data="/tickets/"+str(ticket.pk),
                                 verb=msg, description=request.user.image)
 
-                messages.success(self.request, "Message Added Successfully")
+                messages.success(self.request, _("Message Sent Successfully"))
                 return render(request, 'tickets/view_ticket.html', {'ticket': ticket})
                 
             else:
-                messages.error(self.request, "you dont have to comment in this ticket!")
+                messages.error(self.request, _("you dont have to comment in this ticket!"))
                 return render(request, 'tickets/view_ticket.html', {'ticket': ticket})
 
 

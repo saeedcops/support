@@ -11,13 +11,16 @@ from django.core.paginator import Paginator
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from openpyxl import load_workbook
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
+
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
 
 
-class UploadView(View):
-
+class UploadView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
     def get(self,request):
 
         if request.user.is_staff:
@@ -193,7 +196,8 @@ class UploadView(View):
 
 
 
-class PCUpdateView(UpdateView):
+class PCUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = PC
     context_object_name = 'pc'
     fields =  '__all__'
@@ -207,7 +211,8 @@ class PCUpdateView(UpdateView):
 
 
 
-class ServerUpdateView(UpdateView):
+class ServerUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = Server
     context_object_name = 'server'
     fields =  '__all__'
@@ -220,7 +225,8 @@ class ServerUpdateView(UpdateView):
         return redirect('pc')
 
 
-class PrinterUpdateView(UpdateView):
+class PrinterUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = Printer
     context_object_name = 'printer'
     fields =  '__all__'
@@ -233,7 +239,8 @@ class PrinterUpdateView(UpdateView):
         return redirect('pc')
 
 
-class NetworkUpdateView(UpdateView):
+class NetworkUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = Network
     context_object_name = 'network'
     fields =  '__all__'
@@ -246,7 +253,8 @@ class NetworkUpdateView(UpdateView):
         return redirect('pc')
 
 
-class SwitchUpdateView(UpdateView):
+class SwitchUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = Switch
     context_object_name = 'switch'
     fields =  '__all__'
@@ -260,7 +268,8 @@ class SwitchUpdateView(UpdateView):
 
 
 
-class FirewallUpdateView(UpdateView):
+class FirewallUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = Firewall
     context_object_name = 'firewall'
     fields =  '__all__'
@@ -273,7 +282,8 @@ class FirewallUpdateView(UpdateView):
         return redirect('pc')
 
 
-class DVRUpdateView(UpdateView):
+class DVRUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = DVR
     context_object_name = 'dvr'
     fields =  '__all__'
@@ -286,7 +296,8 @@ class DVRUpdateView(UpdateView):
         return redirect('pc')
 
 
-class FingerPrintUpdateView(UpdateView):
+class FingerPrintUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
     model = FingerPrint
     context_object_name = 'fingerprint'
     fields =  '__all__'
@@ -299,7 +310,8 @@ class FingerPrintUpdateView(UpdateView):
         return redirect('pc')
 
 
-class PCListView(View):
+class PCListView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
     def get(self,request):
 
@@ -313,7 +325,8 @@ class PCListView(View):
             return render(request, 'datasheet/index.html', {'branch': branch, 'page_obj': page_obj,'pc':ctx})
 
 
-class DeviceListView(View):
+class DeviceListView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
 
     def post(self,request):
@@ -424,7 +437,8 @@ class DeviceListView(View):
             return JsonResponse()
 
 
-class PrinterListView(ListView):
+class PrinterListView(LoginRequiredMixin,ListView):
+    login_url = '/auth/login'
 
     model = Printer
     template_name = 'datasheet/index.html'

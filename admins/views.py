@@ -12,9 +12,12 @@ from django.http import JsonResponse
 from django.db.models import F
 from django.conf import settings
 from notifications.signals import notify
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.mixins import PermissionRequiredMixin,LoginRequiredMixin
 
 
-class Home(View):
+class Home(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
     def get(self,request):
 
@@ -24,7 +27,8 @@ class Home(View):
             return render(request, 'admins/index.html')
 
 
-class Profile(View):
+class Profile(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
     def get(self,request):
 
@@ -33,7 +37,8 @@ class Profile(View):
             return redirect('admin-profile',request.user.pk)
 
 
-class ProfileUpdateView(UpdateView):
+class ProfileUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
 
     model = User
     context_object_name = 'profile'
@@ -43,12 +48,13 @@ class ProfileUpdateView(UpdateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.save()
-        messages.success(self.request, "Profile updated successfully!")
+        messages.success(self.request, _("Profile updated successfully!"))
         return redirect('admin-profile',self.object.pk)
 
 
 
-class RequestJson(View):
+class RequestJson(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
     def post(self,request):
 
@@ -90,7 +96,8 @@ class RequestJson(View):
             return JsonResponse()
 
 
-class ContactListView(View):
+class ContactListView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
 
     def get(self,request):        
@@ -103,59 +110,61 @@ class ContactListView(View):
         return render(request, 'admins/contacts.html', {'contacts': dep, 'page_obj': page_obj})
 
 
-class Summary(View):
+class Summary(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
-     def get(self,request):
+    def get(self,request):
 
-         month_ago = now() - datetime.timedelta(days=30)
-         data = {}
-         admin_json={}
-         category_json={}
-         branch_json={}
-         atickets = Ticket.objects.filter(closed_date__gte=month_ago, closed_date__lte=now())
-         tickets = Ticket.objects.filter(open_date__gte=month_ago, open_date__lte=now())
+        month_ago = now() - datetime.timedelta(days=30)
+        data = {}
+        admin_json={}
+        category_json={}
+        branch_json={}
+        atickets = Ticket.objects.filter(closed_date__gte=month_ago, closed_date__lte=now())
+        tickets = Ticket.objects.filter(open_date__gte=month_ago, open_date__lte=now())
 
-         def get_admin(ticket):
+        def get_admin(ticket):
 
-             return ticket.admin
+            return ticket.admin
 
-         def get_category(ticket):
+        def get_category(ticket):
 
-             return ticket.category
+            return ticket.category
 
-         def get_branch(ticket):
+        def get_branch(ticket):
 
-             return ticket.branch
+            return ticket.branch
 
-         admin_list = list(set(map(get_admin, atickets)))
-         category_list = list(set(map(get_category, tickets)))
-         branch_list = list(set(map(get_branch, tickets)))
+        admin_list = list(set(map(get_admin, atickets)))
+        category_list = list(set(map(get_category, tickets)))
+        branch_list = list(set(map(get_branch, tickets)))
 
-         for admin in admin_list:
+        for admin in admin_list:
 
-             filter_tickets = atickets.filter(admin=admin)
-             admin_json[admin.username] = len(filter_tickets)
+            filter_tickets = atickets.filter(admin=admin)
+            admin_json[admin.username] = len(filter_tickets)
 
-         for category in category_list:
+        for category in category_list:
 
-             filter_tickets = tickets.filter(category=category)
-             category_json[category.name] = len(filter_tickets)
+            filter_tickets = tickets.filter(category=category)
+            category_json[category.name] = len(filter_tickets)
 
-         for branch in branch_list:
+        for branch in branch_list:
 
-             filter_tickets = tickets.filter(branch=branch)
-             branch_json[branch.name] = len(filter_tickets)
+            filter_tickets = tickets.filter(branch=branch)
+            branch_json[branch.name] = len(filter_tickets)
 
-         data['admin']=admin_json
-         data['category']=category_json
-         data['branch']=branch_json
+        data['admin']=admin_json
+        data['category']=category_json
+        data['branch']=branch_json
 
-         return JsonResponse(data, safe=False)
-
-
+        return JsonResponse(data, safe=False)
 
 
-class RequestListView(View):
+
+
+class RequestListView(LoginRequiredMixin,View):
+    login_url = '/auth/login'
 
 
     def get(self,request):
@@ -168,7 +177,8 @@ class RequestListView(View):
         return render(request, 'admins/user_requests.html', {'branch': branch, 'page_obj': page_obj})
 
 
-class RequestUpdateView(UpdateView):
+class RequestUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/auth/login'
 
     model = Request
     context_object_name = 'requests'
@@ -185,6 +195,6 @@ class RequestUpdateView(UpdateView):
             notify.send(self.request.user, recipient=recipient, target=self.object,data="/img/"+str(self.object.file_scan),
                         verb="تم تفعيل الصلاحيات", description=self.request.user.image)
 
-        messages.success(self.request, "Request updated successfully!")
+        messages.success(self.request, _("Request updated successfully!"))
         return redirect('admin-requests')
 

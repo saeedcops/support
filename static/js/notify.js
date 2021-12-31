@@ -1,4 +1,4 @@
-
+var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
 var notify_badge_class;
 var notify_menu_class;
 var notify_api_url;
@@ -21,7 +21,13 @@ function showNotification(data) {
     
     notification.onclick = (e) => {
 
-        window.location.href="https://osg-support.cops.com"+data.unread_list[0].data.data;
+        
+
+        if(dir==="ltr"){
+            window.location.href="https://osg-support.cops.com/en"+data.unread_list[0].data.data;
+          }else{
+            window.location.href="https://osg-support.cops.com/ar"+data.unread_list[0].data.data;
+          }
     };
 }
 
@@ -74,7 +80,7 @@ function fill_notification_list(data) {
            
         console.log("data1",item);
         console.log("data2",item.data.data);
-            return '<li onclick=clicked(this)><div class="row"><img src="https://osg-support.cops.com/img/'+item.description+'" alt="">  \
+            return '<li onclick=clickedItem(this)><div class="row"><img src="https://osg-support.cops.com/img/'+item.description+'" alt="">  \
                     <h5>'+item.actor+' </h5></div><p>'+item.verb+'</p><h1 style="display:none">'+item.data.data+'</h1></li><hr/>';
         }).join('');
 
@@ -83,12 +89,17 @@ function fill_notification_list(data) {
     }
 }
 
-function clicked(li){
+function clickedItem(li){
     console.log("CKlick");
     var cell = li.getElementsByTagName("h1")[0];
     var id = cell.innerHTML;
     console.log(id);
-    window.location.href="https://osg-support.cops.com"+id;
+    
+    if(dir==="ltr"){
+        window.location.href="https://osg-support.cops.com/en"+id;
+      }else{
+        window.location.href="https://osg-support.cops.com/ar"+id;
+      }
 }
 function register_notifier(func) {
     console.log("register_notifier");
