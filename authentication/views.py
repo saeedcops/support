@@ -12,10 +12,10 @@ class UsernameValidationView(View):
         data=json.loads(request.body)
         username=data['username']
         if not str(username).isalnum():
-            return JsonResponse({'username_error':'username should only contain alphanumeric digits'})
+            return JsonResponse({'username_error':'اسم الدخول يجب ان يحتوي علي حروف وارقام فقط'})
 
         if User.objects.filter(username=username).exists():
-            return JsonResponse({'username_error':'username is already exist'})
+            return JsonResponse({'username_error':'اسم الدخول موجود بالفعل'})
 
         # request.META.get('REMOTE_HOST')
         return JsonResponse({'username_valid':request.META.get('REMOTE_ADDR')})

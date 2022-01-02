@@ -1,5 +1,4 @@
-
-var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
+var dir = document.getElementsByTagName("html")[0].getAttribute("dir");
 
 function addRowHandlers() {
     var table = document.querySelector(".table");
@@ -11,12 +10,12 @@ function addRowHandlers() {
                 var cell = row.getElementsByTagName("td")[0];
                 var id = cell.innerHTML;
 
-                
-                if(dir==="ltr"){
-                    window.location.href = "https://osg-support.cops.com/en/requests/" + id;
-                  }else{
-                    window.location.href = "https://osg-support.cops.com/ar/requests/" + id;
-                  }
+
+                if (dir === "ltr") {
+                    window.location.href = "/en/requests/" + id;
+                } else {
+                    window.location.href = "/ar/requests/" + id;
+                }
 
 
             };
@@ -27,5 +26,3 @@ function addRowHandlers() {
 
 
 addRowHandlers();
-
-console.log("DIR :",dir);

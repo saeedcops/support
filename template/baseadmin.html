@@ -29,15 +29,15 @@
 
 
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">OSG Support</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">OSG Support <img src="/img/logo.png" /></a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="nav-item text-nowrap mt-3 ms-3">
+        <div class="nav-item text-nowrap mt-3 mr-3">
             <form action="{% url 'logout'%}" method="post">
                 {% csrf_token %}
-    
-                <input class="text text-capitalize" type="submit" value="Sign out">
+
+                <input class="text text-capitalize" type="submit" value="{% trans 'Sign out' %}">
             </form>
         </div>
 

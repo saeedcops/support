@@ -14,7 +14,7 @@
     <div class="card-body">
 
         {% include 'partials/messages.html' %}
-        <input  id="searchText" type="text" class="form-control" placeholder="{% trans " Search " %}">
+        <input id="searchText" type="text" class="form-control" placeholder="{% trans " Search " %}">
         <section>
             <ul>
 
@@ -48,7 +48,7 @@
 
                     {% for ex in page_obj %}
                     <tr>
-                        <td><img src="https://osg-support.cops.com/img/{{ ex.image }}" class="img-rounded" alt="not-found" /></td>
+                        <td><img src="/img/{{ ex.image }}" class="img-rounded" alt="not-found" /></td>
                         <td>{{ex.first_name}}</td>
                         <td>{{ex.email}}</td>
                         <td>{{ex.phone}}</td>

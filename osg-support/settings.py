@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['192.168.10.143','osg-support.cops.com']
+ALLOWED_HOSTS = ['192.168.163.128','osg-support.com']
 # ALLOWED_HOSTS = ['192.168.175.128','django-docker']
 
 

@@ -13,14 +13,14 @@ var department = departmentLastli.getAttribute("data-filter");
 searchText.addEventListener('keyup', (e) => {
 
     const search = e.target.value;
-    console.log("Value", search);
+    // console.log("Value", search);
 
     if (search.trim().length > 0) {
         paginationContainer.style.display = "none";
         tableBody.innerHTML = "";
 
         fetch("/contacts/", {
-                body: JSON.stringify({searchText: search, department: department }),
+                body: JSON.stringify({ searchText: search, department: department }),
                 method: "POST",
             }).then((res) => res.json())
             .then((data) => {
@@ -30,7 +30,7 @@ searchText.addEventListener('keyup', (e) => {
 
                     if (data.length === 0) {
 
-                        console.log('length', 0);
+                        // console.log('length', 0);
                         notFound.style.display = "block";
                         tableOutput.style.display = "none";
 
@@ -41,7 +41,7 @@ searchText.addEventListener('keyup', (e) => {
                         tableBody.innerHTML = "";
                         data.forEach(item => {
 
-                            tableBody.innerHTML += '<tr><td><img src="https://osg-support.cops.com/img/' +
+                            tableBody.innerHTML += '<tr><td><img src="/img/' +
                                 item.image + '" class="img-rounded" alt="not-found" /></td><td>' +
                                 item.first_name + '</td><td>' +
                                 item.email + '</td><td>' +
@@ -77,7 +77,7 @@ function getData() {
 
             if (data != null) {
 
-                console.log('Data', data);
+                // console.log('Data', data);
                 appTable.style.display = "none";
                 tableOutput.style.display = "block";
 
@@ -86,7 +86,7 @@ function getData() {
 
                 data.forEach(item => {
 
-                    tableBody.innerHTML += '<tr><td><img src="https://osg-support.cops.com/img/' +
+                    tableBody.innerHTML += '<tr><td><img src="/img/' +
                         item.image + '" class="img-rounded" alt="not-found" /></td><td>' +
                         item.first_name + '</td><td>' +
                         item.email + '</td><td>' +
@@ -105,7 +105,7 @@ function getData() {
 departmentsItems.forEach(li =>
     li.onclick = () => {
         department = li.getAttribute("data-filter");
-        console.log(department);
+        // console.log(department);
         li.classList.add('active');
         departmentLastli.classList.remove('active');
         departmentLastli = li;

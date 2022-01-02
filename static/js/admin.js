@@ -57,7 +57,7 @@ const getChartData = () => {
             method: "GET",
         }).then((res) => res.json())
         .then((result) => {
-            console.log('Data', result);
+            // console.log('Data', result);
 
             const [label, data] = [Object.keys(result['admin']), Object.values(result['admin']), ];
             const [clabel, cdata] = [Object.keys(result['category']), Object.values(result['category']), ];

@@ -1,5 +1,4 @@
-
-var dir=document.getElementsByTagName("html")[0].getAttribute("dir");
+var dir = document.getElementsByTagName("html")[0].getAttribute("dir");
 const branchItems = document.querySelectorAll(".blist");
 const pagination = document.querySelector(".pagination-container");
 const tableOutput = document.querySelector(".table-output");
@@ -17,7 +16,7 @@ var branch = branchLastli.getAttribute("data-filter");
 searchText.addEventListener('keyup', (e) => {
 
     const search = e.target.value;
-    console.log("Value", search);
+    // console.log("Value", search);
 
     if (search.trim().length > 0) {
         pagination.style.display = "none";
@@ -29,12 +28,12 @@ searchText.addEventListener('keyup', (e) => {
             }).then((res) => res.json())
             .then((data) => {
 
-                console.log('Data', data);
+                // console.log('Data', data);
                 if (data != null) {
 
                     if (data.length === 0) {
 
-                        console.log('length', 0);
+                        // console.log('length', 0);
                         notFound.style.display = "block";
                         tableOutput.style.display = "none";
 
@@ -129,7 +128,7 @@ function getData() {
 
             if (data != null) {
 
-                console.log('Data', data);
+                // console.log('Data', data);
                 setTicketTable(data);
 
             }
@@ -141,7 +140,7 @@ function getData() {
 branchItems.forEach(li =>
     li.onclick = () => {
         branch = li.getAttribute("data-filter");
-        console.log(branch);
+        // console.log(branch);
         li.classList.add('active');
         branchLastli.classList.remove('active');
         branchLastli = li;
@@ -156,13 +155,13 @@ function clicked(tr) {
     console.log("ok!", tr);
     var cell = tr.getElementsByTagName("td")[0];
     var id = cell.innerHTML;
-    
 
-    if(dir==="ltr"){
-        window.location.href = "https://osg-support.cops.com/en/tickets/" + id;
-      }else{
-        window.location.href = "https://osg-support.cops.com/ar/tickets/" + id;
-      }
+
+    if (dir === "ltr") {
+        window.location.href = "/en/tickets/" + id;
+    } else {
+        window.location.href = "/ar/tickets/" + id;
+    }
 }
 
 
@@ -178,11 +177,11 @@ function addRowHandlers() {
                 var cell = row.getElementsByTagName("td")[0];
                 var id = cell.innerHTML;
 
-                if(dir==="ltr"){
-                    window.location.href = "https://osg-support.cops.com/en/tickets/" + id;
-                  }else{
-                    window.location.href = "https://osg-support.cops.com/ar/tickets/" + id;
-                  }
+                if (dir === "ltr") {
+                    window.location.href = "/en/tickets/" + id;
+                } else {
+                    window.location.href = "/ar/tickets/" + id;
+                }
 
 
             };
