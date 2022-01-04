@@ -75,14 +75,18 @@ class ProfileUpdateView(LoginRequiredMixin,UpdateView):
     login_url = '/auth/login'
     model = User
     context_object_name = 'profile'
-    fields =  ['image','first_name','email','phone']
+    fields =  ['image','first_name','email','phone','branch','department']
     template_name = 'user/edit_profile.html'
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        messages.success(self.request, _("Profile updated successfully!"))
-        return redirect('user-profile',self.object.pk)
+        if self.request.user.pk == self.object.pk:
+            self.object = form.save(commit=False)
+            self.object.save()
+            messages.success(self.request, _("Profile updated successfully!"))
+            return redirect('user-profile',self.object.pk)
+        else:
+            messages.error(self.request, self.request.user.username+_(" You dont have permission to do this!"))
+            return redirect('user-profile',self.object.pk)
 
 
 class ContactListView(LoginRequiredMixin,View):
@@ -172,10 +176,14 @@ class RequestUpdateView(LoginRequiredMixin,UpdateView):
     template_name = 'user/edit_request.html'
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        messages.success(self.request, _("Request updated successfully!"))
-        return redirect('requests')
+        if self.request.user == self.object.user:
+            self.object = form.save(commit=False)
+            self.object.save()
+            messages.success(self.request, _("Request updated successfully!"))
+            return redirect('requests')
+        else:
+            messages.error(self.request, self.request.user.username+_(" You dont have permission to do this!"))
+            return redirect('user-profile',self.object.pk)
 
 
 class RequestCreateView(LoginRequiredMixin,CreateView):

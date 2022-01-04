@@ -62,7 +62,7 @@ class RegistrationView(View):
             user.phone=phone
             user.first_name=name
             user.branch=Branch.objects.get(name=branch)
-            user.department=dep
+            user.department=Department.objects.get(name=dep) 
             user.save()
             messages.success(request, "تم انشاء الحساب")
             return redirect('login')

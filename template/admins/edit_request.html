@@ -1,38 +1,35 @@
-{% extends 'baseadmin.html' %}
-{% load i18n %}
-{% block content %}
+{% extends 'baseadmin.html' %} {% load i18n %} {% block content %}
 
 <div class="bg-light">
 
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb mt-1">
-                <li class="breadcrumb-item"><a href="{% url 'admin-requests' %}">{% trans "Requests" %}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{% trans "Edit Request" %}</li>
-                <li class="breadcrumb-item active" aria-current="page">{{requests.user.username}}</li>
-              </ol>
-            </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-1">
+            <li class="breadcrumb-item"><a href="{% url 'admin-requests' %}">{% trans "Requests" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "Edit Request" %}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{requests.user.username}}</li>
+        </ol>
+    </nav>
 </div>
 
 
 
-    <div class="card m-sm-2">
-        <div class="card-body">
-            {% include 'partials/messages.html' %}
-          
-            <form enctype="multipart/form-data" action="{% url 'edit-requests' requests.pk %}" method="post">
-                {% csrf_token %}
-                  {{ form.as_p }}
-                      <table>
+<div class="card m-sm-2">
+    <div class="card-body">
+        {% include 'partials/messages.html' %}
 
-                      </table>
-                 <div class="form-group mt-5">
-                    <input type="submit" value="Submit" class=" btn btn-primary form-control form-control-sm">
-                </div>
+        <form enctype="multipart/form-data" action="{% url 'edit-requests' requests.pk %}" method="post">
+            {% csrf_token %} {{ form.as_p }}
+            <table>
 
-            </form>
+            </table>
+            <div class="form-group mt-5">
+                <input type="submit" value="{% trans 'Update' %}" class=" btn btn-primary form-control form-control-sm">
+            </div>
 
-        </div>
+        </form>
+
     </div>
+</div>
 
 
 

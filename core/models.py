@@ -326,11 +326,12 @@ class User(AbstractUser):
                                 verbose_name =_("Language"),
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE)
-    department=models.CharField(max_length = 15,null=True,blank=True,verbose_name = _("Department"))
-    # department = models.ForeignKey(
-    #         Department,
-    #         related_name='udepartment',
-    #         on_delete = models.PROTECT,null=True,blank=True)
+    # department=models.CharField(max_length = 15,null=True,blank=True,verbose_name = _("Department"))
+    department = models.ForeignKey(
+            Department,
+            related_name='udepartment',
+            verbose_name = _("Department"),
+            on_delete = models.PROTECT,null=True,blank=True)
     pc=models.ForeignKey(
             PC,
             related_name='userpc',

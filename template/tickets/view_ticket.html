@@ -25,7 +25,7 @@
 
                 <div class="row mt-auto">
                     <div class="col-md-auto ">
-                        <img src="https://osg-support.cops.com/img/{{ticket.user.image}}" class="img-rounded" alt="Cinque Terre">
+                        <img src="/img/{{ticket.user.image}}" class="img-rounded" alt="Cinque Terre">
                     </div>
 
                     <div class="col-md-auto py-1 ">
@@ -40,13 +40,13 @@
                     <div class="col-md-auto ">
                         <h4> {{ ticket.description}}</h4>
                         <hr>
-                        <h6>{% trans "Create :" %}  {{ ticket.open_date}}</h6>
-                        <h6>{% trans "Closed :" %}  {{ ticket.closed_date}}</h6>
-                        <h6>{% trans "Status :" %}  {{ ticket.status}}</h6>
+                        <h6>{% trans "Create :" %} {{ ticket.open_date}}</h6>
+                        <h6>{% trans "Closed :" %} {{ ticket.closed_date}}</h6>
+                        <h6>{% trans "Status :" %} {{ ticket.status}}</h6>
                         <h6>{% trans "Category :" %} {{ ticket.category}}</h6>
-                        <h6>{% trans "PC :" %}  {{ ticket.pc}}</h6>
-                        <h6>{% trans "IP :" %}  {{ ticket.pc.ip}}</h6>
-                        <h6>{% trans "Branch :" %}  {{ ticket.branch}}</h6>
+                        <h6>{% trans "PC :" %} {{ ticket.pc}}</h6>
+                        <h6>{% trans "IP :" %} {{ ticket.pc.ip}}</h6>
+                        <h6>{% trans "Branch :" %} {{ ticket.branch}}</h6>
                         <h6> {% trans "Admin :" %} {{ ticket.admin}}</h6>
                     </div>
 
@@ -67,7 +67,7 @@
 
         <div class="row mt-auto">
             <div class="col-md-auto ">
-                <img src="https://osg-support.cops.com/img/{{ticket.user.image}}" class="img-rounded" alt="Cinque Terre">
+                <img src="/img/{{ticket.user.image}}" class="img-rounded" alt="Cinque Terre">
             </div>
 
             <div class="col-md-auto py-1 ">
@@ -87,7 +87,7 @@
     {% csrf_token %}
     <div class="form-group">
         <label for="exampleInputEmail1">{% trans "Send Message" %}</label>
-        <input name="message" type="text" class="form-control" id="exampleInputEmail1" placeholder="{% trans "Enter message" %}">
+        <input name="message" type="text" class="form-control" id="exampleInputEmail1" placeholder="{% trans 'Enter message' %}">
         <small id="emailHelp" class="form-text text-muted"> .</small>
     </div>
 

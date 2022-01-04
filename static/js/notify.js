@@ -80,7 +80,7 @@ function fill_notification_list(data) {
 
             // console.log("data1", item);
             // console.log("data2", item.data.data);
-            return '<li onclick=clickedItem(this)><div class="row"><img src="https://osg-support.cops.com/img/' + item.description + '" alt="">  \
+            return '<li onclick=clickedItem(this)><div class="row"><img src="/img/' + item.description + '" alt="">  \
                     <h5>' + item.actor + ' </h5></div><p>' + item.verb + '</p><h1 style="display:none">' + item.data.data + '</h1></li><hr/>';
         }).join('');
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-25 00:08+0200\n"
+"POT-Creation-Date: 2022-01-03 15:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,17 +19,29 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
+#: admins/views.py:52 users/views.py:85
+msgid "Profile updated successfully!"
+msgstr "تم تعديل الصفحة الشخصية"
+
+#: admins/views.py:55 users/views.py:88 users/views.py:185
+msgid " You dont have permission to do this!"
+msgstr "ليس لديك صلاحية لفعل ذلك"
+
+#: admins/views.py:202 users/views.py:182
+msgid "Request updated successfully!"
+msgstr "تم تعديل الطلب بنجاح"
+
 #: core/models.py:27 core/models.py:38 core/models.py:49 core/models.py:453
 #: template/admins/contacts.html:43 template/admins/contacts.html:78
-#: template/user/contacts.html:43 template/user/contacts.html:77
+#: template/user/contacts.html:39 template/user/contacts.html:73
 msgid "Name"
 msgstr "الاسم"
 
 #: core/models.py:33 core/models.py:340 core/models.py:420 core/models.py:489
 #: template/admins/tickets.html:71 template/admins/tickets.html:115
 #: template/admins/user_requests.html:56 template/admins/user_requests.html:93
-#: template/datasheet/index.html:12 template/user/index.html:39
-#: template/user/index.html:79
+#: template/datasheet/index.html:8 template/user/index.html:37
+#: template/user/index.html:77
 msgid "Branch"
 msgstr "الفرع"
 
@@ -38,8 +50,8 @@ msgid "Branchs"
 msgstr "الفروع"
 
 #: core/models.py:44 core/models.py:329 template/admins/contacts.html:46
-#: template/admins/contacts.html:81 template/user/contacts.html:46
-#: template/user/contacts.html:80
+#: template/admins/contacts.html:81 template/user/contacts.html:42
+#: template/user/contacts.html:76
 msgid "Department"
 msgstr "الادارة"
 
@@ -50,7 +62,7 @@ msgstr "الادارات"
 #: core/models.py:55 core/models.py:425 core/models.py:493
 #: template/admins/tickets.html:68 template/admins/tickets.html:112
 #: template/admins/user_requests.html:54 template/admins/user_requests.html:91
-#: template/user/index.html:36 template/user/index.html:76
+#: template/user/index.html:34 template/user/index.html:74
 #: template/user/user_requests.html:36
 msgid "Category"
 msgstr "النوع"
@@ -60,14 +72,14 @@ msgid "Categories"
 msgstr "الانواع"
 
 #: core/models.py:322 template/admins/contacts.html:45
-#: template/admins/contacts.html:80 template/user/contacts.html:45
-#: template/user/contacts.html:79
+#: template/admins/contacts.html:80 template/user/contacts.html:41
+#: template/user/contacts.html:75
 msgid "Phone"
 msgstr "الهاتف"
 
 #: core/models.py:324 template/admins/contacts.html:42
-#: template/admins/contacts.html:77 template/user/contacts.html:42
-#: template/user/contacts.html:76
+#: template/admins/contacts.html:77 template/user/contacts.html:38
+#: template/user/contacts.html:72
 msgid "Image"
 msgstr "الصورة"
 
@@ -87,8 +99,8 @@ msgstr "صالح"
 
 #: core/models.py:416 core/models.py:455 template/admins/tickets.html:70
 #: template/admins/tickets.html:114 template/admins/user_requests.html:55
-#: template/admins/user_requests.html:92 template/user/index.html:38
-#: template/user/index.html:78 template/user/user_requests.html:37
+#: template/admins/user_requests.html:92 template/user/index.html:36
+#: template/user/index.html:76 template/user/user_requests.html:37
 msgid "Date"
 msgstr "التاريخ"
 
@@ -110,8 +122,8 @@ msgstr "الرسائل"
 
 #: core/models.py:467 template/admins/tickets.html:66
 #: template/admins/tickets.html:110 template/admins/user_requests.html:52
-#: template/admins/user_requests.html:89 template/user/index.html:35
-#: template/user/index.html:75 template/user/user_requests.html:34
+#: template/admins/user_requests.html:89 template/user/index.html:33
+#: template/user/index.html:73 template/user/user_requests.html:34
 msgid "Status"
 msgstr "الحالة"
 
@@ -124,14 +136,14 @@ msgid "Closed Date"
 msgstr "تاريخ الغلق"
 
 #: core/models.py:472 template/admins/tickets.html:69
-#: template/admins/tickets.html:113 template/user/index.html:37
-#: template/user/index.html:77
+#: template/admins/tickets.html:113 template/user/index.html:35
+#: template/user/index.html:75
 msgid "Description"
 msgstr "الوصف"
 
 #: core/models.py:481 template/admins/tickets.html:72
-#: template/admins/tickets.html:116 template/user/index.html:40
-#: template/user/index.html:80
+#: template/admins/tickets.html:116 template/user/index.html:38
+#: template/user/index.html:78
 msgid "Admin"
 msgstr "المهندس"
 
@@ -150,11 +162,11 @@ msgstr "الشكوي"
 msgid "Tickets"
 msgstr "الشكاوي"
 
-#: osg-support/settings.py:216
+#: osg-support/settings.py:217
 msgid "Arabic"
 msgstr "عربي"
 
-#: osg-support/settings.py:217
+#: osg-support/settings.py:218
 msgid "English"
 msgstr "انجليزي"
 
@@ -163,41 +175,42 @@ msgstr "انجليزي"
 msgid "Contacts"
 msgstr "الزملاء"
 
-#: template/admins/contacts.html:28 template/admins/tickets.html:34
-#: template/admins/user_requests.html:34 template/datasheet/index.html:66
-#: template/user/contacts.html:28
-msgid "Search"
+#: template/admins/contacts.html:17 template/datasheet/index.html:32
+#: template/user/contacts.html:17
+#, fuzzy
+#| msgid "Search"
+msgid " Search "
 msgstr "ابحث"
 
 #: template/admins/contacts.html:44 template/admins/contacts.html:79
-#: template/user/contacts.html:44 template/user/contacts.html:78
+#: template/user/contacts.html:40 template/user/contacts.html:74
 msgid "Email"
 msgstr "الايميل"
 
 #: template/admins/contacts.html:69 template/admins/tickets.html:104
-#: template/admins/user_requests.html:83 template/datasheet/index.html:111
-#: template/user/contacts.html:69 template/user/user_requests.html:62
+#: template/admins/user_requests.html:83 template/datasheet/index.html:108
+#: template/user/contacts.html:65 template/user/user_requests.html:62
 msgid "Result not found"
 msgstr "لا يوجد نتائج"
 
 #: template/admins/contacts.html:95 template/admins/tickets.html:127
-#: template/admins/user_requests.html:106 template/user/contacts.html:94
-#: template/user/index.html:93 template/user/user_requests.html:66
+#: template/admins/user_requests.html:106 template/user/contacts.html:90
+#: template/user/index.html:91 template/user/user_requests.html:66
 msgid "Showing page"
 msgstr "عرض صفحة رقم "
 
 #: template/admins/contacts.html:95 template/admins/tickets.html:127
-#: template/admins/user_requests.html:106 template/user/contacts.html:94
-#: template/user/index.html:93 template/user/user_requests.html:66
+#: template/admins/user_requests.html:106 template/user/contacts.html:90
+#: template/user/index.html:91 template/user/user_requests.html:66
 msgid "of"
 msgstr "من"
 
 #: template/admins/contacts.html:102 template/admins/contacts.html:106
 #: template/admins/tickets.html:134 template/admins/tickets.html:138
 #: template/admins/user_requests.html:113
-#: template/admins/user_requests.html:117 template/user/contacts.html:101
-#: template/user/contacts.html:105 template/user/index.html:100
-#: template/user/index.html:104 template/user/user_requests.html:73
+#: template/admins/user_requests.html:117 template/user/contacts.html:97
+#: template/user/contacts.html:101 template/user/index.html:98
+#: template/user/index.html:102 template/user/user_requests.html:73
 #: template/user/user_requests.html:77
 msgid "Previous"
 msgstr "السابق"
@@ -205,9 +218,9 @@ msgstr "السابق"
 #: template/admins/contacts.html:116 template/admins/contacts.html:120
 #: template/admins/tickets.html:148 template/admins/tickets.html:152
 #: template/admins/user_requests.html:127
-#: template/admins/user_requests.html:131 template/user/contacts.html:115
-#: template/user/contacts.html:119 template/user/index.html:114
-#: template/user/index.html:118 template/user/user_requests.html:87
+#: template/admins/user_requests.html:131 template/user/contacts.html:111
+#: template/user/contacts.html:115 template/user/index.html:112
+#: template/user/index.html:116 template/user/user_requests.html:87
 #: template/user/user_requests.html:91
 msgid "Next"
 msgstr "التالي"
@@ -220,13 +233,18 @@ msgstr "الملف الشخصي"
 msgid "Edit Profile"
 msgstr "تعديل الملف الشخصي"
 
-#: template/admins/edit_request.html:9 template/admins/user_requests.html:10
-#: template/partials/_sidebar.html:16 template/user/create_request.html:9
-#: template/user/edit_request.html:9 template/user/user_requests.html:9
+#: template/admins/edit_profile.html:26 template/admins/edit_request.html:26
+#: template/user/edit_profile.html:25 template/user/edit_request.html:26
+msgid "Update"
+msgstr "تعديل"
+
+#: template/admins/edit_request.html:7 template/admins/user_requests.html:10
+#: template/partials/_sidebar.html:16 template/user/create_request.html:7
+#: template/user/edit_request.html:7 template/user/user_requests.html:9
 msgid "Requests"
 msgstr "الصلاحيات"
 
-#: template/admins/edit_request.html:10 template/user/edit_request.html:10
+#: template/admins/edit_request.html:8 template/user/edit_request.html:8
 msgid "Edit Request"
 msgstr "تعديل الصلاحية"
 
@@ -236,21 +254,21 @@ msgstr "لوحة القيادة"
 
 #: template/admins/index.html:9
 msgid "Home"
-msgstr ""
+msgstr "الرئيسية"
 
-#: template/admins/index.html:21
-msgid "HOME PAGE"
-msgstr "الصفحة الرئيسة"
+#: template/admins/tickets.html:34 template/admins/user_requests.html:34
+msgid "Search"
+msgstr "ابحث"
 
-#: template/admins/tickets.html:82 template/user/index.html:50
+#: template/admins/tickets.html:82 template/user/index.html:48
 msgid "closed"
 msgstr "مغلقة"
 
-#: template/admins/tickets.html:85 template/user/index.html:52
+#: template/admins/tickets.html:85 template/user/index.html:50
 msgid "pending"
 msgstr "تم التواصل"
 
-#: template/admins/tickets.html:88 template/user/index.html:54
+#: template/admins/tickets.html:88 template/user/index.html:52
 msgid "open"
 msgstr "مفتوحة"
 
@@ -262,16 +280,31 @@ msgstr "صالح"
 msgid "invalid"
 msgstr "غير صالح"
 
-#: template/base.html:49 template/baseadmin.html:57
+#: template/base.html:34 template/baseadmin.html:40
+msgid "Sign out"
+msgstr "تسجيل الخروج"
+
+#: template/base.html:52 template/baseadmin.html:59
 msgid "Notifications"
 msgstr "الاشعارات"
 
-#: template/datasheet/edit_network.html:9 template/datasheet/edit_pc.html:9
-#: template/datasheet/edit_printer.html:9 template/datasheet/edit_server.html:9
-#: template/datasheet/index.html:11 template/datasheet/upload_datasheet.html:9
+#: template/datasheet/edit_backup.html:7 template/datasheet/edit_network.html:9
+#: template/datasheet/edit_pc.html:9 template/datasheet/edit_printer.html:9
+#: template/datasheet/edit_server.html:9 template/datasheet/index.html:7
+#: template/datasheet/upload_datasheet.html:9
 #: template/partials/_sidebaradmin.html:23
 msgid "Datasheet"
 msgstr "الاجهزة"
+
+#: template/datasheet/edit_backup.html:8
+msgid "Edit Backup"
+msgstr "تعديل "
+
+#: template/datasheet/edit_backup.html:26
+#, fuzzy
+#| msgid "Submit"
+msgid " Submit "
+msgstr "حفظ"
 
 #: template/datasheet/edit_network.html:10
 msgid "Edit"
@@ -280,6 +313,7 @@ msgstr "تعديل"
 #: template/datasheet/edit_network.html:29 template/datasheet/edit_pc.html:28
 #: template/datasheet/edit_printer.html:29
 #: template/datasheet/edit_server.html:29 template/tickets/add.html:29
+#: template/user/create_request.html:25
 msgid "Submit"
 msgstr "حفظ"
 
@@ -375,7 +409,9 @@ msgstr "ارسال رسالة"
 
 #: template/tickets/view_ticket.html:90
 #: template/tickets/view_ticket_admin.html:112
-msgid "Enter message"
+#, fuzzy
+#| msgid "Enter message"
+msgid " Enter message "
 msgstr "اكتب الرسالة"
 
 #: template/tickets/view_ticket.html:94
@@ -404,6 +440,53 @@ msgstr "صلاحياتي"
 #: template/user/user_requests.html:16
 msgid "Create Request"
 msgstr "طلب صلاحية"
+
+#: tickets/views.py:115
+msgid "Ticket has been closed!"
+msgstr "تم اغلاق المشكلة"
+
+#: tickets/views.py:126 tickets/views.py:146
+msgid "Message Sent Successfully"
+msgstr "تم ارسال الرسالة بنجاح"
+
+#: tickets/views.py:133
+msgid "Ticket Assigned to you!"
+msgstr "تم تعين المشكلة لك"
+
+#: tickets/views.py:150
+msgid "you dont have to comment in this ticket!"
+msgstr "لا يمكن التعليق علي هذه المشكلة"
+
+#: users/views.py:142
+msgid "Ticket Added Successfully"
+msgstr "تم ارسال المشكلة للمختص"
+
+#: users/views.py:203
+msgid "Request created successfully!"
+msgstr "تم ارسال طلبك للمختص"
+
+#, fuzzy
+#~| msgid "Result not found"
+#~ msgid "Page not found"
+#~ msgstr "لا يوجد نتائج"
+
+#, fuzzy
+#~| msgid "Sign out"
+#~ msgid "Log out"
+#~ msgstr "تسجيل الخروج"
+
+#, fuzzy
+#~| msgid "Date"
+#~ msgid "Date/time"
+#~ msgstr "التاريخ"
+
+#, fuzzy
+#~| msgid "Showing page"
+#~ msgid "Show all"
+#~ msgstr "عرض صفحة رقم "
+
+#~ msgid "HOME PAGE"
+#~ msgstr "الصفحة الرئيسة"
 
 #~ msgid "My Tickets"
 #~ msgstr "الشكاوي"

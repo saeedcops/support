@@ -46,10 +46,14 @@ class ProfileUpdateView(LoginRequiredMixin,UpdateView):
     template_name = 'admins/edit_profile.html'
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        messages.success(self.request, _("Profile updated successfully!"))
-        return redirect('admin-profile',self.object.pk)
+        if self.request.user.pk == self.object.pk:
+            self.object = form.save(commit=False)
+            self.object.save()
+            messages.success(self.request, _("Profile updated successfully!"))
+            return redirect('admin-profile',self.object.pk)
+        else:
+            messages.error(self.request, self.request.user.username+_(" You dont have permission to do this!"))
+            return redirect('user-profile',self.object.pk)
 
 
 

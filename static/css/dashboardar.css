@@ -5,6 +5,9 @@ body {
 .bmain {
     position: fixed;
     left: 0;
+    bottom: 0;
+    top: 70;
+    z-index: 100;
     text-align: right;
     overflow: auto;
     max-height: 100vh;
@@ -82,8 +85,6 @@ body {
  */
 
 .navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
     margin-right: 0;
     justify-content: right;
     right: 0;

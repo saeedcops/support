@@ -15,20 +15,19 @@
 
 <div class="card m-sm-2">
     <div class="card-body">
-        {% include 'partials/messages.html' %}
-
+        {% include 'partials/messages.html' %} {% if request.user.pk == profile.pk%}
         <form enctype="multipart/form-data" action="{% url 'admin-profile' profile.pk %}" method="post">
-            <img src="https://osg-support.cops.com/img/{{profile.image}}" /> {% csrf_token %} {{ form.as_p }}
+            <img src="/img/{{profile.image}}" /> {% csrf_token %} {{ form.as_p }}
             <table>
 
 
             </table>
             <div class="form-group mt-5">
-                <input type="submit" value="Submit" class=" btn btn-primary form-control form-control-sm">
+                <input type="submit" value="{% trans 'Update' %}" class=" btn btn-primary form-control form-control-sm">
             </div>
 
         </form>
-
+        {% endif %}
     </div>
 </div>
 
